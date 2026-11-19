@@ -9,10 +9,9 @@ import { LearningExperience } from './components/home/LearningExperience';
 import { TrustIndicators } from './components/home/TrustIndicators';
 import { WhyChooseUs } from './components/home/WhyChooseUs';
 import { FloatingWidgets } from './components/layout/FloatingWidgets';
+import { FloatingGlassHeader } from './components/layout/FloatingGlassHeader';
 import { FloatingGlassSidebar, type NavSection } from './components/layout/FloatingGlassSidebar';
 import { Footer } from './components/layout/Footer';
-import { SecondaryBar } from './components/layout/SecondaryBar';
-import { TopGovernmentBar } from './components/layout/TopGovernmentBar';
 import { PortalModal, type ModalState } from './components/programs/PortalModal';
 import { ProgramsFilters } from './components/programs/ProgramsFilters';
 import { ProgramsGrid } from './components/programs/ProgramsGrid';
@@ -20,6 +19,7 @@ import { ProgramsHero } from './components/programs/ProgramsHero';
 import { ProgramsPagination } from './components/programs/ProgramsPagination';
 import { PROGRAMS } from './data/programs';
 import type { Locale, Program, ProgramKind } from './types/program';
+import type { SearchServiceTarget } from './utils/headerSearch';
 import { filterPrograms, paginatePrograms, PROGRAMS_PER_PAGE } from './utils/programFilter';
 
 type PageRoute = 'home' | 'programs';
@@ -150,28 +150,46 @@ export default function App() {
     setModal({ type: 'program', program, tab });
   };
 
+  const handleHeaderSearchSubmit = (query: string) => {
+    setSearch(query);
+    setCurrentPage(1);
+    navigateToPrograms('diplomas', 'programsCatalog');
+  };
+
+  const handleSelectSearchService = (target: SearchServiceTarget) => {
+    if (target === 'diplomas' || target === 'fellowships') {
+      navigateToPrograms(target);
+      return;
+    }
+    setModal({ type: 'info', section: target });
+  };
+
   return (
     <div id="app" className="min-h-screen flex flex-col bg-white text-[#183247]">
-      <header className="contents">
-        <TopGovernmentBar locale={locale} />
-        <SecondaryBar
-          locale={locale}
-          onToggleLocale={handleToggleLocale}
-          onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
-        />
-        <FloatingGlassSidebar
-          locale={locale}
-          activeNav={activeNav}
-          onSelectNav={handleSelectNav}
-          onSelectKind={(nextKind) => {
-            setKind(nextKind);
-            setCurrentPage(1);
-          }}
-          onToggleLocale={handleToggleLocale}
-          onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
-          onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
-        />
-      </header>
+      <FloatingGlassHeader
+        locale={locale}
+        programs={PROGRAMS}
+        searchQuery={search}
+        onSearchChange={handleSearchChange}
+        onSubmitSearch={handleHeaderSearchSubmit}
+        onToggleLocale={handleToggleLocale}
+        onGoHome={navigateToHome}
+        onSelectProgram={(program) => handleOpenProgram(program, 'details')}
+        onSelectService={handleSelectSearchService}
+      />
+
+      <FloatingGlassSidebar
+        locale={locale}
+        activeNav={activeNav}
+        onSelectNav={handleSelectNav}
+        onSelectKind={(nextKind) => {
+          setKind(nextKind);
+          setCurrentPage(1);
+        }}
+        onToggleLocale={handleToggleLocale}
+        onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
+        onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
+      />
 
       <main className="flex-1">
         {activePage === 'home' ? (

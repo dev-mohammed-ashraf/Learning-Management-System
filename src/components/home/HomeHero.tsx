@@ -9,7 +9,7 @@ interface HomeHeroProps {
 
 export function HomeHero({ locale, onExplorePrograms, onLearnAbout }: HomeHeroProps) {
   return (
-    <section className="ut-page-hero relative overflow-hidden py-[56px] max-[1023px]:pt-[72px] max-[1023px]:pb-[44px] max-[720px]:pt-[66px] max-[720px]:pb-[36px] border-b border-white/10">
+    <section className="ut-page-hero relative overflow-hidden pt-[124px] pb-[56px] max-[1023px]:pt-[162px] max-[1023px]:pb-[44px] max-[767px]:pt-[204px] max-[767px]:pb-[36px] border-b border-white/10">
       <svg
         className="pointer-events-none absolute -top-16 end-[-60px] w-[460px] h-[320px] opacity-[0.14] text-[#28B5C5]"
         viewBox="0 0 460 320"
