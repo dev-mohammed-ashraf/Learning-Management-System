@@ -1,0 +1,6 @@
+{
+  "name": "معهد البحوث والاستشارات — جامعة تبوك | برامج الدبلومات",
+  "description": "بوابة البرامج الأكاديمية والدبلومات المهنية عن بُعد في معهد البحوث والاستشارات بجامعة تبوك.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
