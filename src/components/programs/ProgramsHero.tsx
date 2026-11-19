@@ -29,7 +29,7 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
         : 'Specialized professional fellowship programs offered by the Research and Consulting Institute at the University of Tabuk.';
 
   return (
-    <div className="ut-page-hero py-[40px] max-[720px]:py-[32px] relative overflow-hidden border-b border-white/10">
+    <div className="ut-page-hero py-[40px] max-[1023px]:pt-[70px] max-[720px]:pt-[66px] max-[720px]:pb-[32px] relative overflow-hidden border-b border-white/10">
       <svg
         className="pointer-events-none absolute -top-12 end-[-40px] w-[360px] h-[240px] opacity-[0.14] text-[#28B5C5]"
         viewBox="0 0 360 240"

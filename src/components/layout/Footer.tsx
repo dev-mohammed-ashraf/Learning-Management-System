@@ -1,7 +1,7 @@
 import { Mail, Phone } from 'lucide-react';
 import { PROGRAMS } from '../../data/programs';
 import type { Locale, Program } from '../../types/program';
-import type { NavSection } from './MainNavbar';
+import type { NavSection } from './FloatingGlassSidebar';
 
 interface FooterProps {
   locale: Locale;

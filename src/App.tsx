@@ -9,8 +9,8 @@ import { LearningExperience } from './components/home/LearningExperience';
 import { TrustIndicators } from './components/home/TrustIndicators';
 import { WhyChooseUs } from './components/home/WhyChooseUs';
 import { FloatingWidgets } from './components/layout/FloatingWidgets';
+import { FloatingGlassSidebar, type NavSection } from './components/layout/FloatingGlassSidebar';
 import { Footer } from './components/layout/Footer';
-import { MainNavbar, type NavSection } from './components/layout/MainNavbar';
 import { SecondaryBar } from './components/layout/SecondaryBar';
 import { TopGovernmentBar } from './components/layout/TopGovernmentBar';
 import { PortalModal, type ModalState } from './components/programs/PortalModal';
@@ -159,22 +159,13 @@ export default function App() {
           onToggleLocale={handleToggleLocale}
           onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
         />
-        <div
-          className="bg-[#EAF3F6] border-b border-[#DCE7ED] h-[108px] max-[1023px]:h-[96px] max-[720px]:h-[84px] -mb-[108px] max-[1023px]:-mb-[96px] max-[720px]:-mb-[84px]"
-          aria-hidden="true"
-        />
-        <MainNavbar
+        <FloatingGlassSidebar
           locale={locale}
           activeNav={activeNav}
-          searchQuery={search}
           onSelectNav={handleSelectNav}
           onSelectKind={(nextKind) => {
             setKind(nextKind);
             setCurrentPage(1);
-          }}
-          onHeaderSearch={(query) => {
-            setSearch(query);
-            navigateToPrograms('diplomas', 'programsCatalog');
           }}
           onToggleLocale={handleToggleLocale}
           onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
