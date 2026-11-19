@@ -83,11 +83,11 @@ export function FloatingGlassSidebar({
 
   return (
     <>
-      {/* Desktop Floating Vertical Glass Sidebar (Fixed Right, Centered Vertically) */}
+      {/* Desktop Floating Vertical Glass Sidebar (Fixed Left, Centered Vertically) */}
       <aside
         aria-label={locale === 'ar' ? 'القائمة الرئيسية الجانبية' : 'Primary Floating Sidebar'}
         data-expanded={expanded ? 'true' : 'false'}
-        className={`hidden min-[1024px]:flex flex-col fixed right-[20px] top-1/2 -translate-y-1/2 z-[60] max-h-[85vh] rounded-[24px] p-[14px] ut-glass-sidebar transition-[width] duration-300 ease-out ${
+        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 -translate-y-1/2 z-[60] max-h-[85vh] rounded-[24px] p-[14px] ut-glass-sidebar transition-[width] duration-300 ease-out ${
           expanded ? 'w-[260px]' : 'w-[90px]'
         }`}
       >
@@ -114,12 +114,12 @@ export function FloatingGlassSidebar({
                 ? 'توسيع القائمة'
                 : 'Expand'
           }
-          className="absolute -left-[13px] top-[68px] w-[26px] h-[26px] rounded-full bg-white border border-[#DCE7ED] text-[#142D4E] shadow-[0_4px_14px_rgba(20,45,78,0.14)] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer z-[2]"
+          className="absolute -right-[13px] top-1/2 -translate-y-1/2 w-[26px] h-[26px] rounded-full bg-white border border-[#DCE7ED] text-[#142D4E] shadow-[0_4px_14px_rgba(20,45,78,0.14)] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer z-[2]"
         >
           {expanded ? (
-            <ChevronRight className="w-[15px] h-[15px]" aria-hidden="true" />
-          ) : (
             <ChevronLeft className="w-[15px] h-[15px]" aria-hidden="true" />
+          ) : (
+            <ChevronRight className="w-[15px] h-[15px]" aria-hidden="true" />
           )}
         </button>
 
@@ -133,9 +133,7 @@ export function FloatingGlassSidebar({
                 ? 'العودة إلى الرئيسية — معهد البحوث والاستشارات'
                 : 'Home — Research and Consulting Institute'
             }
-            className={`w-full flex items-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors ${
-              expanded ? 'justify-start px-[6px]' : 'justify-center'
-            }`}
+            className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
           >
             {expanded ? (
               <img
@@ -145,7 +143,7 @@ export function FloatingGlassSidebar({
                     ? 'معهد البحوث والاستشارات — جامعة تبوك'
                     : 'Research and Consulting Institute — University of Tabuk'
                 }
-                className="h-[46px] w-auto max-w-full object-contain block"
+                className="h-[46px] w-auto max-w-full object-contain block mx-auto"
               />
             ) : (
               <span className="w-[44px] h-[44px] rounded-[12px] overflow-hidden bg-white/95 border border-[#DCE7ED]/80 grid place-items-center flex-none p-[4px]">
@@ -168,7 +166,7 @@ export function FloatingGlassSidebar({
         {/* B. Vertical Navigation Links */}
         <nav
           aria-label={locale === 'ar' ? 'التنقل الرئيسي' : 'Main Navigation'}
-          className="flex-1 flex flex-col gap-[6px] py-[2px]"
+          className="flex-1 min-h-0 flex flex-col gap-[6px] py-[2px] [@media(max-height:640px)]:overflow-y-auto"
         >
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -218,7 +216,7 @@ export function FloatingGlassSidebar({
                 {!expanded && (
                   <span
                     role="tooltip"
-                    className="pointer-events-none opacity-0 translate-x-[6px] group-hover/nav:opacity-100 group-hover/nav:translate-x-0 group-focus-within/nav:opacity-100 group-focus-within/nav:translate-x-0 transition-all duration-150 absolute right-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
+                    className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/nav:opacity-100 group-hover/nav:translate-x-0 group-focus-within/nav:opacity-100 group-focus-within/nav:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
                   >
                     {label}
                   </span>
@@ -251,7 +249,7 @@ export function FloatingGlassSidebar({
             {!expanded && (
               <span
                 role="tooltip"
-                className="pointer-events-none opacity-0 translate-x-[6px] group-hover/login:opacity-100 group-hover/login:translate-x-0 group-focus-within/login:opacity-100 group-focus-within/login:translate-x-0 transition-all duration-150 absolute right-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
+                className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/login:opacity-100 group-hover/login:translate-x-0 group-focus-within/login:opacity-100 group-focus-within/login:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
               >
                 {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
               </span>
@@ -279,7 +277,7 @@ export function FloatingGlassSidebar({
             {!expanded && (
               <span
                 role="tooltip"
-                className="pointer-events-none opacity-0 translate-x-[6px] group-hover/reg:opacity-100 group-hover/reg:translate-x-0 group-focus-within/reg:opacity-100 group-focus-within/reg:translate-x-0 transition-all duration-150 absolute right-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
+                className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/reg:opacity-100 group-hover/reg:translate-x-0 group-focus-within/reg:opacity-100 group-focus-within/reg:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
               >
                 {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
               </span>
