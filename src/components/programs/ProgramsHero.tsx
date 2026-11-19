@@ -29,38 +29,51 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
         : 'Specialized professional fellowship programs offered by the Research and Consulting Institute at the University of Tabuk.';
 
   return (
-    <div className="ut-page-hero py-[36px] relative overflow-hidden">
+    <div className="ut-page-hero py-[40px] max-[720px]:py-[32px] relative overflow-hidden border-b border-white/10">
+      <svg
+        className="pointer-events-none absolute -top-12 end-[-40px] w-[360px] h-[240px] opacity-[0.14] text-[#28B5C5]"
+        viewBox="0 0 360 240"
+        fill="none"
+        aria-hidden="true"
+      >
+        <circle cx="240" cy="80" r="110" stroke="currentColor" strokeWidth="1" />
+        <circle cx="240" cy="80" r="72" stroke="currentColor" strokeWidth="1" strokeDasharray="4 6" />
+        <path d="M40 200 L180 60 L330 60" stroke="currentColor" strokeWidth="1" />
+      </svg>
+
       <div className="wrap flex items-center justify-between gap-[34px] flex-wrap relative">
         <div>
-          <div className="text-[0.78rem] text-[#B4CCE0] flex gap-[8px] items-center mb-[10px] relative flex-wrap">
+          <div className="text-[0.8rem] text-[#CBD8E6] flex gap-[8px] items-center mb-[12px] relative flex-wrap">
             <button
               type="button"
               onClick={onGoHome}
-              className="text-[#B4CCE0] hover:text-white transition-colors cursor-pointer"
+              className="text-[#CBD8E6] hover:text-[#28B5C5] transition-colors cursor-pointer"
             >
               {locale === 'ar' ? 'الرئيسية' : 'Home'}
             </button>
-            <span aria-hidden="true">/</span>
-            <b className="text-[#E7CC8F] font-bold">{titleText}</b>
+            <span className="text-[#64748B]" aria-hidden="true">/</span>
+            <b className="text-[#28B5C5] font-bold">{titleText}</b>
           </div>
 
-          <h1 className="text-[clamp(1.8rem,3.4vw,2.6rem)] font-bold leading-[1.3] text-white relative">
+          <h1 className="text-[clamp(1.85rem,3.5vw,2.65rem)] font-extrabold leading-[1.3] text-white relative">
             {lead}
             {tail ? (
               <>
                 {' '}
-                <span className="text-[#C99B3F]">{tail}</span>
+                <span className="text-[#28B5C5]">{tail}</span>
               </>
             ) : null}
           </h1>
 
-          <p className="text-[#DCE9F4] max-w-[44rem] mt-[10px] text-[1.02rem] leading-[1.95] relative">
+          <div className="w-[52px] h-[3px] rounded-full bg-[#28B5C5] mt-[12px] mb-[12px]" aria-hidden="true" />
+
+          <p className="text-[#DDF3F5]/90 max-w-[44rem] text-[1.02rem] leading-[1.9] relative">
             {leadParagraph}
           </p>
         </div>
 
         <div
-          className="hidden min-[561px]:block flex-none ps-[20px] border-s-2 border-[#C99B3F]"
+          className="hidden min-[561px]:block flex-none ps-[22px] border-s-2 border-[#28B5C5]/60"
           aria-label={
             locale === 'ar'
               ? 'معهد البحوث والاستشارات — جامعة تبوك'

@@ -76,7 +76,7 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         title={locale === 'ar' ? 'العودة للأعلى' : 'Back to Top'}
         aria-label={locale === 'ar' ? 'العودة للأعلى' : 'Back to Top'}
-        className={`fixed end-[22px] z-[70] w-[46px] h-[46px] rounded-[12px] bg-white border border-[#E3EAF1] text-[#1C5D92] grid place-items-center shadow-[0_8px_26px_rgba(12,59,97,0.06)] hover:-translate-y-[3px] transition-all duration-200 cursor-pointer ${bottomOffset} ${
+        className={`fixed end-[22px] z-[70] w-[46px] h-[46px] rounded-[12px] bg-white border border-[#DCE7ED] text-[#176B87] grid place-items-center shadow-[0_8px_26px_rgba(20,45,78,0.08)] hover:border-[#28B5C5] hover:-translate-y-[3px] transition-all duration-200 cursor-pointer ${bottomOffset} ${
           showTop ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
@@ -89,17 +89,17 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
           role="dialog"
           aria-live="polite"
           aria-label={locale === 'ar' ? 'إشعار ملفات الارتباط' : 'Cookie Consent Notice'}
-          className="fixed bottom-0 inset-x-0 z-[90] bg-white border-t border-[#E3EAF1] shadow-[0_-8px_24px_rgba(16,24,40,0.08)] py-[16px] px-[24px]"
+          className="fixed bottom-0 inset-x-0 z-[90] bg-white border-t border-[#DCE7ED] shadow-[0_-8px_24px_rgba(20,45,78,0.08)] py-[16px] px-[24px]"
         >
           <div className="max-w-[1320px] mx-auto flex items-center gap-[20px] flex-wrap justify-center">
-            <p className="text-[#5E7489] text-[0.86rem] leading-[1.9] flex-1 min-w-[260px] m-0">
+            <p className="text-[#64748B] text-[0.86rem] leading-[1.9] flex-1 min-w-[260px] m-0">
               {locale === 'ar'
                 ? 'نستخدم ملفات تعريف الارتباط (الكوكيز) لتحسين تجربتك وتحليل استخدام الموقع. بمواصلتك التصفح فإنك توافق على استخدامها. '
                 : 'We use cookies to enhance your experience and analyze site usage. By continuing to browse, you consent to their use. '}
               <button
                 type="button"
                 onClick={onOpenPrivacy}
-                className="text-[#1C5D92] font-bold underline underline-offset-[3px] cursor-pointer"
+                className="text-[#176B87] font-bold underline underline-offset-[3px] hover:text-[#142D4E] cursor-pointer"
               >
                 {locale === 'ar' ? 'اعرف المزيد' : 'Learn more'}
               </button>
@@ -107,7 +107,7 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
             <button
               type="button"
               onClick={acceptCookies}
-              className="flex-none inline-flex items-center justify-center rounded-[8px] px-[16px] py-[7px] font-bold text-[0.83rem] bg-[#1C5D92] text-white hover:bg-[#154A76] transition-colors cursor-pointer"
+              className="flex-none inline-flex items-center justify-center rounded-[10px] px-[18px] py-[8px] font-bold text-[0.84rem] bg-[#176B87] text-white hover:bg-[#142D4E] transition-colors cursor-pointer"
             >
               {locale === 'ar' ? 'موافق' : 'Accept'}
             </button>

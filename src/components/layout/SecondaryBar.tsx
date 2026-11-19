@@ -12,13 +12,13 @@ export function SecondaryBar({
   onOpenPortalInfo,
 }: SecondaryBarProps) {
   return (
-    <div className="bg-[#0C3B61] text-[#B4CCE0] text-[0.75rem] max-[720px]:hidden">
+    <div className="bg-[#142D4E] text-[#CBD8E6] text-[0.75rem] border-b border-white/10 max-[720px]:hidden">
       <div className="wrap flex items-center justify-between gap-[18px] py-[7px] flex-wrap">
         <div className="flex items-center gap-[2px]">
           <button
             type="button"
             onClick={() => onOpenPortalInfo('lms')}
-            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-white"
+            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-[#28B5C5]"
           >
             {locale === 'ar' ? 'بوابة التعلم' : 'Learning Portal'}
           </button>
@@ -26,7 +26,7 @@ export function SecondaryBar({
           <button
             type="button"
             onClick={() => onOpenPortalInfo('entities')}
-            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-white"
+            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-[#28B5C5]"
           >
             {locale === 'ar' ? 'خدمات الجهات' : 'Corporate Services'}
           </button>
@@ -34,7 +34,7 @@ export function SecondaryBar({
           <button
             type="button"
             onClick={() => onOpenPortalInfo('support')}
-            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-white"
+            className="cursor-pointer px-[10px] py-[2px] rounded-[6px] font-bold transition-colors hover:text-[#28B5C5]"
           >
             {locale === 'ar' ? 'الدعم والاستفسارات' : 'Support & Inquiries'}
           </button>
@@ -45,7 +45,7 @@ export function SecondaryBar({
             type="button"
             onClick={onToggleLocale}
             title={locale === 'ar' ? 'English' : 'العربية'}
-            className="border border-white/25 bg-transparent text-[#EAF3FB] rounded-[6px] px-[12px] py-[1px] font-bold text-[0.72rem] leading-[1.8] transition-colors hover:bg-white/10 cursor-pointer"
+            className="border border-[#28B5C5]/40 bg-transparent text-[#DDF3F5] rounded-[6px] px-[12px] py-[1px] font-bold text-[0.72rem] leading-[1.8] transition-colors hover:bg-[#176B87]/40 hover:border-[#28B5C5] hover:text-white cursor-pointer"
           >
             {locale === 'ar' ? 'EN' : 'AR'}
           </button>

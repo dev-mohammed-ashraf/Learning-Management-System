@@ -104,13 +104,13 @@ export function MainNavbar({
           >
             <button
               type="button"
-              onClick={() => handleNavClick('diplomas')}
+              onClick={() => handleNavClick('home')}
               aria-label={
                 locale === 'ar'
                   ? 'معهد البحوث والاستشارات — جامعة تبوك'
                   : 'Research and Consulting Institute — University of Tabuk'
               }
-              className="flex-none cursor-pointer focus-visible:outline-2 focus-visible:outline-[#1C5D92] rounded-[10px]"
+              className="flex-none cursor-pointer focus-visible:outline-2 focus-visible:outline-[#176B87] rounded-[10px]"
             >
               <img
                 src="/assets/ut/logo-t.png"
@@ -141,8 +141,8 @@ export function MainNavbar({
                     aria-current={isCurrent ? 'page' : undefined}
                     className={`relative px-[12px] max-[1200px]:px-[8px] py-[7px] font-bold text-[0.94rem] max-[1200px]:text-[0.86rem] whitespace-nowrap shrink-0 rounded-[10px] cursor-pointer transition-all duration-200 ${
                       isCurrent
-                        ? 'text-[#0C3B61] ut-nav-cur'
-                        : 'text-[#0C3B61]/90 hover:text-[#1C5D92] hover:bg-[#0C3B61]/[0.05]'
+                        ? 'text-[#142D4E] ut-nav-cur'
+                        : 'text-[#142D4E]/90 hover:text-[#176B87] hover:bg-[#DDF3F5]/60'
                     }`}
                   >
                     {locale === 'ar' ? item.labelAr : item.labelEn}
@@ -156,7 +156,7 @@ export function MainNavbar({
                 type="button"
                 onClick={onToggleLocale}
                 title={locale === 'ar' ? 'English' : 'العربية'}
-                className="hidden max-[720px]:grid place-items-center w-[38px] h-[38px] flex-none border border-[#D4DFE9] rounded-[11px] bg-white/75 text-[#0C3B61] font-bold text-[0.78rem] tracking-[0.3px] hover:border-[#C99B3F] hover:text-[#A87E2B] hover:bg-[#F7EFDD]/80 transition-colors cursor-pointer"
+                className="hidden max-[720px]:grid place-items-center w-[38px] h-[38px] flex-none border border-[#DCE7ED] rounded-[11px] bg-white/80 text-[#142D4E] font-bold text-[0.78rem] tracking-[0.3px] hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5]/75 transition-colors cursor-pointer"
               >
                 {locale === 'ar' ? 'EN' : 'AR'}
               </button>
@@ -169,8 +169,8 @@ export function MainNavbar({
                 aria-label={locale === 'ar' ? 'بحث' : 'Search'}
                 className={`grid place-items-center w-[40px] h-[40px] max-[720px]:w-[38px] max-[720px]:h-[38px] flex-none border rounded-[12px] cursor-pointer transition-all duration-200 ${
                   searchOpen
-                    ? 'border-[#C99B3F] text-[#A87E2B] bg-[#F7EFDD]/90'
-                    : 'border-[#D4DFE9] bg-white/75 text-[#0C3B61] hover:border-[#C99B3F] hover:text-[#A87E2B] hover:bg-[#F7EFDD]/80'
+                    ? 'border-[#28B5C5] text-[#176B87] bg-[#DDF3F5]/90'
+                    : 'border-[#DCE7ED] bg-white/80 text-[#142D4E] hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5]/70'
                 }`}
               >
                 <Search className="w-[18px] h-[18px]" aria-hidden="true" />
@@ -179,7 +179,7 @@ export function MainNavbar({
               <button
                 type="button"
                 onClick={() => onOpenAuth('login')}
-                className="hidden min-[768px]:inline-flex items-center justify-center rounded-[12px] px-[15px] max-[1200px]:px-[12px] py-[8px] font-bold text-[0.84rem] max-[1200px]:text-[0.8rem] border border-[#D4DFE9] text-[#0C3B61] bg-white/75 hover:border-[#1C5D92] hover:text-[#1C5D92] hover:bg-white transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
+                className="hidden min-[768px]:inline-flex items-center justify-center rounded-[12px] px-[15px] max-[1200px]:px-[12px] py-[8px] font-bold text-[0.84rem] max-[1200px]:text-[0.8rem] border border-[#DCE7ED] text-[#142D4E] bg-white/80 hover:border-[#176B87] hover:text-[#176B87] hover:bg-[#EAF3F6]/70 transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
               >
                 {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
               </button>
@@ -187,7 +187,7 @@ export function MainNavbar({
               <button
                 type="button"
                 onClick={() => onOpenAuth('register')}
-                className="hidden min-[768px]:inline-flex items-center justify-center rounded-[12px] px-[17px] max-[1200px]:px-[14px] py-[8px] font-bold text-[0.84rem] max-[1200px]:text-[0.8rem] border border-transparent bg-[#1C5D92] text-white shadow-[0_4px_14px_rgba(28,93,146,0.22)] hover:bg-[#154A76] hover:shadow-[0_8px_20px_rgba(28,93,146,0.3)] transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
+                className="hidden min-[768px]:inline-flex items-center justify-center rounded-[12px] px-[17px] max-[1200px]:px-[14px] py-[8px] font-bold text-[0.84rem] max-[1200px]:text-[0.8rem] border border-transparent bg-[#176B87] text-white shadow-[0_4px_14px_rgba(23,107,135,0.24)] hover:bg-[#142D4E] hover:shadow-[0_8px_20px_rgba(20,45,78,0.28)] transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
               >
                 {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
               </button>
@@ -201,7 +201,7 @@ export function MainNavbar({
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobNav"
                 aria-label={locale === 'ar' ? 'القائمة' : 'Menu'}
-                className="hidden max-[1023px]:grid place-items-center w-[40px] h-[40px] max-[720px]:w-[38px] max-[720px]:h-[38px] border border-[#D4DFE9] rounded-[12px] bg-white/80 text-[#0C3B61] hover:border-[#1C5D92] flex-none transition-colors cursor-pointer"
+                className="hidden max-[1023px]:grid place-items-center w-[40px] h-[40px] max-[720px]:w-[38px] max-[720px]:h-[38px] border border-[#DCE7ED] rounded-[12px] bg-white/80 text-[#142D4E] hover:border-[#176B87] flex-none transition-colors cursor-pointer"
               >
                 {mobileMenuOpen ? (
                   <X className="w-[20px] h-[20px]" aria-hidden="true" />
@@ -242,11 +242,11 @@ export function MainNavbar({
                     : 'Search for a program or diploma…'
                 }
                 autoComplete="off"
-                className="flex-1 min-w-0 min-h-[44px] px-[16px] border border-[#D4DFE9] rounded-[12px] bg-[#F5F8FB] text-[#12263A] focus:outline-2 focus:outline-[#C99B3F] focus:bg-white"
+                className="flex-1 min-w-0 min-h-[44px] px-[16px] border border-[#DCE7ED] rounded-[12px] bg-[#EAF3F6] text-[#183247] placeholder:text-[#64748B] focus:outline-2 focus:outline-[#28B5C5] focus:bg-white"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center rounded-[12px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#1C5D92] text-white hover:bg-[#154A76] cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center justify-center rounded-[12px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] transition-colors cursor-pointer whitespace-nowrap"
               >
                 {locale === 'ar' ? 'بحث' : 'Search'}
               </button>
@@ -267,13 +267,16 @@ export function MainNavbar({
                   key={item.id}
                   type="button"
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full text-start flex items-center justify-between px-[18px] py-[13px] font-bold text-[0.95rem] border-b border-[#E3EAF1]/80 cursor-pointer transition-colors ${
+                  className={`w-full text-start flex items-center justify-between px-[18px] py-[13px] font-bold text-[0.95rem] border-b border-[#DCE7ED]/80 cursor-pointer transition-colors ${
                     isCurrent
-                      ? 'text-[#0C3B61] bg-[#E8EEF4]/60 shadow-[inset_-4px_0_0_#C99B3F]'
-                      : 'text-[#0C3B61] hover:bg-[#F5F8FB]'
+                      ? 'text-[#142D4E] bg-[#DDF3F5]/65'
+                      : 'text-[#142D4E] hover:bg-[#EAF3F6]'
                   }`}
                 >
                   <span>{locale === 'ar' ? item.labelAr : item.labelEn}</span>
+                  {isCurrent && (
+                    <span className="w-[18px] h-[3px] rounded-full bg-[#28B5C5]" aria-hidden="true" />
+                  )}
                 </button>
               );
             })}
@@ -285,7 +288,7 @@ export function MainNavbar({
                   setMobileMenuOpen(false);
                   onOpenAuth('login');
                 }}
-                className="flex-1 min-h-[44px] rounded-[12px] font-bold text-[0.92rem] border border-[#D4DFE9] text-[#0C3B61] bg-white cursor-pointer"
+                className="flex-1 min-h-[44px] rounded-[12px] font-bold text-[0.92rem] border border-[#DCE7ED] text-[#142D4E] bg-white hover:border-[#176B87] hover:text-[#176B87] cursor-pointer"
               >
                 {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
               </button>
@@ -295,20 +298,20 @@ export function MainNavbar({
                   setMobileMenuOpen(false);
                   onOpenAuth('register');
                 }}
-                className="flex-1 min-h-[44px] rounded-[12px] font-bold text-[0.92rem] bg-[#1C5D92] text-white cursor-pointer"
+                className="flex-1 min-h-[44px] rounded-[12px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] cursor-pointer"
               >
                 {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
               </button>
             </div>
 
-            <div className="hidden max-[720px]:flex flex-col border-t border-[#E3EAF1] bg-[#F5F8FB]/80 px-[18px] py-[10px]">
+            <div className="hidden max-[720px]:flex flex-col border-t border-[#DCE7ED] bg-[#EAF3F6]/70 px-[18px] py-[10px]">
               <button
                 type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenPortalInfo('lms');
                 }}
-                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#5E7489] cursor-pointer"
+                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#64748B] hover:text-[#176B87] cursor-pointer"
               >
                 {locale === 'ar' ? 'بوابة التعلم' : 'Learning Portal'}
               </button>
@@ -318,7 +321,7 @@ export function MainNavbar({
                   setMobileMenuOpen(false);
                   onOpenPortalInfo('entities');
                 }}
-                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#5E7489] cursor-pointer"
+                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#64748B] hover:text-[#176B87] cursor-pointer"
               >
                 {locale === 'ar' ? 'خدمات الجهات' : 'Corporate Services'}
               </button>
@@ -328,7 +331,7 @@ export function MainNavbar({
                   setMobileMenuOpen(false);
                   onOpenPortalInfo('support');
                 }}
-                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#5E7489] cursor-pointer"
+                className="text-start py-[8px] text-[0.86rem] font-semibold text-[#64748B] hover:text-[#176B87] cursor-pointer"
               >
                 {locale === 'ar' ? 'الدعم والاستفسارات' : 'Support & Inquiries'}
               </button>

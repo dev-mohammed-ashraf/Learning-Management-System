@@ -20,61 +20,63 @@ export function ProgramCard({ program, locale, onOpenDetails }: ProgramCardProps
   const isRegisterCta = program.ctaLabelAr === 'سجّل الآن';
 
   return (
-    <article className="ut-pcard bg-white border border-[#E3EAF1] rounded-[14px] overflow-hidden flex flex-col transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_22px_54px_rgba(12,59,97,0.11)] hover:border-[#1C5D92]/30">
+    <article className="group ut-pcard bg-white border border-[#DCE7ED] rounded-[16px] overflow-hidden flex flex-col transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_rgba(20,45,78,0.10)] hover:border-[#28B5C5]/70">
       <button
         type="button"
         onClick={() => onOpenDetails(program, 'details')}
         aria-label={`${title} — ${badge}`}
-        className="ut-pcard-thumb relative w-full aspect-[16/9] overflow-hidden block cursor-pointer bg-[#0C3B61] text-start focus-visible:outline-2 focus-visible:outline-[#1C5D92]"
+        className="relative w-full aspect-[16/9] overflow-hidden block cursor-pointer bg-[#142D4E] text-start border-b-2 border-[#28B5C5]/70 focus-visible:outline-2 focus-visible:outline-[#176B87]"
       >
         <img
           src={program.image}
           alt={title}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-[center_55%] block"
+          className="w-full h-full object-cover object-center block transition-transform duration-500 ease-out group-hover:scale-[1.04]"
         />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'linear-gradient(180deg, rgba(0, 59, 122, 0.08), rgba(0, 59, 122, 0.42))',
+              'linear-gradient(180deg, rgba(20, 45, 78, 0.04) 0%, rgba(20, 45, 78, 0.34) 100%)',
           }}
           aria-hidden="true"
         />
-        <span className="absolute top-[12px] start-[12px] bg-white/92 text-[#0C3B61] rounded-[6px] px-[12px] py-[2px] text-[0.7rem] font-bold">
+        <span className="absolute top-[12px] start-[12px] bg-[#DDF3F5]/95 text-[#142D4E] border border-[#28B5C5]/35 rounded-[8px] px-[12px] py-[2px] text-[0.72rem] font-bold shadow-[0_2px_8px_rgba(20,45,78,0.12)]">
           {badge}
         </span>
       </button>
 
       <div className="px-[18px] pt-[16px] pb-[18px] flex flex-col gap-[6px] flex-1">
-        <h3 className="text-[1.02rem] font-bold leading-[1.55] text-[#12263A]">
+        <div className="w-[34px] h-[3px] rounded-full bg-[#28B5C5] mb-[2px]" aria-hidden="true" />
+
+        <h3 className="text-[1.04rem] font-bold leading-[1.55] text-[#142D4E]">
           <button
             type="button"
             onClick={() => onOpenDetails(program, 'details')}
-            className="text-start hover:text-[#1C5D92] transition-colors cursor-pointer"
+            className="text-start hover:text-[#176B87] transition-colors cursor-pointer"
           >
             {title}
           </button>
         </h3>
 
         <div className="flex flex-col mt-[2px]">
-          <span className="flex items-center gap-[10px] py-[6px] text-[0.8rem] font-bold leading-[1.8] text-[#12263A] border-b border-dashed border-[#E3EAF1]">
+          <span className="flex items-center gap-[10px] py-[6px] text-[0.82rem] font-semibold leading-[1.8] text-[#183247] border-b border-dashed border-[#DCE7ED]">
             <Clock
-              className="w-[26px] h-[26px] p-[6px] rounded-[8px] bg-[#E8EEF4] text-[#0C3B61] flex-none"
+              className="w-[28px] h-[28px] p-[6px] rounded-[8px] bg-[#DDF3F5] text-[#176B87] flex-none"
               aria-hidden="true"
             />
             <span>{duration}</span>
           </span>
-          <span className="flex items-center gap-[10px] py-[6px] text-[0.8rem] font-bold leading-[1.8] text-[#12263A] border-b border-dashed border-[#E3EAF1]">
+          <span className="flex items-center gap-[10px] py-[6px] text-[0.82rem] font-semibold leading-[1.8] text-[#183247] border-b border-dashed border-[#DCE7ED]">
             <BookOpen
-              className="w-[26px] h-[26px] p-[6px] rounded-[8px] bg-[#E8EEF4] text-[#0C3B61] flex-none"
+              className="w-[28px] h-[28px] p-[6px] rounded-[8px] bg-[#DDF3F5] text-[#176B87] flex-none"
               aria-hidden="true"
             />
             <span>{credits}</span>
           </span>
-          <span className="flex items-center gap-[10px] py-[6px] text-[0.8rem] font-bold leading-[1.8] text-[#12263A]">
+          <span className="flex items-center gap-[10px] py-[6px] text-[0.82rem] font-semibold leading-[1.8] text-[#183247]">
             <GraduationCap
-              className="w-[26px] h-[26px] p-[6px] rounded-[8px] bg-[#E8EEF4] text-[#0C3B61] flex-none"
+              className="w-[28px] h-[28px] p-[6px] rounded-[8px] bg-[#DDF3F5] text-[#176B87] flex-none"
               aria-hidden="true"
             />
             <span>{accreditation}</span>
@@ -82,11 +84,11 @@ export function ProgramCard({ program, locale, onOpenDetails }: ProgramCardProps
         </div>
 
         <div className="mt-auto flex flex-col gap-[10px] pt-[10px]">
-          <div className="flex items-baseline justify-between gap-[10px] bg-[#F5F8FB] rounded-[12px] px-[14px] py-[9px]">
-            <b className="num text-[1.35rem] font-bold text-[#0C3B61]">
+          <div className="flex items-baseline justify-between gap-[10px] bg-[#EAF3F6] border border-[#DCE7ED] rounded-[12px] px-[14px] py-[9px]">
+            <b className="num text-[1.35rem] font-extrabold text-[#142D4E]">
               {program.price.toLocaleString('en-US')} {currency}
             </b>
-            <span className="text-[0.7rem] text-[#5E7489] font-bold whitespace-nowrap">
+            <span className="text-[0.72rem] text-[#64748B] font-bold whitespace-nowrap">
               {taxLabel}
             </span>
           </div>
@@ -94,7 +96,7 @@ export function ProgramCard({ program, locale, onOpenDetails }: ProgramCardProps
           <button
             type="button"
             onClick={() => onOpenDetails(program, isRegisterCta ? 'register' : 'details')}
-            className="w-full inline-flex items-center justify-center rounded-[8px] px-[16px] py-[7px] font-bold text-[0.83rem] bg-[#1C5D92] text-white hover:bg-[#154A76] hover:-translate-y-[1px] hover:shadow-[0_10px_24px_rgba(28,93,146,0.3)] active:translate-y-0 transition-all cursor-pointer"
+            className="w-full inline-flex items-center justify-center rounded-[10px] px-[16px] py-[9px] font-bold text-[0.86rem] bg-[#176B87] text-white hover:bg-[#142D4E] hover:shadow-[0_8px_20px_rgba(20,45,78,0.22)] transition-all duration-200 cursor-pointer"
           >
             {ctaLabel}
           </button>

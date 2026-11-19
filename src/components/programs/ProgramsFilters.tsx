@@ -24,7 +24,7 @@ export function ProgramsFilters({
 
   return (
     <form
-      className="flex flex-wrap gap-[12px] items-center mt-[4px] mb-[28px] max-[760px]:flex-col max-[760px]:items-stretch"
+      className="bg-[#EAF3F6] border border-[#DCE7ED] rounded-[16px] p-[12px] flex flex-wrap gap-[12px] items-center mt-[4px] mb-[28px] max-[760px]:flex-col max-[760px]:items-stretch"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
@@ -32,7 +32,9 @@ export function ProgramsFilters({
     >
       <div className="relative flex-[1_1_260px] min-w-0 max-[760px]:w-full max-[760px]:flex-auto">
         <Search
-          className="absolute start-[16px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] text-[#5E7489] pointer-events-none"
+          className={`absolute start-[16px] top-1/2 -translate-y-1/2 w-[18px] h-[18px] pointer-events-none transition-colors ${
+            search.trim() !== '' ? 'text-[#28B5C5]' : 'text-[#176B87]'
+          }`}
           aria-hidden="true"
         />
         <input
@@ -42,7 +44,9 @@ export function ProgramsFilters({
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder={locale === 'ar' ? 'مثال: الأمن السيبراني' : 'e.g., Business Administration'}
           aria-label={locale === 'ar' ? 'ابحث باسم البرنامج' : 'Search by program name'}
-          className="w-full h-[52px] border border-[#E3EAF1] rounded-[14px] bg-white ps-[46px] pe-[16px] text-[0.95rem] text-[#12263A] placeholder:text-[#5E7489] focus:outline-none focus:border-[#1C5D92] focus:shadow-[0_0_0_3px_rgba(32,116,184,0.14)]"
+          className={`w-full h-[50px] border rounded-[12px] bg-white ps-[46px] pe-[16px] text-[0.95rem] text-[#183247] placeholder:text-[#64748B] transition-all focus:outline-none focus:border-[#28B5C5] focus:shadow-[0_0_0_3px_rgba(40,181,197,0.16)] ${
+            search.trim() !== '' ? 'border-[#28B5C5]' : 'border-[#DCE7ED]'
+          }`}
         />
       </div>
 
@@ -51,7 +55,11 @@ export function ProgramsFilters({
         value={selectedType}
         onChange={(e) => onTypeChange(e.target.value)}
         aria-label={locale === 'ar' ? 'نوع البرنامج' : 'Program Type'}
-        className="ut-filter-select h-[52px] border border-[#E3EAF1] rounded-[14px] bg-white text-[0.95rem] font-bold text-[#12263A] cursor-pointer flex-[0_1_230px] min-w-0 focus:outline-none focus:border-[#1C5D92] focus:shadow-[0_0_0_3px_rgba(32,116,184,0.14)] max-[760px]:w-full max-[760px]:flex-auto"
+        className={`ut-filter-select h-[50px] border rounded-[12px] text-[0.95rem] font-bold cursor-pointer flex-[0_1_230px] min-w-0 transition-all focus:outline-none focus:border-[#28B5C5] focus:shadow-[0_0_0_3px_rgba(40,181,197,0.16)] max-[760px]:w-full max-[760px]:flex-auto ${
+          selectedType !== ''
+            ? 'border-[#28B5C5] bg-[#DDF3F5] text-[#142D4E]'
+            : 'border-[#DCE7ED] bg-white text-[#183247]'
+        }`}
       >
         <option value="">{locale === 'ar' ? 'نوع البرنامج' : 'Program Type'}</option>
         <option value="2">{locale === 'ar' ? 'عن بعد' : 'Distance Learning'}</option>
@@ -59,7 +67,7 @@ export function ProgramsFilters({
 
       <button
         type="submit"
-        className="h-[52px] flex-none whitespace-nowrap inline-flex items-center justify-center rounded-[10px] px-[26px] font-bold text-[0.95rem] bg-[#1C5D92] text-white hover:bg-[#154A76] hover:-translate-y-[1px] hover:shadow-[0_10px_24px_rgba(28,93,146,0.3)] transition-all cursor-pointer max-[760px]:w-full max-[760px]:flex-auto"
+        className="h-[50px] flex-none whitespace-nowrap inline-flex items-center justify-center rounded-[12px] px-[26px] font-bold text-[0.95rem] bg-[#176B87] text-white hover:bg-[#142D4E] hover:shadow-[0_8px_20px_rgba(20,45,78,0.2)] transition-all cursor-pointer max-[760px]:w-full max-[760px]:flex-auto"
       >
         {locale === 'ar' ? 'تصفية' : 'Filter'}
       </button>
@@ -68,7 +76,7 @@ export function ProgramsFilters({
         <button
           type="button"
           onClick={onReset}
-          className="h-[52px] flex-none whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-[14px] px-[18px] font-bold text-[0.88rem] border border-[#E3EAF1] bg-white text-[#5E7489] hover:border-[#1C5D92] hover:text-[#1C5D92] transition-colors cursor-pointer max-[760px]:w-full max-[760px]:flex-auto"
+          className="h-[50px] flex-none whitespace-nowrap inline-flex items-center justify-center gap-1.5 rounded-[12px] px-[18px] font-bold text-[0.88rem] border border-[#DCE7ED] bg-white text-[#64748B] hover:border-[#28B5C5] hover:text-[#176B87] transition-colors cursor-pointer max-[760px]:w-full max-[760px]:flex-auto"
         >
           <RotateCcw className="w-[15px] h-[15px]" aria-hidden="true" />
           <span>{locale === 'ar' ? 'إعادة ضبط' : 'Reset'}</span>

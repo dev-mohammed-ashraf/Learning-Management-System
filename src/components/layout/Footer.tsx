@@ -54,7 +54,7 @@ export function Footer({
   };
 
   return (
-    <footer className="bg-[#0C3B61] text-[#B4CCE0] text-[0.92rem] leading-[1.75]">
+    <footer className="bg-[#142D4E] text-[#CBD8E6] text-[0.92rem] leading-[1.75]">
       <div className="wrap">
         <div className="grid grid-cols-[1.4fr_1fr_1fr_1.3fr] max-[920px]:grid-cols-2 max-[560px]:grid-cols-1 gap-[40px] max-[560px]:gap-[32px] pt-[64px] pb-[48px]">
           <div className="min-w-0">
@@ -93,7 +93,7 @@ export function Footer({
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }
                     }}
-                    className="cursor-pointer transition-colors hover:text-[#C99B3F] text-start"
+                    className="cursor-pointer transition-colors hover:text-[#28B5C5] text-start"
                   >
                     {locale === 'ar' ? item.labelAr : item.labelEn}
                   </button>
@@ -112,7 +112,7 @@ export function Footer({
                   <button
                     type="button"
                     onClick={() => onOpenProgram(program)}
-                    className="cursor-pointer transition-colors hover:text-[#C99B3F] text-start"
+                    className="cursor-pointer transition-colors hover:text-[#28B5C5] text-start"
                   >
                     {shortFooterLabel(program)}
                   </button>
@@ -127,23 +127,23 @@ export function Footer({
             </h4>
             <ul className="list-none m-0 p-0 flex flex-col gap-[10px] text-[0.9rem]">
               <li className="flex gap-[10px] items-start">
-                <Phone className="w-[16px] h-[16px] flex-none mt-[5px] text-[#C99B3F]" aria-hidden="true" />
-                <a href="tel:+966546505679" dir="ltr" className="hover:text-[#C99B3F] transition-colors">
+                <Phone className="w-[16px] h-[16px] flex-none mt-[5px] text-[#28B5C5]" aria-hidden="true" />
+                <a href="tel:+966546505679" dir="ltr" className="hover:text-[#28B5C5] transition-colors">
                   +966 54 650 5679
                 </a>
               </li>
               <li className="flex gap-[10px] items-start">
-                <Phone className="w-[16px] h-[16px] flex-none mt-[5px] text-[#C99B3F]" aria-hidden="true" />
-                <a href="tel:+966144563710" dir="ltr" className="hover:text-[#C99B3F] transition-colors">
+                <Phone className="w-[16px] h-[16px] flex-none mt-[5px] text-[#28B5C5]" aria-hidden="true" />
+                <a href="tel:+966144563710" dir="ltr" className="hover:text-[#28B5C5] transition-colors">
                   014 456 3710
                 </a>
               </li>
               <li className="flex gap-[10px] items-start">
-                <Mail className="w-[16px] h-[16px] flex-none mt-[5px] text-[#C99B3F]" aria-hidden="true" />
+                <Mail className="w-[16px] h-[16px] flex-none mt-[5px] text-[#28B5C5]" aria-hidden="true" />
                 <a
                   href="mailto:irc-programs@ut.edu.sa"
                   dir="ltr"
-                  className="hover:text-[#C99B3F] transition-colors"
+                  className="hover:text-[#28B5C5] transition-colors"
                 >
                   irc-programs@ut.edu.sa
                 </a>
@@ -242,14 +242,14 @@ export function Footer({
             <button
               type="button"
               onClick={onOpenPolicy}
-              className="hover:text-[#C99B3F] transition-colors cursor-pointer"
+              className="hover:text-[#28B5C5] transition-colors cursor-pointer"
             >
               {locale === 'ar' ? 'السياسات والأحكام' : 'Policies & Terms'}
             </button>
             <button
               type="button"
               onClick={() => onSelectNav('contact')}
-              className="hover:text-[#C99B3F] transition-colors cursor-pointer"
+              className="hover:text-[#28B5C5] transition-colors cursor-pointer"
             >
               {locale === 'ar' ? 'تواصل معنا' : 'Contact Us'}
             </button>

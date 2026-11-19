@@ -29,10 +29,10 @@ export function ProgramsPagination({
         disabled={currentPage <= 1}
         onClick={() => onPageChange(currentPage - 1)}
         aria-label={locale === 'ar' ? 'الصفحة السابقة' : 'Previous page'}
-        className={`min-w-[38px] h-[38px] grid place-items-center border border-[#E3EAF1] bg-white text-[#5E7489] rounded-[10px] font-bold px-[6px] text-[0.9rem] transition-colors ${
+        className={`min-w-[38px] h-[38px] grid place-items-center border border-[#DCE7ED] bg-white text-[#64748B] rounded-[10px] font-bold px-[6px] text-[0.9rem] transition-colors ${
           currentPage <= 1
             ? 'opacity-40 cursor-default'
-            : 'hover:text-[#1C5D92] hover:border-[#1C5D92] cursor-pointer'
+            : 'hover:text-[#176B87] hover:border-[#28B5C5] cursor-pointer'
         }`}
       >
         ‹
@@ -48,8 +48,8 @@ export function ProgramsPagination({
             aria-current={isCurrent ? 'page' : undefined}
             className={`num min-w-[38px] h-[38px] grid place-items-center border rounded-[10px] font-bold px-[6px] text-[0.9rem] transition-colors ${
               isCurrent
-                ? 'bg-[#1C5D92] border-[#1C5D92] text-white cursor-default'
-                : 'border-[#E3EAF1] bg-white text-[#5E7489] hover:text-[#1C5D92] hover:border-[#1C5D92] cursor-pointer'
+                ? 'bg-[#176B87] border-[#176B87] text-white cursor-default shadow-[0_4px_12px_rgba(23,107,135,0.22)]'
+                : 'border-[#DCE7ED] bg-white text-[#64748B] hover:text-[#176B87] hover:border-[#28B5C5] cursor-pointer'
             }`}
           >
             {page}
@@ -62,10 +62,10 @@ export function ProgramsPagination({
         disabled={currentPage >= totalPages}
         onClick={() => onPageChange(currentPage + 1)}
         aria-label={locale === 'ar' ? 'الصفحة التالية' : 'Next page'}
-        className={`min-w-[38px] h-[38px] grid place-items-center border border-[#E3EAF1] bg-white text-[#5E7489] rounded-[10px] font-bold px-[6px] text-[0.9rem] transition-colors ${
+        className={`min-w-[38px] h-[38px] grid place-items-center border border-[#DCE7ED] bg-white text-[#64748B] rounded-[10px] font-bold px-[6px] text-[0.9rem] transition-colors ${
           currentPage >= totalPages
             ? 'opacity-40 cursor-default'
-            : 'hover:text-[#1C5D92] hover:border-[#1C5D92] cursor-pointer'
+            : 'hover:text-[#176B87] hover:border-[#28B5C5] cursor-pointer'
         }`}
       >
         ›

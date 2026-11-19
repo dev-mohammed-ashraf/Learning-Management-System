@@ -19,7 +19,7 @@ export function TopGovernmentBar({ locale }: TopGovernmentBarProps) {
   }, [locale]);
 
   return (
-    <div className="bg-[#F9FAFB] border-b border-[#E3EAF1] text-[0.72rem] text-[#161616] relative z-[6]">
+    <div className="bg-[#F8FBFC] border-b border-[#DCE7ED] text-[0.72rem] text-[#183247] relative z-[6]">
       <div className="wrap flex items-center gap-[10px] py-[6px] max-[720px]:py-[4px] max-[720px]:gap-[8px] flex-wrap">
         <svg
           role="img"
@@ -46,12 +46,12 @@ export function TopGovernmentBar({ locale }: TopGovernmentBarProps) {
 
         <span className="ms-auto flex items-center gap-[8px] font-semibold whitespace-nowrap max-[720px]:hidden">
           <span className="flex items-center gap-[6px]">
-            <Calendar className="w-[13px] h-[13px] text-[#1C5D92] flex-none" aria-hidden="true" />
+            <Calendar className="w-[13px] h-[13px] text-[#176B87] flex-none" aria-hidden="true" />
             <span>{dateTime.dateStr}</span>
           </span>
           <i className="opacity-45 not-italic" aria-hidden="true">·</i>
           <span className="flex items-center gap-[6px]">
-            <Clock className="w-[13px] h-[13px] text-[#1C5D92] flex-none" aria-hidden="true" />
+            <Clock className="w-[13px] h-[13px] text-[#176B87] flex-none" aria-hidden="true" />
             <span dir="ltr" className="num">{dateTime.timeStr}</span>
           </span>
         </span>
