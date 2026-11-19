@@ -156,9 +156,32 @@
 .ut-nav-cur::after {
   content: "";
   position: absolute;
-  inset-inline: 13px;
-  bottom: -1px;
-  height: 3px;
-  border-radius: 3px;
+  inset-inline: 12px;
+  bottom: 2px;
+  height: 2.5px;
+  border-radius: 999px;
   background: var(--sand);
+}
+
+/* Floating Glassmorphism Navbar */
+.ut-glass-nav {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 8px 32px rgba(15, 55, 85, 0.08);
+}
+
+.ut-glass-nav.is-scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(227, 234, 241, 0.85);
+  box-shadow: 0 12px 36px rgba(15, 55, 85, 0.13);
+}
+
+.ut-glass-panel {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(227, 234, 241, 0.9);
+  box-shadow: 0 16px 40px rgba(15, 55, 85, 0.12);
 }

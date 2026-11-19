@@ -82,12 +82,16 @@ export default function App() {
 
   return (
     <div id="app" className="min-h-screen flex flex-col bg-white text-[#12263A]">
-      <header>
+      <header className="contents">
         <TopGovernmentBar locale={locale} />
         <SecondaryBar
           locale={locale}
           onToggleLocale={handleToggleLocale}
           onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
+        />
+        <div
+          className="bg-[#F4F7FA] border-b border-[#E3EAF1] h-[108px] max-[1023px]:h-[96px] max-[720px]:h-[84px] -mb-[108px] max-[1023px]:-mb-[96px] max-[720px]:-mb-[84px]"
+          aria-hidden="true"
         />
         <MainNavbar
           locale={locale}
