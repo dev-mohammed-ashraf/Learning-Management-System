@@ -146,7 +146,7 @@ export function FloatingGlassSidebar({
       <aside
         aria-label={locale === 'ar' ? 'القائمة الرئيسية الجانبية' : 'Primary Floating Sidebar'}
         data-expanded={expanded ? 'true' : 'false'}
-        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 -translate-y-1/2 z-[60] max-h-[88vh] rounded-[24px] p-[12px] ut-glass-sidebar transition-[width] duration-300 ease-out ${
+        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 -translate-y-1/2 z-[60] h-fit max-h-[88vh] rounded-[24px] p-[12px] ut-glass-sidebar transition-[width] duration-300 ease-out ${
           expanded ? 'w-[264px]' : 'w-[86px]'
         }`}
       >
@@ -192,7 +192,7 @@ export function FloatingGlassSidebar({
                 ? 'العودة إلى الرئيسية — منصة مدار للتعلم الرقمي'
                 : 'Home — Madar Digital Learning Platform'
             }
-            className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 dark:hover:bg-[#1B3553]/70 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
+            className="w-full h-[40px] flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 dark:hover:bg-[#1B3553]/70 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
           >
             {expanded ? (
               <BrandLogo
@@ -228,11 +228,14 @@ export function FloatingGlassSidebar({
                 />
               )}
 
-              {expanded && (
-                <div className="px-[10px] pt-[2px] pb-[2px] text-[0.68rem] font-bold tracking-wide text-[#64748B] dark:text-[#94A3B8]">
-                  {locale === 'ar' ? group.groupLabelAr : group.groupLabelEn}
-                </div>
-              )}
+              <div
+                aria-hidden={!expanded}
+                className={`px-[10px] pt-[2px] pb-[2px] text-[0.68rem] font-bold tracking-wide whitespace-nowrap overflow-hidden text-[#64748B] dark:text-[#94A3B8] transition-opacity duration-300 ease-out ${
+                  expanded ? 'opacity-100' : 'pointer-events-none opacity-0'
+                }`}
+              >
+                {locale === 'ar' ? group.groupLabelAr : group.groupLabelEn}
+              </div>
 
               {group.items.map((item) => {
                 const Icon = item.icon;
