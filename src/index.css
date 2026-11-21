@@ -240,6 +240,60 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
 }
 
+@keyframes madarFloatSlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes madarFloatAlt {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 7px, 0);
+  }
+}
+
+@keyframes madarHeroEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.madar-float-slow {
+  animation: madarFloatSlow 7s ease-in-out infinite;
+}
+
+.madar-float-alt {
+  animation: madarFloatAlt 8.5s ease-in-out infinite;
+}
+
+.madar-float-slow:hover,
+.madar-float-slow:focus-visible,
+.madar-float-alt:hover,
+.madar-float-alt:focus-visible {
+  animation-play-state: paused;
+}
+
+.madar-hero-enter {
+  animation: madarHeroEnter 580ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.madar-hero-enter-delayed {
+  animation: madarHeroEnter 680ms cubic-bezier(0.16, 1, 0.3, 1) 110ms both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

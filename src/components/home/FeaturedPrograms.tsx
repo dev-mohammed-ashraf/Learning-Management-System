@@ -1,16 +1,24 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { PROGRAMS } from '../../data/programs';
 import type { Locale, Program } from '../../types/program';
+import type { CourseEnrollmentRecord } from '../../types/student';
+import { computeCourseProgressPct } from '../../utils/studentPlatform';
 import { ProgramCard } from '../programs/ProgramCard';
 
 interface FeaturedProgramsProps {
   locale: Locale;
+  savedCourseIds?: string[];
+  enrollments?: Record<string, CourseEnrollmentRecord>;
+  onToggleSave?: (program: Program) => void;
   onOpenProgram: (program: Program, tab: 'details' | 'register') => void;
   onViewAllPrograms: () => void;
 }
 
 export function FeaturedPrograms({
   locale,
+  savedCourseIds = [],
+  enrollments = {},
+  onToggleSave,
   onOpenProgram,
   onViewAllPrograms,
 }: FeaturedProgramsProps) {
@@ -59,14 +67,21 @@ export function FeaturedPrograms({
         </div>
 
         <div className="grid grid-cols-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1 gap-[24px]">
-          {featured.map((program) => (
-            <ProgramCard
-              key={program.id}
-              program={program}
-              locale={locale}
-              onOpenDetails={onOpenProgram}
-            />
-          ))}
+          {featured.map((program) => {
+            const enrollment = enrollments[program.id];
+            return (
+              <ProgramCard
+                key={program.id}
+                program={program}
+                locale={locale}
+                isSaved={savedCourseIds.includes(program.id)}
+                isEnrolled={Boolean(enrollment)}
+                progressPct={computeCourseProgressPct(program, enrollment)}
+                onToggleSave={onToggleSave}
+                onOpenDetails={onOpenProgram}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

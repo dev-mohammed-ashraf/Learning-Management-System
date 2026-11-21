@@ -1,7 +1,20 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, CheckCircle2, Clock, GraduationCap, Mail, Phone, X } from 'lucide-react';
+import {
+  Bookmark,
+  BookOpen,
+  CheckCircle2,
+  Circle,
+  Clock,
+  GraduationCap,
+  Mail,
+  Phone,
+  X,
+} from 'lucide-react';
 import { PROGRAMS } from '../../data/programs';
 import type { Locale, Program } from '../../types/program';
+import type { CourseEnrollmentRecord, StudentAccount } from '../../types/student';
+import { computeCourseProgressPct } from '../../utils/studentPlatform';
+import { ProgressBar } from '../common/ProgressBar';
 
 export type ModalState =
   | { type: 'closed' }
@@ -12,18 +25,36 @@ export type ModalState =
 interface PortalModalProps {
   locale: Locale;
   modal: ModalState;
+  savedCourseIds?: string[];
+  enrollments?: Record<string, CourseEnrollmentRecord>;
+  onToggleSaveProgram?: (program: Program) => void;
+  onEnrollProgram?: (program: Program) => void;
+  onToggleCourseModule?: (program: Program, moduleIndex: number) => void;
+  onStudentSignIn?: (account: Partial<Omit<StudentAccount, 'signedIn' | 'avatarId'>>) => void;
+  onNavigateToLibrary?: () => void;
   onClose: () => void;
   onSwitchModal: (next: ModalState) => void;
 }
 
-export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalModalProps) {
+export function PortalModal({
+  locale,
+  modal,
+  savedCourseIds = [],
+  enrollments = {},
+  onToggleSaveProgram,
+  onEnrollProgram,
+  onToggleCourseModule,
+  onStudentSignIn,
+  onNavigateToLibrary,
+  onClose,
+  onSwitchModal,
+}: PortalModalProps) {
   const [fullName, setFullName] = useState('');
   const [nationalId, setNationalId] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedProgramId, setSelectedProgramId] = useState(PROGRAMS[0].id);
-  const [paymentPlan, setPaymentPlan] = useState<'full' | 'installments'>('full');
   const [formError, setFormError] = useState('');
   const [submittedMsg, setSubmittedMsg] = useState('');
 
@@ -61,10 +92,11 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
         );
         return;
       }
+      onStudentSignIn?.({ email: email.trim() });
       setSubmittedMsg(
         locale === 'ar'
-          ? 'تم التحقق من بيانات الطالب بنجاح. جارٍ توجيهك إلى بوابة التعلّم الرقمي في منصة مدار.'
-          : 'Student credentials verified. Redirecting to the Madar digital learning portal.'
+          ? 'تم تسجيل دخول حساب الطالب في جلسة مدار المحلية بنجاح.'
+          : 'Signed in to your local Madar student workspace successfully.'
       );
       return;
     }
@@ -104,11 +136,23 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     }
 
     const chosen = PROGRAMS.find((p) => p.id === selectedProgramId);
+    if (chosen) {
+      onEnrollProgram?.(chosen);
+    }
+    if (mode === 'register') {
+      onStudentSignIn?.({
+        fullName: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        nationalId: nationalId.trim(),
+      });
+    }
     const chosenTitle = chosen ? (locale === 'ar' ? chosen.titleAr : chosen.titleEn) : '';
+    const formattedPrice = chosen ? chosen.price.toLocaleString('en-US') : '6,500';
     setSubmittedMsg(
       locale === 'ar'
-        ? `تم استلام طلب تسجيلك المبدئي في "${chosenTitle}" (${paymentPlan === 'full' ? 'سداد كامل' : 'نظام التقسيط'}). أرسلنا تفاصيل المتابعة والفاتورة إلى بريدك الإلكتروني.`
-        : `Your initial registration for "${chosenTitle}" (${paymentPlan === 'full' ? 'Full Payment' : 'Installments'}) has been recorded. Follow-up and billing details have been sent to your email.`
+        ? `تم تسجيل طلبك وإضافة "${chosenTitle}" إلى مكتبتك التعليمية (سداد كامل ${formattedPrice} ر.س).`
+        : `Your registration for "${chosenTitle}" (Full Payment — ${formattedPrice} SAR) has been recorded and added to your Educational Library.`
     );
   };
 
@@ -128,10 +172,10 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
           aEn: 'Graduates receive an accredited professional associate diploma certificate from the Research and Consulting Institute at University of Tabuk.',
         },
         {
-          qAr: 'ما خيارات سداد الرسوم الدراسية؟',
-          qEn: 'What tuition payment options are available?',
-          aAr: 'تبلغ الرسوم 6,500 ر.س شاملة الضريبة، ويتاح السداد الكامل أو بالتقسيط الشهري عبر بوابة مدفوعات جامعة تبوك.',
-          aEn: 'Tuition is 6,500 SAR (VAT included), payable either in full or in monthly installments via the University of Tabuk payment gateway.',
+          qAr: 'ما آلية سداد الرسوم الدراسية؟',
+          qEn: 'How are tuition fees paid?',
+          aAr: 'تبلغ الرسوم 6,500 ر.س شاملة الضريبة، ويتم السداد الكامل إلكترونيًا عبر بوابة مدفوعات جامعة تبوك.',
+          aEn: 'Tuition is 6,500 SAR (VAT included), payable in full electronically via the University of Tabuk payment gateway.',
         },
       ];
 
@@ -163,12 +207,12 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
             </div>
             <div className="bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4">
               <div className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem]">
-                {locale === 'ar' ? 'خيارات سداد ميسّرة' : 'Flexible Payment Plans'}
+                {locale === 'ar' ? 'سداد إلكتروني موحّد' : 'Direct Full Payment'}
               </div>
               <p className="text-[0.84rem] text-[#64748B] dark:text-[#B8C7D9] mt-1">
                 {locale === 'ar'
-                  ? 'ادفع كاملًا أو بالتقسيط الإلكتروني مباشرة عبر بوابة مدفوعات جامعة تبوك.'
-                  : 'Pay tuition in full or via monthly installments through the University of Tabuk gateway.'}
+                  ? 'أتمم سداد الرسوم الدراسية كاملة (6,500 ر.س) مباشرة عبر بوابة مدفوعات جامعة تبوك.'
+                  : 'Complete full tuition payment (6,500 SAR) directly through the University of Tabuk gateway.'}
               </p>
             </div>
           </div>
@@ -430,81 +474,188 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
               </div>
 
               {modal.tab === 'details' ? (
-                <div className="space-y-4">
-                  <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.95rem] leading-[1.9]">
-                    {locale === 'ar' ? modal.program.descriptionAr : modal.program.descriptionEn}
-                  </p>
+                (() => {
+                  const enrollment = enrollments[modal.program.id];
+                  const isSaved = savedCourseIds.includes(modal.program.id);
+                  const progressPct = computeCourseProgressPct(modal.program, enrollment);
+                  const modules = locale === 'ar' ? modal.program.modulesAr : modal.program.modulesEn;
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
-                      <Clock className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
-                      <span>{locale === 'ar' ? modal.program.durationAr : modal.program.durationEn}</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
-                      <BookOpen className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
-                      <span>{locale === 'ar' ? modal.program.creditsAr : modal.program.creditsEn}</span>
-                    </div>
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
-                      <GraduationCap className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
-                      <span>
-                        {locale === 'ar'
-                          ? modal.program.accreditationAr
-                          : modal.program.accreditationEn}
-                      </span>
-                    </div>
-                  </div>
+                  return (
+                    <div className="space-y-4">
+                      <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.95rem] leading-[1.9]">
+                        {locale === 'ar' ? modal.program.descriptionAr : modal.program.descriptionEn}
+                      </p>
 
-                  <div>
-                    <h4 className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem] mb-2">
-                      {locale === 'ar' ? 'المحاور الدراسية للدورة' : 'Core Course Modules'}
-                    </h4>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {(locale === 'ar' ? modal.program.modulesAr : modal.program.modulesEn).map(
-                        (mod) => (
-                          <li
-                            key={mod}
-                            className="flex items-center gap-2 text-[0.86rem] text-[#183247] dark:text-[#F1F5F9] bg-[#EAF3F6] dark:bg-[#1B3553] rounded-[8px] px-3 py-2"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-[#1F8A5B] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
-                            <span>{mod}</span>
-                          </li>
-                        )
+                      {enrollment && (
+                        <div className="bg-[#DDF3F5]/65 dark:bg-[#102238] border border-[#28B5C5]/35 rounded-[12px] p-3.5 space-y-2">
+                          <div className="flex items-center justify-between gap-2 text-[0.84rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+                            <span>
+                              {locale === 'ar' ? 'تقدّمك في الدورة' : 'Your Course Progress'}
+                            </span>
+                            <span className="num text-[#176B87] dark:text-[#28B5C5]">{progressPct}%</span>
+                          </div>
+                          <ProgressBar value={progressPct} size="sm" />
+                          <p className="text-[0.76rem] text-[#64748B] dark:text-[#B8C7D9]">
+                            {locale === 'ar'
+                              ? 'اضغط على أي محور أدناه لتحديث حالة إتمامه في مكتبتك التعليمية.'
+                              : 'Click any module below to toggle its completion status in your library.'}
+                          </p>
+                        </div>
                       )}
-                    </ul>
-                  </div>
 
-                  <div className="bg-[#F8FBFD] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] px-3.5 py-2.5 text-[0.85rem] text-[#4B6178] dark:text-[#B8C7D9]">
-                    <span className="font-bold text-[#142D4E] dark:text-[#F1F5F9]">
-                      {locale === 'ar' ? 'الفئة المستهدفة: ' : 'Who This Course Is For: '}
-                    </span>
-                    <span>
-                      {locale === 'ar' ? modal.program.targetAudienceAr : modal.program.targetAudienceEn}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-4 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4 flex-wrap">
-                    <div>
-                      <div className="num text-[1.4rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
-                        {modal.program.price.toLocaleString('en-US')}{' '}
-                        {locale === 'ar' ? modal.program.currencyAr : modal.program.currencyEn}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                        <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                          <Clock className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
+                          <span>{locale === 'ar' ? modal.program.durationAr : modal.program.durationEn}</span>
+                        </div>
+                        <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                          <BookOpen className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
+                          <span>{locale === 'ar' ? modal.program.creditsAr : modal.program.creditsEn}</span>
+                        </div>
+                        <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                          <GraduationCap className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
+                          <span>
+                            {locale === 'ar'
+                              ? modal.program.accreditationAr
+                              : modal.program.accreditationEn}
+                          </span>
+                        </div>
                       </div>
-                      <div className="text-[0.76rem] text-[#64748B] dark:text-[#B8C7D9] font-semibold">
-                        {locale === 'ar'
-                          ? 'شامل الضريبة · متاح السداد الكامل أو بالتقسيط'
-                          : 'VAT Included · Full payment or installments available'}
+
+                      <div>
+                        <h4 className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem] mb-2">
+                          {locale === 'ar' ? 'المحاور الدراسية للدورة' : 'Core Course Modules'}
+                        </h4>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {modules.map((mod, idx) => {
+                            const isModuleDone = Boolean(
+                              enrollment?.completedModuleIndices.includes(idx)
+                            );
+                            if (enrollment && onToggleCourseModule) {
+                              return (
+                                <li key={mod}>
+                                  <button
+                                    type="button"
+                                    onClick={() => onToggleCourseModule(modal.program, idx)}
+                                    aria-pressed={isModuleDone}
+                                    className={`w-full text-start flex items-center gap-2 text-[0.85rem] rounded-[8px] px-3 py-2 border transition-colors cursor-pointer ${
+                                      isModuleDone
+                                        ? 'bg-[#E7F5EE] border-[#1F8A5B]/35 text-[#142D4E] dark:bg-[#102E24] dark:border-[#2ECC71]/35 dark:text-[#F1F5F9]'
+                                        : 'bg-[#EAF3F6] border-transparent text-[#183247] hover:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]'
+                                    }`}
+                                  >
+                                    {isModuleDone ? (
+                                      <CheckCircle2 className="w-4 h-4 text-[#1F8A5B] dark:text-[#6EE7B7] flex-none" aria-hidden="true" />
+                                    ) : (
+                                      <Circle className="w-4 h-4 text-[#64748B] dark:text-[#94A3B8] flex-none" aria-hidden="true" />
+                                    )}
+                                    <span>{mod}</span>
+                                  </button>
+                                </li>
+                              );
+                            }
+
+                            return (
+                              <li
+                                key={mod}
+                                className="flex items-center gap-2 text-[0.86rem] text-[#183247] dark:text-[#F1F5F9] bg-[#EAF3F6] dark:bg-[#1B3553] rounded-[8px] px-3 py-2"
+                              >
+                                <CheckCircle2 className="w-4 h-4 text-[#1F8A5B] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
+                                <span>{mod}</span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+
+                      <div className="bg-[#F8FBFD] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] px-3.5 py-2.5 text-[0.85rem] text-[#4B6178] dark:text-[#B8C7D9]">
+                        <span className="font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+                          {locale === 'ar' ? 'الفئة المستهدفة: ' : 'Who This Course Is For: '}
+                        </span>
+                        <span>
+                          {locale === 'ar' ? modal.program.targetAudienceAr : modal.program.targetAudienceEn}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4 flex-wrap">
+                        <div>
+                          <div className="num text-[1.4rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+                            {modal.program.price.toLocaleString('en-US')}{' '}
+                            {locale === 'ar' ? modal.program.currencyAr : modal.program.currencyEn}
+                          </div>
+                          <div className="text-[0.76rem] text-[#64748B] dark:text-[#B8C7D9] font-semibold">
+                            {locale === 'ar'
+                              ? 'شامل الضريبة · السداد الكامل عبر بوابة جامعة تبوك'
+                              : 'VAT Included · Full Payment'}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {onToggleSaveProgram && (
+                            <button
+                              type="button"
+                              onClick={() => onToggleSaveProgram(modal.program)}
+                              className={`inline-flex items-center gap-1.5 rounded-[10px] px-4 py-2.5 font-bold text-[0.86rem] border cursor-pointer transition-colors ${
+                                isSaved
+                                  ? 'bg-[#DDF3F5] border-[#28B5C5] text-[#142D4E] dark:bg-[#1B3553] dark:text-[#28B5C5]'
+                                  : 'bg-white border-[#DCE7ED] text-[#142D4E] hover:border-[#28B5C5] dark:bg-[#142D4E] dark:border-white/15 dark:text-[#F1F5F9]'
+                              }`}
+                            >
+                              <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} aria-hidden="true" />
+                              <span>
+                                {isSaved
+                                  ? locale === 'ar'
+                                    ? 'محفوظة في المكتبة'
+                                    : 'Saved'
+                                  : locale === 'ar'
+                                    ? 'حفظ في المكتبة'
+                                    : 'Save Course'}
+                              </span>
+                            </button>
+                          )}
+
+                          {enrollment ? (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                onClose();
+                                onNavigateToLibrary?.();
+                              }}
+                              className="rounded-[10px] px-5 py-2.5 bg-[#1F8A5B] text-white font-bold text-[0.9rem] hover:bg-[#166534] cursor-pointer"
+                            >
+                              {locale === 'ar' ? 'فتح في مكتبتي التعليمية' : 'Open in My Library'}
+                            </button>
+                          ) : (
+                            <>
+                              {onEnrollProgram && (
+                                <button
+                                  type="button"
+                                  onClick={() => onEnrollProgram(modal.program)}
+                                  className="rounded-[10px] px-4 py-2.5 border border-[#176B87] text-[#176B87] bg-white hover:bg-[#DDF3F5] dark:bg-[#142D4E] dark:text-[#28B5C5] dark:border-[#28B5C5] font-bold text-[0.88rem] cursor-pointer"
+                                >
+                                  {locale === 'ar' ? 'أضف لمكتبتي' : 'Add to My Library'}
+                                </button>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  onSwitchModal({
+                                    type: 'program',
+                                    program: modal.program,
+                                    tab: 'register',
+                                  })
+                                }
+                                className="rounded-[10px] px-5 py-2.5 bg-[#176B87] text-white font-bold text-[0.9rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
+                              >
+                                {locale === 'ar' ? 'التسجيل في الدورة' : 'Enroll in Course'}
+                              </button>
+                            </>
+                          )}
+                        </div>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        onSwitchModal({ type: 'program', program: modal.program, tab: 'register' })
-                      }
-                      className="rounded-[10px] px-6 py-2.5 bg-[#176B87] text-white font-bold text-[0.92rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
-                    >
-                      {locale === 'ar' ? 'التسجيل في الدورة' : 'Enroll in Course'}
-                    </button>
-                  </div>
-                </div>
+                  );
+                })()
               ) : submittedMsg ? (
                 <div className="bg-[#E7F5EE] dark:bg-[#102E24] border border-[#1F8A5B]/30 dark:border-[#2ECC71]/35 text-[#1F8A5B] dark:text-[#6EE7B7] rounded-[12px] p-5 flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 flex-none mt-0.5" aria-hidden="true" />
@@ -547,29 +698,18 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                   </div>
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentPlan('full')}
-                      className={`flex-1 py-2.5 px-3 rounded-[10px] border text-[0.86rem] font-bold cursor-pointer ${
-                        paymentPlan === 'full'
-                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E] dark:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]'
-                          : 'border-[#DCE7ED] bg-white text-[#64748B] dark:border-white/12 dark:bg-[#102238] dark:text-[#B8C7D9]'
-                      }`}
-                    >
-                      {locale === 'ar' ? 'سداد كامل (6,500 ر.س)' : 'Full Payment (6,500 SAR)'}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentPlan('installments')}
-                      className={`flex-1 py-2.5 px-3 rounded-[10px] border text-[0.86rem] font-bold cursor-pointer ${
-                        paymentPlan === 'installments'
-                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E] dark:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]'
-                          : 'border-[#DCE7ED] bg-white text-[#64748B] dark:border-white/12 dark:bg-[#102238] dark:text-[#B8C7D9]'
-                      }`}
-                    >
-                      {locale === 'ar' ? 'نظام التقسيط الشهري' : 'Monthly Installments'}
-                    </button>
+                  <div className="flex items-center justify-between gap-3 py-3 px-4 rounded-[10px] border border-[#176B87] bg-[#DDF3F5] text-[#142D4E] dark:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]">
+                    <div className="flex items-center gap-2.5 text-[0.88rem] font-bold">
+                      <CheckCircle2 className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
+                      <span>
+                        {locale === 'ar'
+                          ? `سداد كامل (${modal.program.price.toLocaleString('en-US')} ر.س)`
+                          : `Full Payment (${modal.program.price.toLocaleString('en-US')} SAR)`}
+                      </span>
+                    </div>
+                    <span className="text-[0.78rem] font-semibold text-[#176B87] dark:text-[#28B5C5]">
+                      {locale === 'ar' ? modal.program.taxLabelAr : modal.program.taxLabelEn}
+                    </span>
                   </div>
                   <button
                     type="submit"

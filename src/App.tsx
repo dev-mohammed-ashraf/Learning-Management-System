@@ -8,19 +8,59 @@ import { HomeHero } from './components/home/HomeHero';
 import { LearningExperience } from './components/home/LearningExperience';
 import { TrustIndicators } from './components/home/TrustIndicators';
 import { WhyChooseUs } from './components/home/WhyChooseUs';
-import { FloatingWidgets } from './components/layout/FloatingWidgets';
 import { FloatingGlassHeader } from './components/layout/FloatingGlassHeader';
 import { FloatingGlassSidebar, type NavSection } from './components/layout/FloatingGlassSidebar';
+import { FloatingWidgets } from './components/layout/FloatingWidgets';
 import { Footer } from './components/layout/Footer';
 import { PortalModal, type ModalState } from './components/programs/PortalModal';
 import { ProgramsFilters } from './components/programs/ProgramsFilters';
 import { ProgramsGrid } from './components/programs/ProgramsGrid';
 import { ProgramsHero } from './components/programs/ProgramsHero';
 import { ProgramsPagination } from './components/programs/ProgramsPagination';
+import { AiToolsPage } from './components/student/AiToolsPage';
+import { AssessmentsPage } from './components/student/AssessmentsPage';
+import { DashboardPage } from './components/student/DashboardPage';
+import { GoalsPage } from './components/student/GoalsPage';
+import { LearningPathsPage } from './components/student/LearningPathsPage';
+import { LibraryPage } from './components/student/LibraryPage';
+import { ProfilePage } from './components/student/ProfilePage';
+import { ProjectsPage } from './components/student/ProjectsPage';
+import { StudyGroupsPage } from './components/student/StudyGroupsPage';
 import { PROGRAMS } from './data/programs';
-import type { Locale, Program, ProgramKind } from './types/program';
+import {
+  loadStudentPlatformState,
+  saveStudentPlatformState,
+} from './services/studentPlatformStore';
+import type {
+  CourseSortOption,
+  Locale,
+  Program,
+  ProgramKind,
+} from './types/program';
+import type {
+  LearningGoal,
+  PageRoute,
+  ProjectStatus,
+  StudentAccount,
+  StudentPlatformState,
+  StudentPreferences,
+} from './types/student';
 import type { SearchServiceTarget } from './utils/headerSearch';
 import { filterPrograms, paginatePrograms, PROGRAMS_PER_PAGE } from './utils/programFilter';
+import {
+  createGoalState,
+  deleteGoalState,
+  enrollInProgramState,
+  signInStudentState,
+  signOutStudentState,
+  toggleAssessmentSelfCheckState,
+  toggleCourseModuleState,
+  toggleGroupMembershipState,
+  toggleSavedProgramState,
+  updateGoalState,
+  updateProjectStatusState,
+  updateStudentProfileState,
+} from './utils/studentPlatform';
 import {
   applyThemeToDocument,
   persistTheme,
@@ -29,15 +69,45 @@ import {
   type Theme,
 } from './utils/theme';
 
-type PageRoute = 'home' | 'programs';
+const ROUTE_PATHS: Record<PageRoute, string> = {
+  home: '/',
+  library: '/library',
+  programs: '/programs',
+  paths: '/paths',
+  goals: '/goals',
+  assessments: '/assessments',
+  projects: '/projects',
+  groups: '/groups',
+  'ai-tools': '/ai-tools',
+  dashboard: '/dashboard',
+  profile: '/profile',
+};
 
 function getInitialRoute(): { page: PageRoute; kind: ProgramKind } {
-  if (typeof window !== 'undefined' && window.location.pathname.includes('/programs')) {
+  if (typeof window === 'undefined') {
+    return { page: 'home', kind: 'diplomas' };
+  }
+  const path = window.location.pathname;
+  if (path.includes('/programs')) {
     const params = new URLSearchParams(window.location.search);
     const kindParam = params.get('kind') === 'fellowships' ? 'fellowships' : 'diplomas';
     return { page: 'programs', kind: kindParam };
   }
+  if (path.startsWith('/library')) return { page: 'library', kind: 'diplomas' };
+  if (path.startsWith('/paths')) return { page: 'paths', kind: 'diplomas' };
+  if (path.startsWith('/goals')) return { page: 'goals', kind: 'diplomas' };
+  if (path.startsWith('/assessments')) return { page: 'assessments', kind: 'diplomas' };
+  if (path.startsWith('/projects')) return { page: 'projects', kind: 'diplomas' };
+  if (path.startsWith('/groups')) return { page: 'groups', kind: 'diplomas' };
+  if (path.startsWith('/ai-tools')) return { page: 'ai-tools', kind: 'diplomas' };
+  if (path.startsWith('/dashboard')) return { page: 'dashboard', kind: 'diplomas' };
+  if (path.startsWith('/profile')) return { page: 'profile', kind: 'diplomas' };
   return { page: 'home', kind: 'diplomas' };
+}
+
+function routeToNav(page: PageRoute, kind: ProgramKind): NavSection {
+  if (page === 'programs') return kind;
+  return page;
 }
 
 export default function App() {
@@ -46,13 +116,22 @@ export default function App() {
   const [theme, setTheme] = useState<Theme>(() => readStoredTheme());
   const [activePage, setActivePage] = useState<PageRoute>(initialRoute.page);
   const [kind, setKind] = useState<ProgramKind>(initialRoute.kind);
-  const [activeNav, setActiveNav] = useState<NavSection>(
-    initialRoute.page === 'home' ? 'home' : initialRoute.kind
+  const [activeNav, setActiveNav] = useState<NavSection>(() =>
+    routeToNav(initialRoute.page, initialRoute.kind)
   );
   const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSort, setSelectedSort] = useState<CourseSortOption>('default');
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState<ModalState>({ type: 'closed' });
+  const [studentState, setStudentState] = useState<StudentPlatformState>(() =>
+    loadStudentPlatformState()
+  );
+
+  useEffect(() => {
+    saveStudentPlatformState(studentState);
+  }, [studentState]);
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -73,21 +152,21 @@ export default function App() {
       const next = getInitialRoute();
       setActivePage(next.page);
       setKind(next.kind);
-      setActiveNav(next.page === 'home' ? 'home' : next.kind);
+      setActiveNav(routeToNav(next.page, next.kind));
       setCurrentPage(1);
     };
     window.addEventListener('popstate', onPopState);
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  const syncHistory = useCallback((page: PageRoute, nextKind: ProgramKind) => {
+  const syncHistory = useCallback((page: PageRoute, nextKind: ProgramKind = 'diplomas') => {
     try {
       const targetUrl =
-        page === 'home'
-          ? '/'
-          : nextKind === 'fellowships'
+        page === 'programs'
+          ? nextKind === 'fellowships'
             ? '/programs?kind=fellowships'
-            : '/programs';
+            : '/programs'
+          : ROUTE_PATHS[page];
       if (window.location.pathname + window.location.search !== targetUrl) {
         window.history.pushState({ page, kind: nextKind }, '', targetUrl);
       }
@@ -96,20 +175,17 @@ export default function App() {
     }
   }, []);
 
-  const navigateToHome = useCallback(() => {
-    setActivePage('home');
-    setActiveNav('home');
-    syncHistory('home', 'diplomas');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [syncHistory]);
-
-  const navigateToPrograms = useCallback(
-    (nextKind: ProgramKind = 'diplomas', scrollTargetId?: string) => {
-      setActivePage('programs');
-      setKind(nextKind);
-      setActiveNav(nextKind);
-      setCurrentPage(1);
-      syncHistory('programs', nextKind);
+  const navigateToPage = useCallback(
+    (page: PageRoute, nextKind: ProgramKind = 'diplomas', scrollTargetId?: string) => {
+      setActivePage(page);
+      if (page === 'programs') {
+        setKind(nextKind);
+        setActiveNav(nextKind);
+        setCurrentPage(1);
+      } else {
+        setActiveNav(page);
+      }
+      syncHistory(page, nextKind);
       if (scrollTargetId) {
         window.setTimeout(() => {
           document.getElementById(scrollTargetId)?.scrollIntoView({ behavior: 'smooth' });
@@ -121,9 +197,27 @@ export default function App() {
     [syncHistory]
   );
 
+  const navigateToHome = useCallback(() => {
+    navigateToPage('home');
+  }, [navigateToPage]);
+
+  const navigateToPrograms = useCallback(
+    (nextKind: ProgramKind = 'diplomas', scrollTargetId?: string) => {
+      navigateToPage('programs', nextKind, scrollTargetId);
+    },
+    [navigateToPage]
+  );
+
   const filteredPrograms = useMemo(
-    () => filterPrograms(PROGRAMS, { kind, search, type: selectedType }),
-    [kind, search, selectedType]
+    () =>
+      filterPrograms(PROGRAMS, {
+        kind,
+        search,
+        type: selectedType,
+        category: selectedCategory,
+        sort: selectedSort,
+      }),
+    [kind, search, selectedType, selectedCategory, selectedSort]
   );
 
   const paginated = useMemo(
@@ -140,7 +234,11 @@ export default function App() {
       navigateToPrograms(nav);
       return;
     }
-    setModal({ type: 'info', section: nav });
+    if (nav === 'about' || nav === 'letters' || nav === 'contact') {
+      setModal({ type: 'info', section: nav });
+      return;
+    }
+    navigateToPage(nav);
   };
 
   const handleToggleLocale = () => {
@@ -156,14 +254,12 @@ export default function App() {
     setCurrentPage(1);
   };
 
-  const handleTypeChange = (value: string) => {
-    setSelectedType(value);
-    setCurrentPage(1);
-  };
-
   const handleResetFilters = () => {
     setSearch('');
     setSelectedType('');
+    setSelectedCategory('');
+    setSelectedSort('default');
+    setKind('diplomas');
     setCurrentPage(1);
   };
 
@@ -182,8 +278,102 @@ export default function App() {
       navigateToPrograms(target);
       return;
     }
+    if (
+      target === 'dashboard' ||
+      target === 'library' ||
+      target === 'paths' ||
+      target === 'goals' ||
+      target === 'assessments' ||
+      target === 'projects' ||
+      target === 'groups' ||
+      target === 'ai-tools' ||
+      target === 'profile'
+    ) {
+      navigateToPage(target);
+      return;
+    }
     setModal({ type: 'info', section: target });
   };
+
+  // Student Platform State Actions
+  const handleEnrollProgram = (program: Program) => {
+    setStudentState((prev) => enrollInProgramState(prev, program));
+  };
+
+  const handleToggleSaveProgram = (program: Program) => {
+    setStudentState((prev) => toggleSavedProgramState(prev, program));
+  };
+
+  const handleToggleCourseModule = (program: Program, moduleIndex: number) => {
+    setStudentState((prev) => toggleCourseModuleState(prev, program, moduleIndex));
+  };
+
+  const handleCreateGoal = (input: {
+    title: string;
+    targetDate: string;
+    progress: number;
+    relatedProgramId?: string;
+  }) => {
+    setStudentState((prev) => createGoalState(prev, input));
+  };
+
+  const handleUpdateGoal = (
+    goalId: string,
+    patch: Partial<
+      Pick<LearningGoal, 'title' | 'targetDate' | 'progress' | 'status' | 'relatedProgramId'>
+    >
+  ) => {
+    setStudentState((prev) => updateGoalState(prev, goalId, patch));
+  };
+
+  const handleDeleteGoal = (goalId: string) => {
+    setStudentState((prev) => deleteGoalState(prev, goalId));
+  };
+
+  const handleUpdateProject = (
+    projectId: string,
+    titleAr: string,
+    titleEn: string,
+    status: ProjectStatus,
+    submissionNote: string
+  ) => {
+    setStudentState((prev) =>
+      updateProjectStatusState(prev, projectId, titleAr, titleEn, status, submissionNote)
+    );
+  };
+
+  const handleToggleGroup = (groupId: string, titleAr: string, titleEn: string) => {
+    setStudentState((prev) => toggleGroupMembershipState(prev, groupId, titleAr, titleEn));
+  };
+
+  const handleToggleSelfCheck = (assessmentId: string, titleAr: string, titleEn: string) => {
+    setStudentState((prev) =>
+      toggleAssessmentSelfCheckState(prev, assessmentId, titleAr, titleEn)
+    );
+  };
+
+  const handleStudentSignIn = (
+    accountPatch: Partial<Omit<StudentAccount, 'signedIn' | 'avatarId'>>
+  ) => {
+    setStudentState((prev) => signInStudentState(prev, accountPatch));
+  };
+
+  const handleStudentSignOut = () => {
+    setStudentState((prev) => signOutStudentState(prev));
+  };
+
+  const handleSaveProfile = (
+    accountPatch: Partial<Pick<StudentAccount, 'fullName' | 'email' | 'phone' | 'avatarId'>>,
+    preferencesPatch: Partial<StudentPreferences>
+  ) => {
+    setStudentState((prev) => updateStudentProfileState(prev, accountPatch, preferencesPatch));
+  };
+
+  const hasActiveCourseFilters =
+    search.trim() !== '' ||
+    selectedType !== '' ||
+    selectedCategory !== '' ||
+    selectedSort !== 'default';
 
   return (
     <div
@@ -208,17 +398,18 @@ export default function App() {
         locale={locale}
         theme={theme}
         activeNav={activeNav}
+        account={studentState.account}
         onSelectNav={handleSelectNav}
         onSelectKind={(nextKind) => {
           setKind(nextKind);
           setCurrentPage(1);
         }}
         onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
-        onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
+        onSignOut={handleStudentSignOut}
       />
 
       <main className="flex-1">
-        {activePage === 'home' ? (
+        {activePage === 'home' && (
           <>
             <HomeHero
               locale={locale}
@@ -226,6 +417,8 @@ export default function App() {
               onLearnAbout={() =>
                 document.getElementById('aboutInstitute')?.scrollIntoView({ behavior: 'smooth' })
               }
+              onOpenProgram={(program) => handleOpenProgram(program, 'details')}
+              onNavigateToPaths={() => navigateToPage('paths')}
             />
             <TrustIndicators locale={locale} />
             <AboutInstitute
@@ -234,6 +427,9 @@ export default function App() {
             />
             <FeaturedPrograms
               locale={locale}
+              savedCourseIds={studentState.savedCourseIds}
+              enrollments={studentState.enrollments}
+              onToggleSave={handleToggleSaveProgram}
               onOpenProgram={handleOpenProgram}
               onViewAllPrograms={() => navigateToPrograms('diplomas')}
             />
@@ -252,7 +448,9 @@ export default function App() {
               onContactUs={() => setModal({ type: 'info', section: 'contact' })}
             />
           </>
-        ) : (
+        )}
+
+        {activePage === 'programs' && (
           <>
             <ProgramsHero locale={locale} kind={kind} onGoHome={navigateToHome} />
 
@@ -263,10 +461,30 @@ export default function App() {
               <div className="wrap">
                 <ProgramsFilters
                   locale={locale}
+                  kind={kind}
                   search={search}
                   selectedType={selectedType}
+                  selectedCategory={selectedCategory}
+                  selectedSort={selectedSort}
                   onSearchChange={handleSearchChange}
-                  onTypeChange={handleTypeChange}
+                  onTypeChange={(val) => {
+                    setSelectedType(val);
+                    setCurrentPage(1);
+                  }}
+                  onCategoryChange={(val) => {
+                    setSelectedCategory(val);
+                    setCurrentPage(1);
+                  }}
+                  onKindChange={(nextKind) => {
+                    setKind(nextKind);
+                    setActiveNav(nextKind);
+                    setCurrentPage(1);
+                    syncHistory('programs', nextKind);
+                  }}
+                  onSortChange={(val) => {
+                    setSelectedSort(val);
+                    setCurrentPage(1);
+                  }}
                   onSubmit={() => setCurrentPage(1)}
                   onReset={handleResetFilters}
                 />
@@ -275,7 +493,10 @@ export default function App() {
                   locale={locale}
                   kind={kind}
                   programs={paginated.items}
-                  hasActiveFilters={search.trim() !== '' || selectedType !== ''}
+                  hasActiveFilters={hasActiveCourseFilters}
+                  savedCourseIds={studentState.savedCourseIds}
+                  enrollments={studentState.enrollments}
+                  onToggleSave={handleToggleSaveProgram}
                   onOpenDetails={handleOpenProgram}
                   onResetFilters={handleResetFilters}
                   onOpenContact={() => setModal({ type: 'info', section: 'contact' })}
@@ -299,6 +520,104 @@ export default function App() {
             />
           </>
         )}
+
+        {activePage === 'dashboard' && (
+          <DashboardPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onNavigate={handleSelectNav}
+            onOpenProgram={handleOpenProgram}
+            onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
+          />
+        )}
+
+        {activePage === 'library' && (
+          <LibraryPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onBrowseCourses={() => navigateToPrograms('diplomas')}
+            onOpenProgram={handleOpenProgram}
+            onToggleSave={handleToggleSaveProgram}
+            onToggleModule={handleToggleCourseModule}
+          />
+        )}
+
+        {activePage === 'paths' && (
+          <LearningPathsPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onOpenProgram={handleOpenProgram}
+          />
+        )}
+
+        {activePage === 'goals' && (
+          <GoalsPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onCreateGoal={handleCreateGoal}
+            onUpdateGoal={handleUpdateGoal}
+            onDeleteGoal={handleDeleteGoal}
+          />
+        )}
+
+        {activePage === 'assessments' && (
+          <AssessmentsPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onToggleSelfCheck={handleToggleSelfCheck}
+            onOpenProgram={handleOpenProgram}
+          />
+        )}
+
+        {activePage === 'projects' && (
+          <ProjectsPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onUpdateProject={handleUpdateProject}
+          />
+        )}
+
+        {activePage === 'groups' && (
+          <StudyGroupsPage
+            locale={locale}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onToggleGroup={handleToggleGroup}
+          />
+        )}
+
+        {activePage === 'ai-tools' && (
+          <AiToolsPage locale={locale} programs={PROGRAMS} onGoHome={navigateToHome} />
+        )}
+
+        {activePage === 'profile' && (
+          <ProfilePage
+            locale={locale}
+            theme={theme}
+            state={studentState}
+            programs={PROGRAMS}
+            onGoHome={navigateToHome}
+            onToggleLocale={handleToggleLocale}
+            onToggleTheme={handleToggleTheme}
+            onSaveProfile={handleSaveProfile}
+            onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
+            onSignOut={handleStudentSignOut}
+            onOpenProgram={handleOpenProgram}
+          />
+        )}
       </main>
 
       <Footer
@@ -316,6 +635,13 @@ export default function App() {
       <PortalModal
         locale={locale}
         modal={modal}
+        savedCourseIds={studentState.savedCourseIds}
+        enrollments={studentState.enrollments}
+        onToggleSaveProgram={handleToggleSaveProgram}
+        onEnrollProgram={handleEnrollProgram}
+        onToggleCourseModule={handleToggleCourseModule}
+        onStudentSignIn={handleStudentSignIn}
+        onNavigateToLibrary={() => navigateToPage('library')}
         onClose={() => setModal({ type: 'closed' })}
         onSwitchModal={(next) => setModal(next)}
       />

@@ -14,22 +14,35 @@ export function normalizeArabicSearch(input: string): string {
 
 export function filterPrograms(programs: Program[], params: ProgramFilterParams): Program[] {
   const query = normalizeArabicSearch(params.search);
-  return programs.filter((program) => {
+  const filtered = programs.filter((program) => {
     if (program.kind !== params.kind) {
       return false;
     }
     if (params.type && program.deliveryTypeValue !== params.type) {
       return false;
     }
+    if (params.category && program.category !== params.category) {
+      return false;
+    }
     if (query) {
-      const hayAr = normalizeArabicSearch(program.titleAr);
-      const hayEn = program.titleEn.toLowerCase();
+      const hayAr = normalizeArabicSearch(
+        `${program.titleAr} ${program.categoryAr} ${program.descriptionAr}`
+      );
+      const hayEn = `${program.titleEn} ${program.categoryEn} ${program.descriptionEn}`.toLowerCase();
       if (!hayAr.includes(query) && !hayEn.includes(query)) {
         return false;
       }
     }
     return true;
   });
+
+  if (params.sort === 'title_asc') {
+    return [...filtered].sort((a, b) => a.titleAr.localeCompare(b.titleAr, 'ar'));
+  }
+  if (params.sort === 'title_desc') {
+    return [...filtered].sort((a, b) => b.titleAr.localeCompare(a.titleAr, 'ar'));
+  }
+  return filtered;
 }
 
 export function paginatePrograms<T>(

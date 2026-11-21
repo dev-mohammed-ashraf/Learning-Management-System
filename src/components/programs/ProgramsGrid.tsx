@@ -1,4 +1,6 @@
 import type { Locale, Program, ProgramKind } from '../../types/program';
+import type { CourseEnrollmentRecord } from '../../types/student';
+import { computeCourseProgressPct } from '../../utils/studentPlatform';
 import { ProgramCard } from './ProgramCard';
 
 interface ProgramsGridProps {
@@ -6,6 +8,9 @@ interface ProgramsGridProps {
   kind: ProgramKind;
   programs: Program[];
   hasActiveFilters: boolean;
+  savedCourseIds?: string[];
+  enrollments?: Record<string, CourseEnrollmentRecord>;
+  onToggleSave?: (program: Program) => void;
   onOpenDetails: (program: Program, initialMode: 'details' | 'register') => void;
   onResetFilters: () => void;
   onOpenContact: () => void;
@@ -16,6 +21,9 @@ export function ProgramsGrid({
   kind,
   programs,
   hasActiveFilters,
+  savedCourseIds = [],
+  enrollments = {},
+  onToggleSave,
   onOpenDetails,
   onResetFilters,
   onOpenContact,
@@ -66,14 +74,21 @@ export function ProgramsGrid({
 
   return (
     <div className="grid grid-cols-3 max-[980px]:grid-cols-2 max-[640px]:grid-cols-1 gap-[24px]">
-      {programs.map((program) => (
-        <ProgramCard
-          key={program.id}
-          program={program}
-          locale={locale}
-          onOpenDetails={onOpenDetails}
-        />
-      ))}
+      {programs.map((program) => {
+        const enrollment = enrollments[program.id];
+        return (
+          <ProgramCard
+            key={program.id}
+            program={program}
+            locale={locale}
+            isSaved={savedCourseIds.includes(program.id)}
+            isEnrolled={Boolean(enrollment)}
+            progressPct={computeCourseProgressPct(program, enrollment)}
+            onToggleSave={onToggleSave}
+            onOpenDetails={onOpenDetails}
+          />
+        );
+      })}
     </div>
   );
 }

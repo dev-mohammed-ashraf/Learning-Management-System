@@ -4,11 +4,25 @@ export type ProgramKind = 'diplomas' | 'fellowships';
 
 export type ProgramDeliveryMode = 'distance';
 
+export type CourseCategory =
+  | 'business'
+  | 'logistics'
+  | 'service'
+  | 'security'
+  | 'language';
+
+export type CourseSortOption = 'default' | 'title_asc' | 'title_desc';
+
 export interface Program {
   id: string;
   slug: string;
   kind: ProgramKind;
   deliveryTypeValue: string;
+  category: CourseCategory;
+  categoryAr: string;
+  categoryEn: string;
+  levelAr: string;
+  levelEn: string;
   badgeAr: string;
   badgeEn: string;
   titleAr: string;
@@ -39,6 +53,8 @@ export interface ProgramFilterParams {
   kind: ProgramKind;
   search: string;
   type: string;
+  category?: string;
+  sort?: CourseSortOption;
 }
 
 export interface PaginatedResult<T> {

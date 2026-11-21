@@ -2,7 +2,16 @@ import type { Locale, Program } from '../types/program';
 import { normalizeArabicSearch } from './programFilter';
 
 export type SearchServiceTarget =
+  | 'dashboard'
+  | 'library'
   | 'diplomas'
+  | 'paths'
+  | 'goals'
+  | 'assessments'
+  | 'projects'
+  | 'groups'
+  | 'ai-tools'
+  | 'profile'
   | 'fellowships'
   | 'about'
   | 'letters'
@@ -20,6 +29,69 @@ export interface PortalServiceEntry {
 }
 
 export const PORTAL_SERVICES: PortalServiceEntry[] = [
+  {
+    id: 'dashboard',
+    titleAr: 'لوحة الإنجاز الطلابية',
+    titleEn: 'Student Achievement Dashboard',
+    keywordsAr: 'لوحة الإنجاز التقدم الإحصائيات الساعات النشاط المتابعة',
+    keywordsEn: 'dashboard progress stats activity analytics overview',
+  },
+  {
+    id: 'library',
+    titleAr: 'مكتبتي التعليمية',
+    titleEn: 'My Educational Library',
+    keywordsAr: 'مكتبتي التعليمية الدورات المسجلة المحفوظة المكتملة قيد التعلم',
+    keywordsEn: 'library saved enrolled completed in progress courses',
+  },
+  {
+    id: 'paths',
+    titleAr: 'المسارات التعليمية',
+    titleEn: 'Learning Paths',
+    keywordsAr: 'المسارات التعليمية الخطة الدراسية التدرج الأكاديمي',
+    keywordsEn: 'learning paths tracks roadmap sequence',
+  },
+  {
+    id: 'goals',
+    titleAr: 'أهدافي الدراسية',
+    titleEn: 'Learning Goals',
+    keywordsAr: 'أهدافي هدف دراسي تخطيط متابعة الإنجاز',
+    keywordsEn: 'goals target study plan progress',
+  },
+  {
+    id: 'assessments',
+    titleAr: 'الاختبارات والتقييمات',
+    titleEn: 'Assessments & Quizzes',
+    keywordsAr: 'الاختبارات التقييم مراجعة جاهزية الامتحان',
+    keywordsEn: 'assessments exams quizzes evaluation check',
+  },
+  {
+    id: 'projects',
+    titleAr: 'المشاريع التطبيقية',
+    titleEn: 'Applied Projects',
+    keywordsAr: 'المشاريع مشاريع تطبيقية تسليم عمل عملي',
+    keywordsEn: 'projects practical deliverables submission',
+  },
+  {
+    id: 'groups',
+    titleAr: 'مجموعات الدراسة',
+    titleEn: 'Study Groups',
+    keywordsAr: 'مجموعات الدراسة زملاء نقاش تعلم تعاوني',
+    keywordsEn: 'study groups peers community discussion',
+  },
+  {
+    id: 'ai-tools',
+    titleAr: 'أدوات الذكاء الاصطناعي للتعلم',
+    titleEn: 'AI Learning Tools',
+    keywordsAr: 'أدوات الذكاء الاصطناعي شرح تلخيص أسئلة مراجعة خطة مذاكرة',
+    keywordsEn: 'ai tools study assistant explain summarize flashcards quiz plan',
+  },
+  {
+    id: 'profile',
+    titleAr: 'الملف الشخصي للطالب',
+    titleEn: 'Student Profile & Settings',
+    keywordsAr: 'الملف الشخصي الحساب التفضيلات الشهادات',
+    keywordsEn: 'profile account preferences certificates settings',
+  },
   {
     id: 'lms',
     titleAr: 'بوابة التعلم للطلاب',
