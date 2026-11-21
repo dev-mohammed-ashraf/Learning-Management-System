@@ -44,8 +44,8 @@ export function AboutInstitute({ locale, onDiscoverMore }: AboutInstituteProps) 
 
           <p className="text-[#64748B] dark:text-[#B8C7D9] text-[1.02rem] leading-[1.9] mt-[14px] max-w-[42rem]">
             {locale === 'ar'
-              ? 'تمثل هذه المنصة الواجهة التعليمية الرقمية لمعهد البحوث والاستشارات بجامعة تبوك، حيث نضع الطالب في قلب التجربة الدراسية من خلال دبلومات مهنية تمنحك أساسًا معرفيًا متينًا وتجربة تعلم تفاعلية ميسّرة.'
-              : 'Serving as the digital learning gateway of the Research and Consulting Institute at the University of Tabuk, our platform centers on the student experience—combining solid academic foundations with accessible online instruction.'}
+              ? 'تمثل منصة «مدار» الواجهة التعليمية الرقمية لمعهد البحوث والاستشارات بجامعة تبوك، حيث نضع الطالب في قلب التجربة الدراسية من خلال دبلومات مهنية تمنحك أساسًا معرفيًا متينًا وتجربة تعلم تفاعلية ميسّرة.'
+              : 'Serving as the digital learning gateway of the Research and Consulting Institute at the University of Tabuk, the Madar platform centers on the student experience—combining solid academic foundations with accessible online instruction.'}
           </p>
 
           <ul className="list-none m-0 p-0 grid gap-[10px] mt-[20px]">

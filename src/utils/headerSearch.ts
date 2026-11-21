@@ -64,10 +64,10 @@ export const PORTAL_SERVICES: PortalServiceEntry[] = [
   },
   {
     id: 'about',
-    titleAr: 'عن المنصة التعليمية',
-    titleEn: 'About the Learning Platform',
-    keywordsAr: 'عن المعهد المنصة الرؤية الرسالة جامعة تبوك أسئلة شائعة',
-    keywordsEn: 'about institute platform vision mission tabuk university faq',
+    titleAr: 'عن منصة مدار التعليمية',
+    titleEn: 'About Madar Learning Platform',
+    keywordsAr: 'مدار عن المعهد المنصة الرؤية الرسالة جامعة تبوك أسئلة شائعة',
+    keywordsEn: 'madar about institute platform vision mission tabuk university faq',
   },
   {
     id: 'contact',

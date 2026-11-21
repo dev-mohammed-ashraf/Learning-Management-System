@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" fill="none">
+  <defs>
+    <linearGradient id="ogBg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0E223D" />
+      <stop offset="55%" stop-color="#142D4E" />
+      <stop offset="100%" stop-color="#176B87" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogBg)" />
+  <circle cx="220" cy="140" r="220" stroke="#28B5C5" stroke-opacity="0.14" stroke-width="1.5" />
+  <circle cx="220" cy="140" r="148" stroke="#28B5C5" stroke-opacity="0.22" stroke-width="1.5" stroke-dasharray="6 8" />
+  <g transform="translate(870, 200) scale(4.4)">
+    <path d="M11.5 12.5C14.8 8.6 19.2 6.8 24 6.8C28.8 6.8 33.2 8.6 36.5 12.5" stroke="#28B5C5" stroke-width="3.2" stroke-linecap="round" />
+    <circle cx="24" cy="13.5" r="3.2" fill="#28B5C5" />
+    <path d="M8.5 18C8.5 16.7 9.8 15.9 11 16.5L21.6 21.8C22.5 22.2 23 23.1 23 24.1V38.8C23 40.1 21.7 40.9 20.5 40.3L9.9 35C9 34.6 8.5 33.7 8.5 32.7V18Z" fill="#FFFFFF" />
+    <path d="M39.5 18C39.5 16.7 38.2 15.9 37 16.5L26.4 21.8C25.5 22.2 25 23.1 25 24.1V38.8C25 40.1 26.3 40.9 27.5 40.3L38.1 35C39 34.6 39.5 33.7 39.5 32.7V18Z" fill="#DDF3F5" />
+  </g>
+  <text x="820" y="295" text-anchor="end" fill="#FFFFFF" font-family="Tajawal, Arial, sans-serif" font-size="86" font-weight="800">مدار</text>
+  <text x="820" y="360" text-anchor="end" fill="#28B5C5" font-family="Tajawal, Arial, sans-serif" font-size="32" font-weight="700">منصة التعلّم الرقمي والبرامج المعتمدة</text>
+  <text x="820" y="420" text-anchor="end" fill="#DDF3F5" fill-opacity="0.85" font-family="Tajawal, Arial, sans-serif" font-size="22" font-weight="500">معهد البحوث والاستشارات — جامعة تبوك</text>
+</svg>

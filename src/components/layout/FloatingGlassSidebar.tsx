@@ -7,7 +7,6 @@ import {
   ChevronLeft,
   ChevronRight,
   FileCheck2,
-  Globe,
   GraduationCap,
   Home,
   LifeBuoy,
@@ -19,6 +18,7 @@ import {
 } from 'lucide-react';
 import type { Locale, ProgramKind } from '../../types/program';
 import type { Theme } from '../../utils/theme';
+import { BrandLogo } from '../common/BrandLogo';
 
 export type NavSection = 'home' | 'about' | 'diplomas' | 'fellowships' | 'letters' | 'contact';
 export type PortalInfoSection = 'lms' | 'entities' | 'support';
@@ -29,7 +29,6 @@ interface FloatingGlassSidebarProps {
   activeNav: NavSection;
   onSelectNav: (nav: NavSection) => void;
   onSelectKind: (kind: ProgramKind) => void;
-  onToggleLocale: () => void;
   onOpenAuth: (mode: 'login' | 'register') => void;
   onOpenPortalInfo: (section: PortalInfoSection) => void;
 }
@@ -40,7 +39,6 @@ export function FloatingGlassSidebar({
   activeNav,
   onSelectNav,
   onSelectKind,
-  onToggleLocale,
   onOpenAuth,
   onOpenPortalInfo,
 }: FloatingGlassSidebarProps) {
@@ -105,8 +103,6 @@ export function FloatingGlassSidebar({
     onOpenPortalInfo(section);
   };
 
-  const localeTooltip = locale === 'ar' ? 'Switch to English (EN)' : 'التبديل إلى العربية (AR)';
-
   return (
     <>
       {/* Desktop Floating Vertical Glass Sidebar (Fixed Left, Centered Vertically) */}
@@ -156,34 +152,26 @@ export function FloatingGlassSidebar({
             onClick={() => handleNavClick('home')}
             aria-label={
               locale === 'ar'
-                ? 'العودة إلى الرئيسية — معهد البحوث والاستشارات'
-                : 'Home — Research and Consulting Institute'
+                ? 'العودة إلى الرئيسية — منصة مدار للتعلّم الرقمي'
+                : 'Home — Madar Digital Learning Platform'
             }
             className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 dark:hover:bg-[#1B3553]/70 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
           >
             {expanded ? (
-              <img
-                src={theme === 'dark' ? '/assets/ut/logo-white.png' : '/assets/ut/logo-t.png'}
-                alt={
-                  locale === 'ar'
-                    ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                    : 'Research and Consulting Institute — University of Tabuk'
-                }
-                className="h-[44px] w-auto max-w-full object-contain block mx-auto"
+              <BrandLogo
+                locale={locale}
+                variant="full"
+                surface={theme === 'dark' ? 'dark' : 'light'}
+                size="sm"
+                className="mx-auto"
               />
             ) : (
-              <span className="w-[42px] h-[42px] rounded-[12px] overflow-hidden bg-white/95 border border-[#DCE7ED]/80 dark:border-white/20 grid place-items-center flex-none p-[4px]">
-                <span className="w-[32px] h-[34px] overflow-hidden block">
-                  <img
-                    src="/assets/ut/favicon.png"
-                    alt={
-                      locale === 'ar'
-                        ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                        : 'Research and Consulting Institute — University of Tabuk'
-                    }
-                    className="w-[37px] max-w-none h-[34px] object-contain object-left block"
-                  />
-                </span>
+              <span className="w-[42px] h-[42px] rounded-[12px] overflow-hidden bg-white/95 border border-[#DCE7ED]/85 dark:bg-[#1B3553]/85 dark:border-white/18 grid place-items-center flex-none shadow-[0_4px_12px_rgba(20,45,78,0.06)]">
+                <BrandLogo
+                  locale={locale}
+                  variant="compact"
+                  surface={theme === 'dark' ? 'dark' : 'light'}
+                />
               </span>
             )}
           </button>
@@ -215,13 +203,6 @@ export function FloatingGlassSidebar({
                       : 'text-[#142D4E] hover:bg-[#EAF3F6]/90 hover:text-[#176B87] dark:text-[#B8C7D9] dark:hover:bg-[#142D4E]/80 dark:hover:text-[#F1F5F9]'
                   }`}
                 >
-                  {isCurrent && (
-                    <span
-                      aria-hidden="true"
-                      className="w-[3.5px] h-[20px] rounded-full bg-[#28B5C5] flex-none absolute right-[4px] top-1/2 -translate-y-1/2 transition-opacity"
-                    />
-                  )}
-
                   <Icon
                     className={`w-[19px] h-[19px] flex-none transition-colors duration-200 ${
                       isCurrent
@@ -294,47 +275,8 @@ export function FloatingGlassSidebar({
           })}
         </nav>
 
-        {/* C. Bottom Actions: Compact Language Switch + Login + Register */}
-        <div className="flex-none pt-[10px] mt-[8px] border-t border-[#DCE7ED]/80 dark:border-white/12 flex flex-col gap-[6px]">
-          <div className="relative group/lang">
-            <button
-              type="button"
-              onClick={onToggleLocale}
-              aria-label={localeTooltip}
-              title={!expanded ? localeTooltip : undefined}
-              className={`w-full h-[36px] flex items-center rounded-[11px] border border-[#28B5C5]/45 bg-white/60 text-[#142D4E] font-bold text-[0.8rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/65 hover:text-[#176B87] dark:bg-[#1B3553]/70 dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:bg-[#1B3553] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
-                expanded ? 'px-[12px] justify-between' : 'justify-center px-0'
-              }`}
-            >
-              {expanded ? (
-                <>
-                  <span className="inline-flex items-center gap-[8px]">
-                    <Globe className="w-[15px] h-[15px] text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
-                    <span className="whitespace-nowrap">
-                      {locale === 'ar' ? 'اللغة' : 'Language'}
-                    </span>
-                  </span>
-                  <span className="text-[0.74rem] font-extrabold text-[#176B87] dark:text-[#28B5C5] tracking-wide">
-                    {locale === 'ar' ? 'EN' : 'AR'}
-                  </span>
-                </>
-              ) : (
-                <span className="text-[0.76rem] font-extrabold tracking-wide leading-none">
-                  {locale === 'ar' ? 'EN' : 'AR'}
-                </span>
-              )}
-            </button>
-
-            {!expanded && (
-              <span
-                role="tooltip"
-                className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/lang:opacity-100 group-hover/lang:translate-x-0 group-focus-within/lang:opacity-100 group-focus-within/lang:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
-              >
-                {localeTooltip}
-              </span>
-            )}
-          </div>
-
+        {/* C. Bottom Actions: Login + Register */}
+        <div className="flex-none pt-[12px] mt-[8px] border-t border-[#DCE7ED]/80 dark:border-white/12 flex flex-col gap-[8px]">
           <div className="relative group/login">
             <button
               type="button"
@@ -438,19 +380,16 @@ export function FloatingGlassSidebar({
               onClick={() => handleNavClick('home')}
               aria-label={
                 locale === 'ar'
-                  ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                  : 'Research and Consulting Institute — University of Tabuk'
+                  ? 'مدار — منصة التعلّم الرقمي'
+                  : 'Madar — Digital Learning Platform'
               }
-              className="min-w-0 cursor-pointer rounded-[10px] focus-visible:outline-2 focus-visible:outline-[#176B87]"
+              className="min-w-0 cursor-pointer rounded-[10px] py-[2px] focus-visible:outline-2 focus-visible:outline-[#176B87]"
             >
-              <img
-                src={theme === 'dark' ? '/assets/ut/logo-white.png' : '/assets/ut/logo-t.png'}
-                alt={
-                  locale === 'ar'
-                    ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                    : 'Research and Consulting Institute — University of Tabuk'
-                }
-                className="h-[42px] w-auto object-contain block"
+              <BrandLogo
+                locale={locale}
+                variant="full"
+                surface={theme === 'dark' ? 'dark' : 'light'}
+                size="sm"
               />
             </button>
 
@@ -484,12 +423,6 @@ export function FloatingGlassSidebar({
                       : 'text-[#142D4E] hover:bg-[#EAF3F6] hover:text-[#176B87] dark:text-[#B8C7D9] dark:hover:bg-[#142D4E] dark:hover:text-[#F1F5F9]'
                   }`}
                 >
-                  {isCurrent && (
-                    <span
-                      aria-hidden="true"
-                      className="w-[3.5px] h-[22px] rounded-full bg-[#28B5C5] flex-none absolute right-[4px] top-1/2 -translate-y-1/2"
-                    />
-                  )}
                   <Icon
                     className={`w-[20px] h-[20px] flex-none ${
                       isCurrent ? 'text-[#28B5C5]' : 'text-[#142D4E] dark:text-[#B8C7D9]'
@@ -519,23 +452,8 @@ export function FloatingGlassSidebar({
             })}
           </nav>
 
-          {/* Drawer Bottom Actions: Language Switch + Login + Register */}
+          {/* Drawer Bottom Actions: Login + Register */}
           <div className="flex-none pt-[12px] mt-[12px] border-t border-[#DCE7ED] dark:border-white/12 flex flex-col gap-[8px]">
-            <button
-              type="button"
-              onClick={onToggleLocale}
-              aria-label={localeTooltip}
-              className="w-full min-h-[40px] px-[14px] rounded-[12px] border border-[#28B5C5]/45 bg-white text-[#142D4E] font-bold text-[0.86rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/60 dark:bg-[#1B3553] dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] inline-flex items-center justify-between cursor-pointer transition-colors"
-            >
-              <span className="inline-flex items-center gap-[8px]">
-                <Globe className="w-[17px] h-[17px] text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
-                <span>{locale === 'ar' ? 'اللغة' : 'Language'}</span>
-              </span>
-              <span className="text-[0.8rem] font-extrabold text-[#176B87] dark:text-[#28B5C5]">
-                {locale === 'ar' ? 'EN' : 'AR'}
-              </span>
-            </button>
-
             <button
               type="button"
               onClick={() => {

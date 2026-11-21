@@ -1,5 +1,6 @@
 import type { Locale, ProgramKind } from '../../types/program';
 import { splitTwoToneTitle } from '../../utils/programFilter';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface ProgramsHeroProps {
   locale: Locale;
@@ -76,19 +77,11 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
           className="hidden min-[561px]:block flex-none ps-[22px] border-s-2 border-[#28B5C5]/60"
           aria-label={
             locale === 'ar'
-              ? 'معهد البحوث والاستشارات — جامعة تبوك'
-              : 'Research and Consulting Institute — University of Tabuk'
+              ? 'منصة مدار للتعلّم الرقمي — جامعة تبوك'
+              : 'Madar Digital Learning Platform — University of Tabuk'
           }
         >
-          <img
-            src="/assets/ut/logo-white.png"
-            alt={
-              locale === 'ar'
-                ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                : 'Research and Consulting Institute — University of Tabuk'
-            }
-            className="w-[180px] h-[58px] max-[820px]:w-[140px] max-[820px]:h-[45px] object-contain opacity-96 block"
-          />
+          <BrandLogo locale={locale} variant="full" surface="dark" size="md" />
         </div>
       </div>
     </div>

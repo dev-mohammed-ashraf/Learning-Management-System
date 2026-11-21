@@ -26,8 +26,8 @@ export function HomeHero({ locale, onExplorePrograms, onLearnAbout }: HomeHeroPr
           <div className="ut-eyebrow inline-flex items-center gap-[10px] text-[0.86rem] font-bold text-[#DDF3F5] mb-[14px]">
             <span>
               {locale === 'ar'
-                ? 'منصة التعلّم الرقمي — جامعة تبوك'
-                : 'Digital Learning Platform — University of Tabuk'}
+                ? 'منصة مدار للتعلّم الرقمي — جامعة تبوك'
+                : 'Madar Digital Learning Platform — University of Tabuk'}
             </span>
           </div>
 

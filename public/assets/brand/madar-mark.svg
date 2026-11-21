@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="madarBg" x1="8" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#173860" />
+      <stop offset="100%" stop-color="#0E223D" />
+    </linearGradient>
+    <linearGradient id="madarCyan" x1="18" y1="12" x2="46" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#48D1DF" />
+      <stop offset="100%" stop-color="#28B5C5" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#madarBg)" />
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="15.25" stroke="#28B5C5" stroke-opacity="0.35" stroke-width="1.5" />
+  <path d="M18 19.5C21.8 15 26.8 12.8 32 12.8C37.2 12.8 42.2 15 46 19.5" stroke="url(#madarCyan)" stroke-width="3.6" stroke-linecap="round" />
+  <circle cx="32" cy="21" r="3.6" fill="#28B5C5" />
+  <path d="M14 25.8C14 24.4 15.4 23.5 16.7 24.1L29.1 30.3C30.1 30.8 30.7 31.8 30.7 32.9V49.6C30.7 51 29.3 51.9 28 51.3L15.6 45.1C14.6 44.6 14 43.6 14 42.5V25.8Z" fill="#FFFFFF" />
+  <path d="M50 25.8C50 24.4 48.6 23.5 47.3 24.1L34.9 30.3C33.9 30.8 33.3 31.8 33.3 32.9V49.6C33.3 51 34.7 51.9 36 51.3L48.4 45.1C49.4 44.6 50 43.6 50 42.5V25.8Z" fill="#DDF3F5" />
+</svg>

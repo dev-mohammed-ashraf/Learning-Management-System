@@ -63,8 +63,8 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
       }
       setSubmittedMsg(
         locale === 'ar'
-          ? 'تم التحقق من بيانات الطالب بنجاح. جارٍ توجيهك إلى بوابة التعلّم الرقمي بجامعة تبوك.'
-          : 'Student credentials verified. Redirecting to the University of Tabuk digital learning portal.'
+          ? 'تم التحقق من بيانات الطالب بنجاح. جارٍ توجيهك إلى بوابة التعلّم الرقمي في منصة مدار.'
+          : 'Student credentials verified. Redirecting to the Madar digital learning portal.'
       );
       return;
     }
@@ -140,13 +140,13 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
           <div className="space-y-2.5">
             <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
               {locale === 'ar'
-                ? 'عن منصة التعلّم — معهد البحوث والاستشارات بجامعة تبوك'
-                : 'About the Learning Platform — University of Tabuk'}
+                ? 'عن منصة مدار للتعلّم — معهد البحوث والاستشارات بجامعة تبوك'
+                : 'About Madar Learning Platform — University of Tabuk'}
             </h3>
             <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
               {locale === 'ar'
-                ? 'توفر المنصة تجربة دراسية إلكترونية منظمة تتيح للطلبة والراغبين في التطوير العلمي والعملي الالتحاق ببرامج الدبلوم المشارك المهني المقدمة من معهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م، وفق بيئة تعليمية معتمدة من المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
-                : 'This platform delivers a structured online study experience enabling learners to enroll in accredited associate diplomas offered by the Research and Consulting Institute at the University of Tabuk since 2006, supervised by NELC and the Ministry of Education.'}
+                ? 'توفر منصة مدار تجربة دراسية إلكترونية منظمة تتيح للطلبة والراغبين في التطوير العلمي والعملي الالتحاق ببرامج الدبلوم المشارك المهني المقدمة من معهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م، وفق بيئة تعليمية معتمدة من المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
+                : 'Madar delivers a structured online study experience enabling learners to enroll in accredited associate diplomas offered by the Research and Consulting Institute at the University of Tabuk since 2006, supervised by NELC and the Ministry of Education.'}
             </p>
           </div>
 
@@ -597,8 +597,8 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
               </h3>
               <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.9rem] mt-1">
                 {locale === 'ar'
-                  ? 'منصة التعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك'
-                  : 'Digital Learning Platform — Research & Consulting Institute, University of Tabuk'}
+                  ? 'منصة مدار للتعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك'
+                  : 'Madar Digital Learning Platform — Research & Consulting Institute, University of Tabuk'}
               </p>
             </div>
 

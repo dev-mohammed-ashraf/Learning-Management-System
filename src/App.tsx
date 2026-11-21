@@ -57,6 +57,10 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+    document.title =
+      locale === 'ar'
+        ? 'مدار | منصة التعلّم الرقمي والبرامج المعتمدة — جامعة تبوك'
+        : 'Madar | Digital Learning Platform — University of Tabuk';
   }, [locale]);
 
   useEffect(() => {
@@ -209,7 +213,6 @@ export default function App() {
           setKind(nextKind);
           setCurrentPage(1);
         }}
-        onToggleLocale={handleToggleLocale}
         onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
         onOpenPortalInfo={(section) => setModal({ type: 'info', section })}
       />

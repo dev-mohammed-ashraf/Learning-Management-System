@@ -15,6 +15,7 @@ import {
   type SearchServiceTarget,
 } from '../../utils/headerSearch';
 import type { Theme } from '../../utils/theme';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface FloatingGlassHeaderProps {
   locale: Locale;
@@ -91,25 +92,22 @@ export function FloatingGlassHeader({
       aria-label={locale === 'ar' ? 'الشريط العلوي للموقع' : 'Site Utility Header'}
       className={`ut-glass-header ${isScrolled ? 'is-scrolled' : ''} sticky top-[18px] z-[55] mx-auto mt-[18px] -mb-[98px] max-[767px]:top-[14px] max-[767px]:mt-[14px] max-[767px]:-mb-[122px] w-[calc(100%-80px)] max-w-[1440px] max-[767px]:w-[calc(100%-24px)] min-[768px]:h-[80px] rounded-[20px] px-[24px] max-[767px]:px-[14px] max-[767px]:py-[10px] flex items-center justify-between gap-[20px] max-[767px]:flex-wrap max-[767px]:gap-x-[12px] max-[767px]:gap-y-[10px] transition-[background-color,border-color,box-shadow] duration-250 ease-out`}
     >
-      {/* 1. Right Side (in RTL): Official Institute Logo */}
+      {/* 1. Right Side (in RTL): Educational Brand Logo */}
       <button
         type="button"
         onClick={onGoHome}
         aria-label={
           locale === 'ar'
-            ? 'العودة إلى الرئيسية — معهد البحوث والاستشارات'
-            : 'Home — Research and Consulting Institute'
+            ? 'العودة إلى الرئيسية — منصة مدار للتعلّم الرقمي'
+            : 'Home — Madar Digital Learning Platform'
         }
         className="order-1 flex-none flex items-center justify-center rounded-[12px] py-[4px] px-[4px] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-[#176B87] dark:focus-visible:outline-[#28B5C5] transition-opacity cursor-pointer"
       >
-        <img
-          src={theme === 'dark' ? '/assets/ut/logo-white.png' : '/assets/ut/logo-t.png'}
-          alt={
-            locale === 'ar'
-              ? 'معهد البحوث والاستشارات — جامعة تبوك'
-              : 'Research and Consulting Institute — University of Tabuk'
-          }
-          className="max-w-[170px] max-h-[55px] max-[767px]:max-w-[145px] max-[767px]:max-h-[44px] w-auto h-auto object-contain block"
+        <BrandLogo
+          locale={locale}
+          variant="full"
+          surface={theme === 'dark' ? 'dark' : 'light'}
+          size="md"
         />
       </button>
 

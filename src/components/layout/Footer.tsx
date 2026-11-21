@@ -1,6 +1,7 @@
 import { Mail, Phone } from 'lucide-react';
 import { PROGRAMS } from '../../data/programs';
 import type { Locale, Program } from '../../types/program';
+import { BrandLogo } from '../common/BrandLogo';
 import type { NavSection } from './FloatingGlassSidebar';
 
 interface FooterProps {
@@ -58,21 +59,17 @@ export function Footer({
       <div className="wrap">
         <div className="grid grid-cols-[1.4fr_1fr_1fr_1.3fr] max-[920px]:grid-cols-2 max-[560px]:grid-cols-1 gap-[40px] max-[560px]:gap-[32px] pt-[64px] pb-[48px]">
           <div className="min-w-0">
-            <img
-              src="/assets/ut/logo-white.png"
-              alt={
-                locale === 'ar'
-                  ? 'معهد البحوث والاستشارات — جامعة تبوك'
-                  : 'Research and Consulting Institute — University of Tabuk'
-              }
-              width={480}
-              height={156}
-              className="block h-[64px] w-auto mb-[20px]"
+            <BrandLogo
+              locale={locale}
+              variant="full"
+              surface="dark"
+              size="lg"
+              className="mb-[18px]"
             />
             <p className="text-[0.9rem] max-w-[40ch]">
               {locale === 'ar'
-                ? 'منصة التعلّم الرقمي التابعة لمعهد البحوث والاستشارات بجامعة تبوك — مسارات تعليمية وتدريبية منذ عام 2006م.'
-                : 'Digital learning platform of the Research & Consulting Institute, University of Tabuk — delivering academic programs since 2006.'}
+                ? 'منصة مدار للتعلّم الرقمي — البوابة التعليمية لبرامج الدبلومات المعتمدة التابعة لمعهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م.'
+                : 'Madar Digital Learning Platform — the digital education gateway for accredited diploma tracks by the Research & Consulting Institute, University of Tabuk since 2006.'}
             </p>
           </div>
 
@@ -232,8 +229,8 @@ export function Footer({
         <div className="border-t border-white/12 py-[20px] flex justify-between items-center gap-[16px] flex-wrap text-[0.82rem] max-[560px]:justify-center max-[560px]:text-center">
           <span>
             {locale === 'ar'
-              ? '© 2026 معهد البحوث والاستشارات — جامعة تبوك. جميع الحقوق محفوظة.'
-              : '© 2026 Research and Consulting Institute — University of Tabuk. All rights reserved.'}
+              ? '© 2026 منصة مدار للتعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك. جميع الحقوق محفوظة.'
+              : '© 2026 Madar Digital Learning Platform — Research & Consulting Institute, University of Tabuk. All rights reserved.'}
           </span>
           <nav
             className="flex items-center gap-[20px]"
