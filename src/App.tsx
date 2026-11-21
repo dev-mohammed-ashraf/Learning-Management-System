@@ -31,6 +31,7 @@ import {
   loadStudentPlatformState,
   saveStudentPlatformState,
 } from './services/studentPlatformStore';
+import { initGlassFusion } from './utils/glassFusion';
 import type {
   CourseSortOption,
   Locale,
@@ -146,6 +147,10 @@ export default function App() {
     applyThemeToDocument(theme);
     persistTheme(theme);
   }, [theme]);
+
+  // Glass Fusion: merges the Floating Glass Header & Sidebar into one
+  // continuous surface whenever they touch or come close (no React re-renders).
+  useEffect(() => initGlassFusion(), []);
 
   useEffect(() => {
     const onPopState = () => {

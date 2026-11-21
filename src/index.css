@@ -227,6 +227,251 @@
   box-shadow: -8px 12px 40px rgba(0, 0, 0, 0.5);
 }
 
+/* ============================================================
+   Glass Fusion — Header ⇄ Sidebar unified glass surface
+   The proximity controller (utils/glassFusion.ts) toggles the
+   `glass-fused` class on <html> and feeds the geometry vars.
+   ============================================================ */
+:root {
+  --gf-fill: rgba(255, 255, 255, 0.76);
+  --gf-line: rgba(255, 255, 255, 0.75);
+  --gf-shadow: 0 12px 36px rgba(20, 45, 78, 0.1), 0 2px 10px rgba(20, 45, 78, 0.05);
+  --gf-saturate: 165%;
+}
+
+.dark {
+  --gf-fill: rgba(11, 23, 38, 0.78);
+  --gf-line: rgba(255, 255, 255, 0.12);
+  --gf-shadow: 0 12px 40px rgba(0, 0, 0, 0.42), 0 2px 8px rgba(0, 0, 0, 0.24);
+  --gf-saturate: 160%;
+}
+
+/* One shared glass recipe for both surfaces while fused (the translucent
+   values match exactly, so the joint between them becomes invisible). */
+html.glass-fused .ut-glass-header,
+html.glass-fused .ut-glass-header.is-scrolled,
+html.glass-fused aside.ut-glass-sidebar {
+  background: var(--gf-fill);
+  border-color: var(--gf-line);
+  backdrop-filter: blur(24px) saturate(var(--gf-saturate));
+  -webkit-backdrop-filter: blur(24px) saturate(var(--gf-saturate));
+  box-shadow: var(--gf-shadow);
+}
+
+/* While fused, the header's bottom & left edges run inside the joined
+   surface: hand those two segments over to the masked pseudo lines below. */
+html.glass-fused .ut-glass-header {
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+/* Masked replicas of the header's left / bottom border segments.
+   Invisible while separate (the real border renders); while fused the real
+   segments go transparent and these fade in, minus the seam span that the
+   fillets and the sidebar now own. Geometry mirrors the border-box exactly
+   (padding-box origin -1px), so the corner arcs line up pixel-perfectly. */
+.ut-glass-header::before,
+.ut-glass-header::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ut-glass-header::before {
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+  width: 21px;
+  border-left: 1px solid var(--gf-line);
+  border-radius: 20px 0 0 20px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 var(--gf-left-fade, 0px),
+    transparent calc(var(--gf-left-fade, 0px) + 1px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 var(--gf-left-fade, 0px),
+    transparent calc(var(--gf-left-fade, 0px) + 1px),
+    transparent 100%
+  );
+}
+
+.ut-glass-header::after {
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  height: 21px;
+  border-bottom: 1px solid var(--gf-line);
+  border-radius: 0 0 20px 20px;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--gf-seam-end, 0px),
+    #000 calc(var(--gf-seam-end, 0px) + 1px),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--gf-seam-end, 0px),
+    #000 calc(var(--gf-seam-end, 0px) + 1px),
+    #000 100%
+  );
+}
+
+html.glass-fused .ut-glass-header::before,
+html.glass-fused .ut-glass-header::after {
+  opacity: 1;
+}
+
+/* Sidebar: dock onto the header's bottom edge purely via `translate`, so the
+   box size, layout and centering math stay untouched (stable height/width). */
+aside.ut-glass-sidebar {
+  translate: 0 calc(-50% + var(--gf-dock, 0px));
+  transition:
+    width 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 350ms ease-out,
+    border-color 350ms ease-out,
+    box-shadow 350ms ease-out,
+    backdrop-filter 350ms ease-out,
+    border-top-left-radius 350ms ease-out,
+    border-top-right-radius 350ms ease-out;
+}
+
+html.glass-fused aside.ut-glass-sidebar {
+  /* Stay inside the viewport while docked under the header. */
+  max-height: calc(100vh - 122px);
+  /* The top edge becomes the fused interior: no border, no corner curves —
+     the fillets take over the silhouette. */
+  border-top-color: transparent;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+/* Concave fillets: two masked glass pieces that fill the inside corners where
+   the header's edges meet the sidebar's edges, turning two stacked rounded
+   rectangles into one continuous, organically curved silhouette. Each fillet
+   is a glass square with a quarter-disc carved out (radial mask) plus a 1px
+   border arc that continues the neighbouring border lines tangentially. */
+aside.ut-glass-sidebar .gf-fillet {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  background: var(--gf-fill);
+  -webkit-backdrop-filter: blur(24px) saturate(var(--gf-saturate));
+  backdrop-filter: blur(24px) saturate(var(--gf-saturate));
+  opacity: 0;
+  transform: scale(0.7);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.glass-fused aside.ut-glass-sidebar .gf-fillet {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Top-left junction: header's left edge flows into the sidebar's left edge. */
+.gf-fillet-a {
+  left: -1px;
+  top: calc(-1px - var(--gf-fa-r, 20px));
+  width: var(--gf-fa-r, 20px);
+  height: var(--gf-fa-r, 20px);
+  -webkit-mask-image: radial-gradient(
+    circle var(--gf-fa-r, 20px) at 0 0,
+    transparent calc(var(--gf-fa-r, 20px) - 0.5px),
+    #000 calc(var(--gf-fa-r, 20px) - 0.5px)
+  );
+  mask-image: radial-gradient(
+    circle var(--gf-fa-r, 20px) at 0 0,
+    transparent calc(var(--gf-fa-r, 20px) - 0.5px),
+    #000 calc(var(--gf-fa-r, 20px) - 0.5px)
+  );
+}
+
+.gf-fillet-a::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gf-line);
+  -webkit-mask-image: radial-gradient(
+    circle var(--gf-fa-r, 20px) at 0 0,
+    transparent calc(var(--gf-fa-r, 20px) - 1px),
+    #000 calc(var(--gf-fa-r, 20px) - 1px),
+    #000 var(--gf-fa-r, 20px),
+    transparent var(--gf-fa-r, 20px)
+  );
+  mask-image: radial-gradient(
+    circle var(--gf-fa-r, 20px) at 0 0,
+    transparent calc(var(--gf-fa-r, 20px) - 1px),
+    #000 calc(var(--gf-fa-r, 20px) - 1px),
+    #000 var(--gf-fa-r, 20px),
+    transparent var(--gf-fa-r, 20px)
+  );
+}
+
+/* Right junction: header's bottom edge flows into the sidebar's right edge,
+   adapting live to the sidebar's current width. */
+.gf-fillet-b {
+  top: -1px;
+  right: calc(-1px - var(--gf-fb-r, 16px));
+  width: var(--gf-fb-r, 16px);
+  height: var(--gf-fb-r, 16px);
+  -webkit-mask-image: radial-gradient(
+    circle var(--gf-fb-r, 16px) at 100% 100%,
+    transparent calc(var(--gf-fb-r, 16px) - 0.5px),
+    #000 calc(var(--gf-fb-r, 16px) - 0.5px)
+  );
+  mask-image: radial-gradient(
+    circle var(--gf-fb-r, 16px) at 100% 100%,
+    transparent calc(var(--gf-fb-r, 16px) - 0.5px),
+    #000 calc(var(--gf-fb-r, 16px) - 0.5px)
+  );
+}
+
+.gf-fillet-b::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gf-line);
+  -webkit-mask-image: radial-gradient(
+    circle var(--gf-fb-r, 16px) at 100% 100%,
+    transparent calc(var(--gf-fb-r, 16px) - 1px),
+    #000 calc(var(--gf-fb-r, 16px) - 1px),
+    #000 var(--gf-fb-r, 16px),
+    transparent var(--gf-fb-r, 16px)
+  );
+  mask-image: radial-gradient(
+    circle var(--gf-fb-r, 16px) at 100% 100%,
+    transparent calc(var(--gf-fb-r, 16px) - 1px),
+    #000 calc(var(--gf-fb-r, 16px) - 1px),
+    #000 var(--gf-fb-r, 16px),
+    transparent var(--gf-fb-r, 16px)
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  aside.ut-glass-sidebar {
+    transition: width 300ms ease-out;
+  }
+
+  .ut-glass-header::before,
+  .ut-glass-header::after,
+  aside.ut-glass-sidebar .gf-fillet {
+    transition: none;
+  }
+}
+
+
 .ut-glass-tooltip {
   background: rgba(20, 45, 78, 0.95);
   color: #ffffff;

@@ -146,10 +146,13 @@ export function FloatingGlassSidebar({
       <aside
         aria-label={locale === 'ar' ? 'القائمة الرئيسية الجانبية' : 'Primary Floating Sidebar'}
         data-expanded={expanded ? 'true' : 'false'}
-        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 -translate-y-1/2 z-[60] h-fit max-h-[88vh] rounded-[24px] p-[12px] ut-glass-sidebar transition-[width] duration-300 ease-out ${
+        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 z-[60] h-fit max-h-[88vh] rounded-[24px] p-[12px] ut-glass-sidebar ${
           expanded ? 'w-[264px]' : 'w-[86px]'
         }`}
       >
+        {/* Glass Fusion fillets — organically merge the sidebar into the Floating Glass Header when they meet */}
+        <div aria-hidden="true" className="gf-fillet gf-fillet-a" />
+        <div aria-hidden="true" className="gf-fillet gf-fillet-b" />
         {/* Expand / Collapse Dedicated Toggle Button */}
         <button
           type="button"
