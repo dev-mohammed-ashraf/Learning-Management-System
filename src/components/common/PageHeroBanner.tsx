@@ -11,7 +11,6 @@ interface PageHeroBannerProps {
   descriptionEn: string;
   eyebrowAr?: string;
   eyebrowEn?: string;
-  onGoHome: () => void;
   actionSlot?: ReactNode;
 }
 
@@ -23,7 +22,6 @@ export function PageHeroBanner({
   descriptionEn,
   eyebrowAr,
   eyebrowEn,
-  onGoHome,
   actionSlot,
 }: PageHeroBannerProps) {
   const titleText = locale === 'ar' ? titleAr : titleEn;
@@ -46,18 +44,6 @@ export function PageHeroBanner({
 
       <div className="wrap flex items-center justify-between gap-[28px] flex-wrap relative">
         <div className="min-w-0 flex-1">
-          <div className="text-[0.8rem] text-[#CBD8E6] flex gap-[8px] items-center mb-[10px] relative flex-wrap">
-            <button
-              type="button"
-              onClick={onGoHome}
-              className="text-[#CBD8E6] hover:text-[#28B5C5] transition-colors cursor-pointer"
-            >
-              {locale === 'ar' ? 'الرئيسية' : 'Home'}
-            </button>
-            <span className="text-[#64748B]" aria-hidden="true">/</span>
-            <b className="text-[#28B5C5] font-bold">{titleText}</b>
-          </div>
-
           {eyebrow && (
             <div className="text-[0.78rem] font-bold text-[#28B5C5] tracking-wide mb-[6px]">
               {eyebrow}
@@ -87,8 +73,8 @@ export function PageHeroBanner({
           className="hidden min-[561px]:block flex-none ps-[22px] border-s-2 border-[#28B5C5]/60"
           aria-label={
             locale === 'ar'
-              ? 'منصة مدار للتعلّم الرقمي — جامعة تبوك'
-              : 'Madar Digital Learning Platform — University of Tabuk'
+              ? 'منصة مدار للتعلم الرقمي'
+              : 'Madar Digital Learning Platform'
           }
         >
           <BrandLogo locale={locale} variant="full" surface="dark" size="md" />

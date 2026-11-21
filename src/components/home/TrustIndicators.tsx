@@ -30,8 +30,8 @@ export function TrustIndicators({ locale }: TrustIndicatorsProps) {
     },
     {
       icon: Award,
-      titleAr: 'شهادة جامعية معتمدة',
-      titleEn: 'Accredited University Certificate',
+      titleAr: 'شهادة معتمدة عند التخرج',
+      titleEn: 'Accredited Graduation Certificate',
       descAr: '30 ساعة معتمدة وشهادة معتمدة عند إتمام متطلبات التخرج.',
       descEn: '30 credit hours culminating in an accredited graduation certificate.',
     },

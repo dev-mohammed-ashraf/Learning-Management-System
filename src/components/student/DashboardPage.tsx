@@ -32,7 +32,6 @@ export function DashboardPage({
   locale,
   state,
   programs,
-  onGoHome,
   onNavigate,
   onOpenProgram,
   onOpenAuth,
@@ -95,7 +94,6 @@ export function DashboardPage({
         titleEn={`Welcome, ${studentDisplayName} — Dashboard`}
         descriptionAr="اعرض ملخص تقدمك الحقيقي في الدورات، الساعات الدراسية المنجزة، أهدافك التعليمية، وآخر نشاط لك على منصة مدار."
         descriptionEn="Track your real course enrollment progress, completed credit hours, active study goals, and recent activity on Madar."
-        onGoHome={onGoHome}
         actionSlot={
           !state.account.signedIn ? (
             <button

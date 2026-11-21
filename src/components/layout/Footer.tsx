@@ -68,8 +68,8 @@ export function Footer({
             />
             <p className="text-[0.9rem] max-w-[40ch]">
               {locale === 'ar'
-                ? 'منصة مدار للتعلّم الرقمي — البوابة التعليمية لبرامج الدبلومات المعتمدة التابعة لمعهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م.'
-                : 'Madar Digital Learning Platform — the digital education gateway for accredited diploma tracks by the Research & Consulting Institute, University of Tabuk since 2006.'}
+                ? 'منصة مدار للتعلم الرقمي — البوابة الإلكترونية لبرامج الدبلومات المهنية المعتمدة عن بُعد منذ عام 2006م.'
+                : 'Madar Digital Learning Platform — the online gateway for accredited professional diploma tracks offered since 2006.'}
             </p>
           </div>
 
@@ -160,7 +160,7 @@ export function Footer({
                 title={locale === 'ar' ? 'المركز الوطني للتعليم الإلكتروني' : 'National eLearning Center'}
               >
                 <img
-                  src="/assets/ut/lg-nelc-onnavy.svg"
+                  src="/assets/brand/lg-nelc-onnavy.svg"
                   alt={locale === 'ar' ? 'المركز الوطني للتعليم الإلكتروني' : 'National eLearning Center'}
                   className="h-[44px] w-auto max-w-[150px] object-contain block opacity-95 hover:opacity-100 transition-opacity"
                 />
@@ -171,7 +171,7 @@ export function Footer({
                 title={locale === 'ar' ? 'وزارة التعليم' : 'Ministry of Education'}
               >
                 <img
-                  src="/assets/ut/lg-moe-onnavy.png"
+                  src="/assets/brand/lg-moe-onnavy.png"
                   alt={locale === 'ar' ? 'وزارة التعليم' : 'Ministry of Education'}
                   className="h-[44px] w-auto max-w-[150px] object-contain block opacity-95 hover:opacity-100 transition-opacity"
                 />
@@ -186,7 +186,7 @@ export function Footer({
                 }
               >
                 <img
-                  src="/assets/ut/lg-hrsd-onnavy.svg"
+                  src="/assets/brand/lg-hrsd-onnavy.svg"
                   alt={
                     locale === 'ar'
                       ? 'وزارة الموارد البشرية والتنمية الاجتماعية'
@@ -204,23 +204,7 @@ export function Footer({
           aria-label={locale === 'ar' ? 'الهوية الرسمية' : 'Official Identity'}
         >
           <img
-            src="/assets/ut/ut-tabuk-white.svg"
-            alt={locale === 'ar' ? 'جامعة تبوك' : 'University of Tabuk'}
-            className="block w-auto h-[58px] max-[560px]:h-[48px] opacity-92 hover:opacity-100 transition-opacity"
-          />
-          <span className="w-[1px] h-[46px] bg-white/16 flex-none max-[560px]:hidden" aria-hidden="true" />
-          <img
-            src="/assets/ut/ut-ai-white.svg"
-            alt={
-              locale === 'ar'
-                ? 'التقنيات المتقدمة والذكاء الاصطناعي 2026'
-                : 'Advanced Technologies and AI 2026'
-            }
-            className="block w-auto h-[50px] max-[560px]:h-[40px] opacity-92 hover:opacity-100 transition-opacity"
-          />
-          <span className="w-[1px] h-[46px] bg-white/16 flex-none max-[560px]:hidden" aria-hidden="true" />
-          <img
-            src="/assets/ut/ut-vision-white.svg"
+            src="/assets/brand/vision2030-white.svg"
             alt={locale === 'ar' ? 'رؤية السعودية 2030' : 'Saudi Vision 2030'}
             className="block w-auto h-[56px] max-[560px]:h-[46px] opacity-92 hover:opacity-100 transition-opacity"
           />
@@ -229,8 +213,8 @@ export function Footer({
         <div className="border-t border-white/12 py-[20px] flex justify-between items-center gap-[16px] flex-wrap text-[0.82rem] max-[560px]:justify-center max-[560px]:text-center">
           <span>
             {locale === 'ar'
-              ? '© 2026 منصة مدار للتعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك. جميع الحقوق محفوظة.'
-              : '© 2026 Madar Digital Learning Platform — Research & Consulting Institute, University of Tabuk. All rights reserved.'}
+              ? '© 2026 منصة مدار للتعلم الرقمي. جميع الحقوق محفوظة.'
+              : '© 2026 Madar Digital Learning Platform. All rights reserved.'}
           </span>
           <nav
             className="flex items-center gap-[20px]"

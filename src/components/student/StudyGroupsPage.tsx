@@ -16,7 +16,6 @@ export function StudyGroupsPage({
   locale,
   state,
   programs,
-  onGoHome,
   onToggleGroup,
 }: StudyGroupsPageProps) {
   const joinedGroups = STUDY_GROUPS.filter((g) => state.joinedGroupIds.includes(g.id));
@@ -32,7 +31,6 @@ export function StudyGroupsPage({
         titleEn="Study Groups"
         descriptionAr="انضم إلى حلقات الدراسة التخصصية المرتبطة بمسارك الأكاديمي لتنظيم المذاكرة الجماعية وتنسيق المراجعات."
         descriptionEn="Join subject-focused study circles linked to your diploma track to organize group revision."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">

@@ -1,6 +1,6 @@
 export type Theme = 'light' | 'dark';
 
-export const THEME_STORAGE_KEY = 'ut_theme';
+export const THEME_STORAGE_KEY = 'madar_theme';
 
 export function resolveInitialTheme(storedValue: string | null | undefined): Theme {
   return storedValue === 'dark' ? 'dark' : 'light';

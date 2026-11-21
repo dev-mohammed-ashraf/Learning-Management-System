@@ -5,10 +5,9 @@ import { BrandLogo } from '../common/BrandLogo';
 interface ProgramsHeroProps {
   locale: Locale;
   kind: ProgramKind;
-  onGoHome: () => void;
 }
 
-export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
+export function ProgramsHero({ locale, kind }: ProgramsHeroProps) {
   const titleText =
     locale === 'ar'
       ? kind === 'diplomas'
@@ -23,11 +22,11 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
   const leadParagraph =
     locale === 'ar'
       ? kind === 'diplomas'
-        ? 'تصفّح جميع الدورات وبرامج الدبلوم المشارك المهني المقدمة عن بُعد في جامعة تبوك، وقارن المحاور والساعات المعتمدة لاختيار مسارك الدراسي.'
-        : 'مسارات زمالة تخصصية قيد الإعداد الأكاديمي تمهيدًا لإطلاقها عبر منصة معهد البحوث والاستشارات بجامعة تبوك.'
+        ? 'تصفّح جميع الدورات وبرامج الدبلوم المشارك المهني المقدمة عن بُعد على منصة مدار، وقارن المحاور والساعات المعتمدة لاختيار مسارك الدراسي.'
+        : 'مسارات زمالة تخصصية قيد الإعداد الأكاديمي تمهيدًا لإطلاقها عبر منصة مدار.'
       : kind === 'diplomas'
-        ? 'Browse all online professional associate diploma courses offered at the University of Tabuk, and compare modules and credit hours to choose your study path.'
-        : 'Specialized professional fellowship tracks currently under academic preparation for release at the University of Tabuk.';
+        ? 'Browse all online professional associate diploma courses offered on the Madar platform, and compare modules and credit hours to choose your study path.'
+        : 'Specialized professional fellowship tracks currently under academic preparation for release on the Madar platform.';
 
   return (
     <div className="ut-page-hero pt-[122px] pb-[44px] max-[1023px]:pt-[160px] max-[767px]:pt-[202px] max-[767px]:pb-[32px] relative overflow-hidden border-b border-white/10">
@@ -44,18 +43,6 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
 
       <div className="wrap flex items-center justify-between gap-[34px] flex-wrap relative">
         <div>
-          <div className="text-[0.8rem] text-[#CBD8E6] flex gap-[8px] items-center mb-[12px] relative flex-wrap">
-            <button
-              type="button"
-              onClick={onGoHome}
-              className="text-[#CBD8E6] hover:text-[#28B5C5] transition-colors cursor-pointer"
-            >
-              {locale === 'ar' ? 'الرئيسية' : 'Home'}
-            </button>
-            <span className="text-[#64748B]" aria-hidden="true">/</span>
-            <b className="text-[#28B5C5] font-bold">{titleText}</b>
-          </div>
-
           <h1 className="text-[clamp(1.85rem,3.5vw,2.65rem)] font-extrabold leading-[1.3] text-white relative">
             {lead}
             {tail ? (
@@ -77,8 +64,8 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
           className="hidden min-[561px]:block flex-none ps-[22px] border-s-2 border-[#28B5C5]/60"
           aria-label={
             locale === 'ar'
-              ? 'منصة مدار للتعلّم الرقمي — جامعة تبوك'
-              : 'Madar Digital Learning Platform — University of Tabuk'
+              ? 'منصة مدار للتعلم الرقمي'
+              : 'Madar Digital Learning Platform'
           }
         >
           <BrandLogo locale={locale} variant="full" surface="dark" size="md" />

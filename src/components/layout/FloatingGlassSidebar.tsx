@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
   BookOpen,
-  Brain,
   ChartNoAxesColumn,
   ChevronLeft,
   ChevronRight,
@@ -76,7 +75,6 @@ const SIDEBAR_GROUPS: SidebarGroup[] = [
     groupLabelAr: 'أدوات التعلم',
     groupLabelEn: 'Learning Tools',
     items: [
-      { id: 'ai-tools', labelAr: 'أدوات الذكاء الاصطناعي', labelEn: 'AI Tools', icon: Brain },
       { id: 'dashboard', labelAr: 'لوحة الإنجاز', labelEn: 'Dashboard', icon: ChartNoAxesColumn },
       { id: 'profile', labelAr: 'الملف الشخصي', labelEn: 'Profile', icon: UserRound },
     ],
@@ -191,7 +189,7 @@ export function FloatingGlassSidebar({
             onClick={() => handleNavClick('home')}
             aria-label={
               locale === 'ar'
-                ? 'العودة إلى الرئيسية — منصة مدار للتعلّم الرقمي'
+                ? 'العودة إلى الرئيسية — منصة مدار للتعلم الرقمي'
                 : 'Home — Madar Digital Learning Platform'
             }
             className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 dark:hover:bg-[#1B3553]/70 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
@@ -216,7 +214,7 @@ export function FloatingGlassSidebar({
           </button>
         </div>
 
-        {/* B. 4 Grouped Student Navigation Sections (11 items) */}
+        {/* B. 4 Grouped Student Navigation Sections (10 items) */}
         <nav
           aria-label={locale === 'ar' ? 'التنقل الرئيسي' : 'Main Navigation'}
           className="flex-1 min-h-0 flex flex-col gap-[2px] py-[2px] overflow-y-auto [&::-webkit-scrollbar]:hidden"
@@ -443,7 +441,7 @@ export function FloatingGlassSidebar({
               onClick={() => handleNavClick('home')}
               aria-label={
                 locale === 'ar'
-                  ? 'مدار — منصة التعلّم الرقمي'
+                  ? 'مدار — منصة التعلم الرقمي'
                   : 'Madar — Digital Learning Platform'
               }
               className="min-w-0 cursor-pointer rounded-[10px] py-[2px] focus-visible:outline-2 focus-visible:outline-[#176B87]"

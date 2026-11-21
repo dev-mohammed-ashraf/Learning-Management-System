@@ -56,7 +56,6 @@ export function ProfilePage({
   theme,
   state,
   programs,
-  onGoHome,
   onToggleLocale,
   onToggleTheme,
   onSaveProfile,
@@ -102,7 +101,6 @@ export function ProfilePage({
         titleEn="Student Profile"
         descriptionAr="إدارة معلوماتك الشخصية وتفضيلات المذاكرة واللغة والوضع الليلي، ومتابعة سجل دوراتك المسجلة والمكتملة."
         descriptionEn="Manage your student details, study preferences, language, theme, and review your enrolled and completed courses."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">
@@ -362,11 +360,11 @@ export function ProfilePage({
                   <span>
                     {completedPrograms.length > 0
                       ? locale === 'ar'
-                        ? `أتممت محاور ${completedPrograms.length} دورة محليًا؛ تصدر الشهادة الرسمية المعتمدة (30 ساعة معتمدة) بعد استكمال متطلبات القبول والاختبارات عبر بوابة معهد البحوث والاستشارات بجامعة تبوك.`
-                        : `You completed ${completedPrograms.length} course syllabus locally. Accredited certificates (30 credit hours) are officially issued through the University of Tabuk portal upon exam verification.`
+                        ? `أتممت محاور ${completedPrograms.length} دورة محليًا؛ تصدر الشهادة الرسمية المعتمدة (30 ساعة معتمدة) بعد استكمال متطلبات القبول والاختبارات عبر بوابة التعلّم.`
+                        : `You completed ${completedPrograms.length} course syllabus locally. Accredited certificates (30 credit hours) are officially issued through the learning portal upon exam verification.`
                       : locale === 'ar'
-                        ? 'تصدر الشهادات المعتمدة فور استكمال متطلبات الدبلوم (30 ساعة معتمدة) واجتياز الاختبارات الرسمية عبر البوابة الجامعية.'
-                        : 'Accredited diploma certificates appear once official admission, 30 credit hours, and university assessment verification are completed.'}
+                        ? 'تصدر الشهادات المعتمدة فور استكمال متطلبات الدبلوم (30 ساعة معتمدة) واجتياز الاختبارات الرسمية عبر بوابة التعلّم.'
+                        : 'Accredited diploma certificates appear once official admission, 30 credit hours, and official assessment verification are completed.'}
                   </span>
                 </div>
               </div>

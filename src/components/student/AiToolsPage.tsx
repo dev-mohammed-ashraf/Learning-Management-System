@@ -30,7 +30,7 @@ const TOOL_ICONS: Record<AiToolId, typeof Brain> = {
   'idea-organizer': Lightbulb,
 };
 
-export function AiToolsPage({ locale, programs, onGoHome }: AiToolsPageProps) {
+export function AiToolsPage({ locale, programs }: AiToolsPageProps) {
   const [activeToolId, setActiveToolId] = useState<AiToolId>('concept-explainer');
   const [selectedProgramId, setSelectedProgramId] = useState<string>(programs[0]?.id ?? '');
   const [topicInput, setTopicInput] = useState('');
@@ -82,7 +82,6 @@ export function AiToolsPage({ locale, programs, onGoHome }: AiToolsPageProps) {
         titleEn="AI Learning Tools"
         descriptionAr="مساحة عمل تفاعلية لاختيار أداة المذاكرة المناسبة، وتحديد سياق الدورة الدراسية، وإعداد طلبات تعليمية دقيقة قبل إرسالها لمحرك الذكاء الاصطناعي."
         descriptionEn="Select a specialized learning tool, pair it with your course context, and compose structured study requests ready for the AI service endpoint."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">

@@ -75,17 +75,17 @@ export const LEARNING_PATHS: LearningPathDefinition[] = [
     id: 'path-fellowships-upcoming',
     titleAr: 'مسار الزمالات التخصصية (قيد الإعداد الأكاديمي)',
     titleEn: 'Specialized Fellowships Track (Coming Soon)',
-    subtitleAr: 'مسارات زمالة متقدمة قيد الاعتماد في معهد البحوث والاستشارات',
+    subtitleAr: 'مسارات زمالة متقدمة قيد الاعتماد الأكاديمي',
     subtitleEn: 'Advanced fellowship tracks currently undergoing academic accreditation',
     descriptionAr:
-      'يعمل معهد البحوث والاستشارات بجامعة تبوك على إعداد مسارات الزمالة التخصصية لإضافتها لاحقًا دون إدراج مقررات غير معتمدة.',
+      'تعمل فرق المنصة على إعداد مسارات الزمالة التخصصية لإضافتها لاحقًا دون إدراج مقررات غير معتمدة.',
     descriptionEn:
-      'The Research & Consulting Institute is preparing specialized fellowship tracks for future release without listing unaccredited courses.',
+      'The Madar platform team is preparing specialized fellowship tracks for future release without listing unaccredited courses.',
     image: '/src/assets/images/procurement_course_1795281371077.jpg',
     programIds: [],
     status: 'upcoming',
-    durationAr: 'قريبًا عبر بوابة جامعة تبوك',
-    durationEn: 'Upcoming via University of Tabuk Portal',
+    durationAr: 'قريبًا على منصة مدار',
+    durationEn: 'Upcoming on the Madar Platform',
   },
 ];
 

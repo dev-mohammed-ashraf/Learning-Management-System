@@ -23,7 +23,6 @@ export function ProjectsPage({
   locale,
   state,
   programs,
-  onGoHome,
   onUpdateProject,
 }: ProjectsPageProps) {
   const [draftNotes, setDraftNotes] = useState<Record<string, string>>({});
@@ -64,7 +63,6 @@ export function ProjectsPage({
         titleEn="Applied Projects"
         descriptionAr="اعمل على المشاريع المرتبطة بدوراتك لتطبيق المهارات عمليًا، وسجّل حالة التقدم وملاحظات التسليم محليًا في مساحة عملك."
         descriptionEn="Work through applied projects tied to your diploma courses, organize deliverables, and track status locally."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">
@@ -78,8 +76,8 @@ export function ProjectsPage({
                   : 'Project Review Integration: '}
               </strong>
               {locale === 'ar'
-                ? 'يمكنك تجهيز ملاحظات التسليم وتحديث مراحل العمل محليًا. تُعتمد المراجعات والتقييمات الرسمية من أعضاء هيئة التدريس عند ربط بوابة تسليم الجامعة.'
-                : 'You can save deliverable notes and update your project workflow locally. Official instructor feedback and grading require connection to the university submission server.'}
+                ? 'يمكنك تجهيز ملاحظات التسليم وتحديث مراحل العمل محليًا. تُعتمد المراجعات والتقييمات الرسمية من أعضاء هيئة التدريس عند ربط بوابة التسليم الرسمية.'
+                : 'You can save deliverable notes and update your project workflow locally. Official instructor feedback and grading require connection to the official submission server.'}
             </p>
           </div>
 

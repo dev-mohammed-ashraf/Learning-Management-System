@@ -21,7 +21,6 @@ export function LearningPathsPage({
   locale,
   state,
   programs,
-  onGoHome,
   onOpenProgram,
 }: LearningPathsPageProps) {
   return (
@@ -34,7 +33,6 @@ export function LearningPathsPage({
         titleEn="Structured Learning Paths"
         descriptionAr="مسارات مترابطة تجمع دورات الدبلوم المعتمدة في تسلسل واضح لبناء مهارات متكاملة، مع حساب تقدّمك الحقيقي تلقائيًا."
         descriptionEn="Curated sequences grouping accredited diploma courses into clear career tracks, automatically reflecting your real study progress."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">

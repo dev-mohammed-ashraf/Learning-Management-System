@@ -13,7 +13,7 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
 
   useEffect(() => {
     try {
-      const accepted = window.localStorage.getItem('tabuk_cookies_ok');
+      const accepted = window.localStorage.getItem('madar_cookies_ok');
       if (!accepted) {
         setCookieVisible(true);
       }
@@ -30,7 +30,7 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
 
   const acceptCookies = () => {
     try {
-      window.localStorage.setItem('tabuk_cookies_ok', '1');
+      window.localStorage.setItem('madar_cookies_ok', '1');
     } catch {
       // ignore storage failure
     }

@@ -138,8 +138,8 @@ export default function App() {
     document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
     document.title =
       locale === 'ar'
-        ? 'مدار | منصة التعلّم الرقمي والبرامج المعتمدة — جامعة تبوك'
-        : 'Madar | Digital Learning Platform — University of Tabuk';
+        ? 'مدار | منصة التعلم الرقمي والبرامج المعتمدة'
+        : 'Madar | Digital Learning Platform';
   }, [locale]);
 
   useEffect(() => {
@@ -452,7 +452,7 @@ export default function App() {
 
         {activePage === 'programs' && (
           <>
-            <ProgramsHero locale={locale} kind={kind} onGoHome={navigateToHome} />
+            <ProgramsHero locale={locale} kind={kind} />
 
             <section
               id="programsCatalog"

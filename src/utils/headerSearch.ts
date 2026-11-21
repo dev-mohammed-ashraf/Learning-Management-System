@@ -138,8 +138,8 @@ export const PORTAL_SERVICES: PortalServiceEntry[] = [
     id: 'about',
     titleAr: 'عن منصة مدار التعليمية',
     titleEn: 'About Madar Learning Platform',
-    keywordsAr: 'مدار عن المعهد المنصة الرؤية الرسالة جامعة تبوك أسئلة شائعة',
-    keywordsEn: 'madar about institute platform vision mission tabuk university faq',
+    keywordsAr: 'مدار عن المنصة الرؤية الرسالة أسئلة شائعة',
+    keywordsEn: 'madar about platform vision mission faq',
   },
   {
     id: 'contact',

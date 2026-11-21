@@ -92,7 +92,7 @@ export function BrandLogo({
         className={`inline-flex items-center justify-center ${className}`}
         aria-label={
           locale === 'ar'
-            ? 'مدار — منصة التعلّم الرقمي'
+            ? 'مدار — منصة التعلم الرقمي'
             : 'Madar — Digital Learning Platform'
         }
       >
@@ -112,14 +112,14 @@ export function BrandLogo({
 
   const brandName = locale === 'ar' ? 'مدار' : 'Madar';
   const brandTagline =
-    locale === 'ar' ? 'منصة التعلّم الرقمي' : 'Digital Learning';
+    locale === 'ar' ? 'منصة التعلم الرقمي' : 'Digital Learning';
 
   return (
     <span
       className={`inline-flex items-center ${sizing.gap} select-none ${className}`}
       aria-label={
         locale === 'ar'
-          ? 'مدار — منصة التعلّم الرقمي'
+          ? 'مدار — منصة التعلم الرقمي'
           : 'Madar — Digital Learning Platform'
       }
     >

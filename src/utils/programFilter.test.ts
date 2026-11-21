@@ -55,7 +55,7 @@ test('paginatePrograms returns 6 items on page 1 and 1 item on page 2', () => {
   assert.equal(page2.currentPage, 2);
 });
 
-test('splitTwoToneTitle splits hero and journey headings like reference tabuk.js', () => {
+test('splitTwoToneTitle splits hero and journey headings like the reference headings', () => {
   assert.deepEqual(splitTwoToneTitle('برامج الدبلومات'), {
     lead: 'برامج',
     tail: 'الدبلومات',

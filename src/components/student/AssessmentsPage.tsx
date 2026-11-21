@@ -17,7 +17,6 @@ export function AssessmentsPage({
   locale,
   state,
   programs,
-  onGoHome,
   onToggleSelfCheck,
   onOpenProgram,
 }: AssessmentsPageProps) {
@@ -29,9 +28,8 @@ export function AssessmentsPage({
         eyebrowEn="Academic Readiness & Verification"
         titleAr="الاختبارات والتقييمات"
         titleEn="Assessments & Readiness"
-        descriptionAr="استعرض قوائم التحقق والمراجعة الذاتية المرتبطة بمحاور كل دبلوم. تُعقد الاختبارات الرسمية وتُعتمد درجاتها حصريًا عبر بوابة جامعة تبوك التعليمية."
+        descriptionAr="استعرض قوائم التحقق والمراجعة الذاتية المرتبطة بمحاور كل دبلوم. تُعقد الاختبارات الرسمية وتُعتمد درجاتها حصريًا عبر بوابة التعلّم الرسمية."
         descriptionEn="Review syllabus-aligned readiness checklists for each diploma. Official graded exams and transcripts are hosted exclusively on the connected LMS backend."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">
@@ -47,7 +45,7 @@ export function AssessmentsPage({
               </strong>
               {locale === 'ar'
                 ? 'لا تُعرض درجات اختبارية افتراضية أو نتائج مُختلقة هنا؛ بمجرد الربط مع خادم الاختبارات الرسمي تظهر الجلسات المجدولة والدرجات المعتمدة تلقائيًا، ويمكنك حاليًا تحديد جاهزيتك الذاتية لكل محور.'
-                : 'No fabricated grades or synthetic exam scores are generated here. Scheduled official exams and verified grades appear once connected to the university LMS API; below you can track your self-readiness per course.'}
+                : 'No fabricated grades or synthetic exam scores are generated here. Scheduled official exams and verified grades appear once connected to the official LMS API; below you can track your self-readiness per course.'}
             </div>
           </div>
 

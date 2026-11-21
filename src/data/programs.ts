@@ -351,14 +351,14 @@ export const ENROLLMENT_STEPS = [
     number: 3,
     titleAr: 'أكمل الرسوم والتسجيل',
     titleEn: 'Complete Tuition & Enrollment',
-    descAr: 'أتمم السداد الكامل إلكترونيًا عبر بوابة جامعة تبوك، وفق شروط القبول المعلنة.',
-    descEn: 'Complete full tuition payment electronically via the University of Tabuk portal, subject to admission rules.',
+    descAr: 'أتمم السداد الكامل إلكترونيًا عبر بوابة المنصة، وفق شروط القبول المعلنة.',
+    descEn: 'Complete full tuition payment electronically via the platform payment gateway, subject to admission rules.',
   },
   {
     number: 4,
     titleAr: 'احضر دروسك وتخرّج بشهادة معتمدة',
     titleEn: 'Attend Classes & Graduate',
-    descAr: 'تابع محاضراتك المسائية عبر بوابة التعلّم، وعند إتمام المتطلبات تحصل على شهادة معتمدة من معهد البحوث والاستشارات بجامعة تبوك.',
-    descEn: 'Join evening sessions in the learning portal and earn an accredited certificate from the Research and Consulting Institute at University of Tabuk.',
+    descAr: 'تابع محاضراتك المسائية عبر بوابة التعلّم، وعند إتمام المتطلبات تحصل على شهادة دبلوم مشارك مهني معتمدة.',
+    descEn: 'Join evening sessions in the learning portal and earn an accredited professional associate diploma certificate.',
   },
 ];

@@ -27,7 +27,6 @@ export function GoalsPage({
   locale,
   state,
   programs,
-  onGoHome,
   onCreateGoal,
   onUpdateGoal,
   onDeleteGoal,
@@ -91,7 +90,6 @@ export function GoalsPage({
         titleEn="My Learning Goals"
         descriptionAr="أنشئ أهدافك الدراسية وحدّد مواعيدها المستهدفة وتابع نسبة إنجازها لحظة بلحظة بالتزامن مع لوحة الإنجاز."
         descriptionEn="Create study goals, set target dates, and track real progress updates synced with your Dashboard."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">

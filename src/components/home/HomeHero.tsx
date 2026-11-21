@@ -116,8 +116,8 @@ export function HomeHero({
             <div className="ut-eyebrow inline-flex items-center gap-[10px] text-[0.84rem] sm:text-[0.86rem] font-bold text-[#DDF3F5] mb-[14px]">
               <span>
                 {isRtl
-                  ? 'منصة مدار للتعلّم الرقمي — جامعة تبوك'
-                  : 'Madar Digital Learning Platform — University of Tabuk'}
+                  ? 'منصة مدار للتعلم الرقمي'
+                  : 'Madar Digital Learning Platform'}
               </span>
             </div>
 
@@ -126,7 +126,7 @@ export function HomeHero({
                 <>
                   <span className="block">بوابتك الرقمية</span>
                   <span className="block mt-1">لصناعة مسارك التعليمي</span>
-                  <span className="block mt-1 text-[#28B5C5]">بمعايير جامعية معتمدة</span>
+                  <span className="block mt-1 text-[#28B5C5]">بمعايير أكاديمية معتمدة</span>
                 </>
               ) : (
                 <>
@@ -333,7 +333,7 @@ export function HomeHero({
                   </div>
                   <div className="text-[0.72rem] text-[#DDF3F5]/78 mt-0.5 flex items-center gap-1">
                     <Layers className="w-[12px] h-[12px] text-[#28B5C5] flex-none" aria-hidden="true" />
-                    <span>{isRtl ? 'معهد البحوث والاستشارات' : 'Research & Consulting Inst.'}</span>
+                    <span>{isRtl ? 'تدريب مهني معتمد' : 'Accredited Professional Training'}</span>
                   </div>
                 </div>
               </button>

@@ -33,19 +33,19 @@ export function AboutInstitute({ locale, onDiscoverMore }: AboutInstituteProps) 
           <h2 className="text-[clamp(1.65rem,3vw,2.25rem)] font-extrabold text-[#142D4E] dark:text-[#F1F5F9] leading-[1.4] text-balance">
             {locale === 'ar' ? (
               <>
-                بيئة جامعية <span className="text-[#176B87] dark:text-[#28B5C5]">تدعم رحلتك الدراسية</span>
+                بيئة تعليمية <span className="text-[#176B87] dark:text-[#28B5C5]">تدعم رحلتك الدراسية</span>
               </>
             ) : (
               <>
-                A University Space <span className="text-[#176B87] dark:text-[#28B5C5]">Built for Learners</span>
+                An Educational Space <span className="text-[#176B87] dark:text-[#28B5C5]">Built for Learners</span>
               </>
             )}
           </h2>
 
           <p className="text-[#64748B] dark:text-[#B8C7D9] text-[1.02rem] leading-[1.9] mt-[14px] max-w-[42rem]">
             {locale === 'ar'
-              ? 'تمثل منصة «مدار» الواجهة التعليمية الرقمية لمعهد البحوث والاستشارات بجامعة تبوك، حيث نضع الطالب في قلب التجربة الدراسية من خلال دبلومات مهنية تمنحك أساسًا معرفيًا متينًا وتجربة تعلم تفاعلية ميسّرة.'
-              : 'Serving as the digital learning gateway of the Research and Consulting Institute at the University of Tabuk, the Madar platform centers on the student experience—combining solid academic foundations with accessible online instruction.'}
+              ? 'تمثل منصة «مدار» بيئة تعلم رقمية متكاملة، حيث نضع الطالب في قلب التجربة الدراسية من خلال دبلومات مهنية تمنحك أساسًا معرفيًا متينًا وتجربة تعلم تفاعلية ميسّرة.'
+              : 'Madar is a complete digital learning environment that centers on the student experience—combining solid academic foundations with accessible online instruction.'}
           </p>
 
           <ul className="list-none m-0 p-0 grid gap-[10px] mt-[20px]">
@@ -80,8 +80,8 @@ export function AboutInstitute({ locale, onDiscoverMore }: AboutInstituteProps) 
               src="/src/assets/images/modern_study_space_1795281369592.jpg"
               alt={
                 locale === 'ar'
-                  ? 'مكتبة جامعية حديثة ومقصورات دراسة رقمية مجهزة للطلاب'
-                  : 'Contemporary university library and digital student study commons'
+                  ? 'مكتبة حديثة ومقصورات دراسة رقمية مجهزة للطلاب'
+                  : 'Contemporary library and digital student study commons'
               }
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover object-center block"

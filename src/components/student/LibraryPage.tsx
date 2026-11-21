@@ -24,7 +24,6 @@ export function LibraryPage({
   locale,
   state,
   programs,
-  onGoHome,
   onBrowseCourses,
   onOpenProgram,
   onToggleSave,
@@ -51,7 +50,6 @@ export function LibraryPage({
         titleEn="My Educational Library"
         descriptionAr="إدارة الدورات التي سجّلت بها أو حفظتها للرجوع إليها، مع متابعة مباشرة لإتمام المحاور الدراسية في كل دبلوم."
         descriptionEn="Manage the courses you enrolled in or bookmarked, and check off course modules as you progress."
-        onGoHome={onGoHome}
       />
 
       <section className="py-[32px] pb-[72px]">

@@ -98,7 +98,7 @@ export function FloatingGlassHeader({
         onClick={onGoHome}
         aria-label={
           locale === 'ar'
-            ? 'العودة إلى الرئيسية — منصة مدار للتعلّم الرقمي'
+            ? 'العودة إلى الرئيسية — منصة مدار للتعلم الرقمي'
             : 'Home — Madar Digital Learning Platform'
         }
         className="order-1 flex-none flex items-center justify-center rounded-[12px] py-[4px] px-[4px] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-[#176B87] dark:focus-visible:outline-[#28B5C5] transition-opacity cursor-pointer"

@@ -168,14 +168,14 @@ export function PortalModal({
         {
           qAr: 'ما طبيعة الشهادة الممنوحة عند التخرج؟',
           qEn: 'What certificate do students earn upon graduation?',
-          aAr: 'يحصل الطالب بعد استيفاء متطلبات التخرج على شهادة دبلوم مشارك مهني معتمدة من معهد البحوث والاستشارات بجامعة تبوك.',
-          aEn: 'Graduates receive an accredited professional associate diploma certificate from the Research and Consulting Institute at University of Tabuk.',
+          aAr: 'يحصل الطالب بعد استيفاء متطلبات التخرج على شهادة دبلوم مشارك مهني معتمدة.',
+          aEn: 'Graduates receive an accredited professional associate diploma certificate upon completing all graduation requirements.',
         },
         {
           qAr: 'ما آلية سداد الرسوم الدراسية؟',
           qEn: 'How are tuition fees paid?',
-          aAr: 'تبلغ الرسوم 6,500 ر.س شاملة الضريبة، ويتم السداد الكامل إلكترونيًا عبر بوابة مدفوعات جامعة تبوك.',
-          aEn: 'Tuition is 6,500 SAR (VAT included), payable in full electronically via the University of Tabuk payment gateway.',
+          aAr: 'تبلغ الرسوم 6,500 ر.س شاملة الضريبة، ويتم السداد الكامل إلكترونيًا عبر بوابة المدفوعات الإلكترونية للمنصة.',
+          aEn: 'Tuition is 6,500 SAR (VAT included), payable in full electronically via the platform payment gateway.',
         },
       ];
 
@@ -184,13 +184,13 @@ export function PortalModal({
           <div className="space-y-2.5">
             <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
               {locale === 'ar'
-                ? 'عن منصة مدار للتعلّم — معهد البحوث والاستشارات بجامعة تبوك'
-                : 'About Madar Learning Platform — University of Tabuk'}
+                ? 'عن منصة مدار للتعلم الرقمي'
+                : 'About Madar — Digital Learning Platform'}
             </h3>
             <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
               {locale === 'ar'
-                ? 'توفر منصة مدار تجربة دراسية إلكترونية منظمة تتيح للطلبة والراغبين في التطوير العلمي والعملي الالتحاق ببرامج الدبلوم المشارك المهني المقدمة من معهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م، وفق بيئة تعليمية معتمدة من المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
-                : 'Madar delivers a structured online study experience enabling learners to enroll in accredited associate diplomas offered by the Research and Consulting Institute at the University of Tabuk since 2006, supervised by NELC and the Ministry of Education.'}
+                ? 'توفر منصة مدار تجربة دراسية إلكترونية منظمة تتيح للطلبة والراغبين في التطوير العلمي والعملي الالتحاق ببرامج الدبلوم المشارك المهني المعتمدة عن بُعد منذ عام 2006م، وفق بيئة تعليمية معتمدة من المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
+                : 'Madar delivers a structured online study experience enabling learners to enroll in accredited associate diplomas offered online since 2006, within an e-learning environment recognized by NELC and the Ministry of Education.'}
             </p>
           </div>
 
@@ -211,8 +211,8 @@ export function PortalModal({
               </div>
               <p className="text-[0.84rem] text-[#64748B] dark:text-[#B8C7D9] mt-1">
                 {locale === 'ar'
-                  ? 'أتمم سداد الرسوم الدراسية كاملة (6,500 ر.س) مباشرة عبر بوابة مدفوعات جامعة تبوك.'
-                  : 'Complete full tuition payment (6,500 SAR) directly through the University of Tabuk gateway.'}
+                  ? 'أتمم سداد الرسوم الدراسية كاملة (6,500 ر.س) مباشرة عبر بوابة المدفوعات الإلكترونية للمنصة.'
+                  : 'Complete full tuition payment (6,500 SAR) directly through the platform payment gateway.'}
               </p>
             </div>
           </div>
@@ -249,8 +249,8 @@ export function PortalModal({
           </h3>
           <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
             {locale === 'ar'
-              ? 'يتعاون معهد البحوث والاستشارات بجامعة تبوك مع الجهات في القطاعين العام والخاص لتصميم وتنفيذ مسارات دبلوم وتدريب متخصصة لمنسوبيها بما يتوافق مع أهدافها التشغيلية.'
-              : 'The Research and Consulting Institute at University of Tabuk partners with public and private organizations to coordinate structured diploma and specialized training tracks for their teams.'}
+              ? 'تتعاون منصة مدار مع الجهات في القطاعين العام والخاص لتصميم وتنفيذ مسارات دبلوم وتدريب متخصصة لمنسوبيها بما يتوافق مع أهدافها التشغيلية.'
+              : 'Madar partners with public and private organizations to coordinate structured diploma and specialized training tracks for their teams.'}
           </p>
           <button
             type="button"
@@ -299,8 +299,8 @@ export function PortalModal({
             </li>
             <li>
               {locale === 'ar'
-                ? 'تشمل الرسوم الدراسية المعلنة (6,500 ر.س) ضريبة القيمة المضافة، وتُطبّق اللوائح المعتمدة لدى معهد البحوث والاستشارات بجامعة تبوك.'
-                : 'Listed tuition fees (6,500 SAR) include VAT and are governed by Research and Consulting Institute regulations at University of Tabuk.'}
+                ? 'تشمل الرسوم الدراسية المعلنة (6,500 ر.س) ضريبة القيمة المضافة، وتُطبّق اللوائح الأكاديمية المعتمدة لدى المنصة.'
+                : 'Listed tuition fees (6,500 SAR) include VAT and are governed by the platform approved academic regulations.'}
             </li>
             <li>
               {locale === 'ar'
@@ -585,7 +585,7 @@ export function PortalModal({
                           </div>
                           <div className="text-[0.76rem] text-[#64748B] dark:text-[#B8C7D9] font-semibold">
                             {locale === 'ar'
-                              ? 'شامل الضريبة · السداد الكامل عبر بوابة جامعة تبوك'
+                              ? 'شامل الضريبة · السداد الكامل إلكترونيًا'
                               : 'VAT Included · Full Payment'}
                           </div>
                         </div>
@@ -737,8 +737,8 @@ export function PortalModal({
               </h3>
               <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.9rem] mt-1">
                 {locale === 'ar'
-                  ? 'منصة مدار للتعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك'
-                  : 'Madar Digital Learning Platform — Research & Consulting Institute, University of Tabuk'}
+                  ? 'منصة مدار للتعلم الرقمي'
+                  : 'Madar Digital Learning Platform'}
               </p>
             </div>
 

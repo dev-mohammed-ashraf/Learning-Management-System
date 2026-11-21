@@ -26,8 +26,8 @@ export function EnrollmentSteps({ locale, onStartRegistration }: EnrollmentSteps
       number: '3',
       titleAr: 'أنشئ ملفك التعليمي',
       titleEn: 'Set Up Your Learner Profile',
-      descAr: 'أكمل بيانات التسجيل وأتمم السداد الكامل إلكترونيًا عبر بوابة جامعة تبوك.',
-      descEn: 'Submit your enrollment details online and complete full tuition payment via the University of Tabuk portal.',
+      descAr: 'أكمل بيانات التسجيل وأتمم السداد الكامل إلكترونيًا عبر بوابة المنصة.',
+      descEn: 'Submit your enrollment details online and complete full tuition payment via the platform payment gateway.',
     },
     {
       number: '4',
