@@ -18,12 +18,14 @@ import {
   X,
 } from 'lucide-react';
 import type { Locale, ProgramKind } from '../../types/program';
+import type { Theme } from '../../utils/theme';
 
 export type NavSection = 'home' | 'about' | 'diplomas' | 'fellowships' | 'letters' | 'contact';
 export type PortalInfoSection = 'lms' | 'entities' | 'support';
 
 interface FloatingGlassSidebarProps {
   locale: Locale;
+  theme?: Theme;
   activeNav: NavSection;
   onSelectNav: (nav: NavSection) => void;
   onSelectKind: (kind: ProgramKind) => void;
@@ -34,6 +36,7 @@ interface FloatingGlassSidebarProps {
 
 export function FloatingGlassSidebar({
   locale,
+  theme = 'light',
   activeNav,
   onSelectNav,
   onSelectKind,
@@ -51,11 +54,11 @@ export function FloatingGlassSidebar({
     icon: typeof Home;
   }[] = [
     { id: 'home', labelAr: 'الرئيسية', labelEn: 'Home', icon: Home },
-    { id: 'about', labelAr: 'عن المعهد', labelEn: 'About', icon: Building2 },
-    { id: 'diplomas', labelAr: 'برامج الدبلومات', labelEn: 'Diplomas', icon: GraduationCap },
-    { id: 'fellowships', labelAr: 'برامج الزمالات', labelEn: 'Fellowships', icon: Award },
-    { id: 'letters', labelAr: 'إفادة جهة العمل', labelEn: 'Employer Letters', icon: FileCheck2 },
-    { id: 'contact', labelAr: 'تواصل معنا', labelEn: 'Contact Us', icon: PhoneCall },
+    { id: 'about', labelAr: 'عن المنصة', labelEn: 'About', icon: Building2 },
+    { id: 'diplomas', labelAr: 'الدورات والدبلومات', labelEn: 'Courses', icon: GraduationCap },
+    { id: 'fellowships', labelAr: 'الزمالات', labelEn: 'Fellowships', icon: Award },
+    { id: 'letters', labelAr: 'إفادة الدراسة', labelEn: 'Study Letters', icon: FileCheck2 },
+    { id: 'contact', labelAr: 'تواصل معنا', labelEn: 'Contact', icon: PhoneCall },
   ];
 
   const secondaryPortalItems: {
@@ -65,8 +68,8 @@ export function FloatingGlassSidebar({
     icon: typeof BookOpen;
   }[] = [
     { id: 'lms', labelAr: 'بوابة التعلم', labelEn: 'Learning Portal', icon: BookOpen },
-    { id: 'entities', labelAr: 'خدمات الجهات', labelEn: 'Corporate Services', icon: Briefcase },
-    { id: 'support', labelAr: 'الدعم والاستفسارات', labelEn: 'Support & Inquiries', icon: LifeBuoy },
+    { id: 'entities', labelAr: 'شراكات الجهات', labelEn: 'Partnerships', icon: Briefcase },
+    { id: 'support', labelAr: 'دعم الطلاب', labelEn: 'Student Support', icon: LifeBuoy },
   ];
 
   useEffect(() => {
@@ -137,7 +140,7 @@ export function FloatingGlassSidebar({
                 ? 'توسيع القائمة'
                 : 'Expand'
           }
-          className="absolute -right-[13px] top-1/2 -translate-y-1/2 w-[26px] h-[26px] rounded-full bg-white border border-[#DCE7ED] text-[#142D4E] shadow-[0_4px_14px_rgba(20,45,78,0.14)] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer z-[2]"
+          className="absolute -right-[13px] top-1/2 -translate-y-1/2 w-[26px] h-[26px] rounded-full bg-white border border-[#DCE7ED] text-[#142D4E] shadow-[0_4px_14px_rgba(20,45,78,0.14)] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] hover:bg-[#DDF3F5] dark:bg-[#142D4E] dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:text-[#28B5C5] dark:hover:bg-[#1B3553] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer z-[2]"
         >
           {expanded ? (
             <ChevronLeft className="w-[15px] h-[15px]" aria-hidden="true" />
@@ -147,7 +150,7 @@ export function FloatingGlassSidebar({
         </button>
 
         {/* A. Brand Area (Horizontally Centered in Both States) */}
-        <div className="flex-none pb-[10px] mb-[8px] border-b border-[#DCE7ED]/80 flex items-center justify-center">
+        <div className="flex-none pb-[10px] mb-[8px] border-b border-[#DCE7ED]/80 dark:border-white/12 flex items-center justify-center">
           <button
             type="button"
             onClick={() => handleNavClick('home')}
@@ -156,11 +159,11 @@ export function FloatingGlassSidebar({
                 ? 'العودة إلى الرئيسية — معهد البحوث والاستشارات'
                 : 'Home — Research and Consulting Institute'
             }
-            className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
+            className="w-full flex items-center justify-center cursor-pointer rounded-[14px] p-[4px] hover:bg-[#DDF3F5]/45 dark:hover:bg-[#1B3553]/70 focus-visible:outline-2 focus-visible:outline-[#176B87] transition-colors"
           >
             {expanded ? (
               <img
-                src="/assets/ut/logo-t.png"
+                src={theme === 'dark' ? '/assets/ut/logo-white.png' : '/assets/ut/logo-t.png'}
                 alt={
                   locale === 'ar'
                     ? 'معهد البحوث والاستشارات — جامعة تبوك'
@@ -169,7 +172,7 @@ export function FloatingGlassSidebar({
                 className="h-[44px] w-auto max-w-full object-contain block mx-auto"
               />
             ) : (
-              <span className="w-[42px] h-[42px] rounded-[12px] overflow-hidden bg-white/95 border border-[#DCE7ED]/80 grid place-items-center flex-none p-[4px]">
+              <span className="w-[42px] h-[42px] rounded-[12px] overflow-hidden bg-white/95 border border-[#DCE7ED]/80 dark:border-white/20 grid place-items-center flex-none p-[4px]">
                 <span className="w-[32px] h-[34px] overflow-hidden block">
                   <img
                     src="/assets/ut/favicon.png"
@@ -208,8 +211,8 @@ export function FloatingGlassSidebar({
                     expanded ? 'px-[12px] gap-[11px] justify-start' : 'justify-center px-0'
                   } ${
                     isCurrent
-                      ? 'bg-[#DDF3F5] text-[#142D4E] shadow-[inset_0_0_0_1px_rgba(40,181,197,0.38)]'
-                      : 'text-[#142D4E] hover:bg-[#EAF3F6]/90 hover:text-[#176B87]'
+                      ? 'bg-[#DDF3F5] text-[#142D4E] shadow-[inset_0_0_0_1px_rgba(40,181,197,0.38)] dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:shadow-[inset_0_0_0_1px_rgba(40,181,197,0.45)]'
+                      : 'text-[#142D4E] hover:bg-[#EAF3F6]/90 hover:text-[#176B87] dark:text-[#B8C7D9] dark:hover:bg-[#142D4E]/80 dark:hover:text-[#F1F5F9]'
                   }`}
                 >
                   {isCurrent && (
@@ -223,7 +226,7 @@ export function FloatingGlassSidebar({
                     className={`w-[19px] h-[19px] flex-none transition-colors duration-200 ${
                       isCurrent
                         ? 'text-[#28B5C5]'
-                        : 'text-[#142D4E] group-hover/nav:text-[#176B87]'
+                        : 'text-[#142D4E] group-hover/nav:text-[#176B87] dark:text-[#B8C7D9] dark:group-hover/nav:text-[#28B5C5]'
                     }`}
                     aria-hidden="true"
                   />
@@ -248,7 +251,7 @@ export function FloatingGlassSidebar({
           })}
 
           {/* Subtle Divider between Primary Nav & Portal Links */}
-          <div className="my-[6px] border-t border-[#DCE7ED]/85" aria-hidden="true" />
+          <div className="my-[6px] border-t border-[#DCE7ED]/85 dark:border-white/12" aria-hidden="true" />
 
           {/* Secondary Portal Services Group */}
           {secondaryPortalItems.map((item) => {
@@ -262,12 +265,12 @@ export function FloatingGlassSidebar({
                   onClick={() => handlePortalClick(item.id)}
                   aria-label={label}
                   title={!expanded ? label : undefined}
-                  className={`relative w-full h-[38px] flex items-center rounded-[12px] text-[#142D4E]/90 hover:bg-[#EAF3F6]/90 hover:text-[#176B87] cursor-pointer transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#176B87] ${
+                  className={`relative w-full h-[38px] flex items-center rounded-[12px] text-[#142D4E]/90 hover:bg-[#EAF3F6]/90 hover:text-[#176B87] dark:text-[#B8C7D9] dark:hover:bg-[#142D4E]/80 dark:hover:text-[#F1F5F9] cursor-pointer transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#176B87] ${
                     expanded ? 'px-[12px] gap-[11px] justify-start' : 'justify-center px-0'
                   }`}
                 >
                   <Icon
-                    className="w-[18px] h-[18px] flex-none text-[#176B87] group-hover/sec:text-[#28B5C5] transition-colors duration-200"
+                    className="w-[18px] h-[18px] flex-none text-[#176B87] group-hover/sec:text-[#28B5C5] dark:text-[#28B5C5] transition-colors duration-200"
                     aria-hidden="true"
                   />
 
@@ -292,26 +295,26 @@ export function FloatingGlassSidebar({
         </nav>
 
         {/* C. Bottom Actions: Compact Language Switch + Login + Register */}
-        <div className="flex-none pt-[10px] mt-[8px] border-t border-[#DCE7ED]/80 flex flex-col gap-[6px]">
+        <div className="flex-none pt-[10px] mt-[8px] border-t border-[#DCE7ED]/80 dark:border-white/12 flex flex-col gap-[6px]">
           <div className="relative group/lang">
             <button
               type="button"
               onClick={onToggleLocale}
               aria-label={localeTooltip}
               title={!expanded ? localeTooltip : undefined}
-              className={`w-full h-[36px] flex items-center rounded-[11px] border border-[#28B5C5]/45 bg-white/60 text-[#142D4E] font-bold text-[0.8rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/65 hover:text-[#176B87] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
+              className={`w-full h-[36px] flex items-center rounded-[11px] border border-[#28B5C5]/45 bg-white/60 text-[#142D4E] font-bold text-[0.8rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/65 hover:text-[#176B87] dark:bg-[#1B3553]/70 dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:bg-[#1B3553] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
                 expanded ? 'px-[12px] justify-between' : 'justify-center px-0'
               }`}
             >
               {expanded ? (
                 <>
                   <span className="inline-flex items-center gap-[8px]">
-                    <Globe className="w-[15px] h-[15px] text-[#176B87] flex-none" aria-hidden="true" />
+                    <Globe className="w-[15px] h-[15px] text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
                     <span className="whitespace-nowrap">
                       {locale === 'ar' ? 'اللغة' : 'Language'}
                     </span>
                   </span>
-                  <span className="text-[0.74rem] font-extrabold text-[#176B87] tracking-wide">
+                  <span className="text-[0.74rem] font-extrabold text-[#176B87] dark:text-[#28B5C5] tracking-wide">
                     {locale === 'ar' ? 'EN' : 'AR'}
                   </span>
                 </>
@@ -336,16 +339,16 @@ export function FloatingGlassSidebar({
             <button
               type="button"
               onClick={() => onOpenAuth('login')}
-              aria-label={locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
-              title={!expanded ? (locale === 'ar' ? 'تسجيل الدخول' : 'Sign In') : undefined}
-              className={`w-full h-[38px] flex items-center rounded-[12px] border border-[#DCE7ED] bg-white/75 text-[#142D4E] font-bold text-[0.85rem] hover:border-[#176B87] hover:text-[#176B87] hover:bg-white focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
+              aria-label={locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
+              title={!expanded ? (locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In') : undefined}
+              className={`w-full h-[38px] flex items-center rounded-[12px] border border-[#DCE7ED] bg-white/75 text-[#142D4E] font-bold text-[0.85rem] hover:border-[#176B87] hover:text-[#176B87] hover:bg-white dark:bg-[#142D4E]/80 dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:text-[#28B5C5] dark:hover:bg-[#1B3553] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
                 expanded ? 'px-[12px] gap-[9px] justify-center' : 'justify-center px-0'
               }`}
             >
               <LogIn className="w-[17px] h-[17px] flex-none" aria-hidden="true" />
               {expanded && (
                 <span className="whitespace-nowrap">
-                  {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
+                  {locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
                 </span>
               )}
             </button>
@@ -355,7 +358,7 @@ export function FloatingGlassSidebar({
                 role="tooltip"
                 className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/login:opacity-100 group-hover/login:translate-x-0 group-focus-within/login:opacity-100 group-focus-within/login:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
               >
-                {locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}
+                {locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
               </span>
             )}
           </div>
@@ -364,16 +367,16 @@ export function FloatingGlassSidebar({
             <button
               type="button"
               onClick={() => onOpenAuth('register')}
-              aria-label={locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
-              title={!expanded ? (locale === 'ar' ? 'سجّل الآن' : 'Register Now') : undefined}
-              className={`w-full h-[40px] flex items-center rounded-[12px] bg-[#176B87] text-white font-bold text-[0.86rem] shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] hover:shadow-[0_10px_24px_rgba(20,45,78,0.3)] focus-visible:outline-2 focus-visible:outline-[#28B5C5] transition-all duration-200 cursor-pointer ${
+              aria-label={locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}
+              title={!expanded ? (locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now') : undefined}
+              className={`w-full h-[40px] flex items-center rounded-[12px] bg-[#176B87] text-white font-bold text-[0.86rem] shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] hover:shadow-[0_10px_24px_rgba(20,45,78,0.3)] focus-visible:outline-2 focus-visible:outline-[#28B5C5] transition-all duration-200 cursor-pointer ${
                 expanded ? 'px-[14px] gap-[9px] justify-center' : 'justify-center px-0'
               }`}
             >
               <UserPlus className="w-[17px] h-[17px] flex-none" aria-hidden="true" />
               {expanded && (
                 <span className="whitespace-nowrap">
-                  {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
+                  {locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}
                 </span>
               )}
             </button>
@@ -383,7 +386,7 @@ export function FloatingGlassSidebar({
                 role="tooltip"
                 className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/reg:opacity-100 group-hover/reg:translate-x-0 group-focus-within/reg:opacity-100 group-focus-within/reg:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.82rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
               >
-                {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
+                {locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}
               </span>
             )}
           </div>
@@ -397,7 +400,7 @@ export function FloatingGlassSidebar({
         aria-expanded={drawerOpen}
         aria-controls="mobileGlassDrawer"
         aria-label={locale === 'ar' ? 'فتح القائمة الرئيسية' : 'Open main navigation menu'}
-        className="min-[1024px]:hidden fixed min-[768px]:top-[106px] max-[767px]:top-[150px] right-[40px] max-[767px]:right-[12px] z-[60] h-[40px] px-[14px] rounded-[13px] ut-glass-sidebar text-[#142D4E] inline-flex items-center gap-[8px] hover:border-[#28B5C5] hover:text-[#176B87] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer"
+        className="min-[1024px]:hidden fixed min-[768px]:top-[106px] max-[767px]:top-[150px] right-[40px] max-[767px]:right-[12px] z-[60] h-[40px] px-[14px] rounded-[13px] ut-glass-sidebar text-[#142D4E] dark:text-[#F1F5F9] inline-flex items-center gap-[8px] hover:border-[#28B5C5] hover:text-[#176B87] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer"
       >
         <Menu className="w-[18px] h-[18px] flex-none" aria-hidden="true" />
         <span className="font-bold text-[0.84rem]">
@@ -429,7 +432,7 @@ export function FloatingGlassSidebar({
           }`}
         >
           {/* Drawer Header */}
-          <div className="flex items-center justify-between gap-[10px] pb-[14px] mb-[12px] border-b border-[#DCE7ED]">
+          <div className="flex items-center justify-between gap-[10px] pb-[14px] mb-[12px] border-b border-[#DCE7ED] dark:border-white/12">
             <button
               type="button"
               onClick={() => handleNavClick('home')}
@@ -441,7 +444,7 @@ export function FloatingGlassSidebar({
               className="min-w-0 cursor-pointer rounded-[10px] focus-visible:outline-2 focus-visible:outline-[#176B87]"
             >
               <img
-                src="/assets/ut/logo-t.png"
+                src={theme === 'dark' ? '/assets/ut/logo-white.png' : '/assets/ut/logo-t.png'}
                 alt={
                   locale === 'ar'
                     ? 'معهد البحوث والاستشارات — جامعة تبوك'
@@ -455,7 +458,7 @@ export function FloatingGlassSidebar({
               type="button"
               onClick={() => setDrawerOpen(false)}
               aria-label={locale === 'ar' ? 'إغلاق القائمة' : 'Close menu'}
-              className="w-[38px] h-[38px] rounded-[12px] border border-[#DCE7ED] bg-white text-[#142D4E] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] focus-visible:outline-2 focus-visible:outline-[#176B87] cursor-pointer transition-colors flex-none"
+              className="w-[38px] h-[38px] rounded-[12px] border border-[#DCE7ED] bg-white text-[#142D4E] dark:border-white/15 dark:bg-[#142D4E] dark:text-[#F1F5F9] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] cursor-pointer transition-colors flex-none"
             >
               <X className="w-[19px] h-[19px]" aria-hidden="true" />
             </button>
@@ -477,8 +480,8 @@ export function FloatingGlassSidebar({
                   aria-current={isCurrent ? 'page' : undefined}
                   className={`relative w-full min-h-[44px] px-[14px] flex items-center gap-[12px] rounded-[14px] font-bold text-[0.94rem] cursor-pointer transition-all duration-200 text-start ${
                     isCurrent
-                      ? 'bg-[#DDF3F5] text-[#142D4E] shadow-[inset_0_0_0_1px_rgba(40,181,197,0.38)]'
-                      : 'text-[#142D4E] hover:bg-[#EAF3F6] hover:text-[#176B87]'
+                      ? 'bg-[#DDF3F5] text-[#142D4E] shadow-[inset_0_0_0_1px_rgba(40,181,197,0.38)] dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:shadow-[inset_0_0_0_1px_rgba(40,181,197,0.45)]'
+                      : 'text-[#142D4E] hover:bg-[#EAF3F6] hover:text-[#176B87] dark:text-[#B8C7D9] dark:hover:bg-[#142D4E] dark:hover:text-[#F1F5F9]'
                   }`}
                 >
                   {isCurrent && (
@@ -489,7 +492,7 @@ export function FloatingGlassSidebar({
                   )}
                   <Icon
                     className={`w-[20px] h-[20px] flex-none ${
-                      isCurrent ? 'text-[#28B5C5]' : 'text-[#142D4E]'
+                      isCurrent ? 'text-[#28B5C5]' : 'text-[#142D4E] dark:text-[#B8C7D9]'
                     }`}
                     aria-hidden="true"
                   />
@@ -498,7 +501,7 @@ export function FloatingGlassSidebar({
               );
             })}
 
-            <div className="my-[6px] border-t border-[#DCE7ED]/80" aria-hidden="true" />
+            <div className="my-[6px] border-t border-[#DCE7ED]/80 dark:border-white/12" aria-hidden="true" />
 
             {secondaryPortalItems.map((item) => {
               const Icon = item.icon;
@@ -507,9 +510,9 @@ export function FloatingGlassSidebar({
                   key={item.id}
                   type="button"
                   onClick={() => handlePortalClick(item.id)}
-                  className="w-full min-h-[42px] px-[14px] flex items-center gap-[12px] rounded-[13px] font-bold text-[0.88rem] text-[#142D4E]/90 hover:text-[#176B87] hover:bg-[#EAF3F6] cursor-pointer transition-colors text-start"
+                  className="w-full min-h-[42px] px-[14px] flex items-center gap-[12px] rounded-[13px] font-bold text-[0.88rem] text-[#142D4E]/90 hover:text-[#176B87] hover:bg-[#EAF3F6] dark:text-[#B8C7D9] dark:hover:text-[#F1F5F9] dark:hover:bg-[#142D4E] cursor-pointer transition-colors text-start"
                 >
-                  <Icon className="w-[18px] h-[18px] flex-none text-[#176B87]" aria-hidden="true" />
+                  <Icon className="w-[18px] h-[18px] flex-none text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
                   <span>{locale === 'ar' ? item.labelAr : item.labelEn}</span>
                 </button>
               );
@@ -517,18 +520,18 @@ export function FloatingGlassSidebar({
           </nav>
 
           {/* Drawer Bottom Actions: Language Switch + Login + Register */}
-          <div className="flex-none pt-[12px] mt-[12px] border-t border-[#DCE7ED] flex flex-col gap-[8px]">
+          <div className="flex-none pt-[12px] mt-[12px] border-t border-[#DCE7ED] dark:border-white/12 flex flex-col gap-[8px]">
             <button
               type="button"
               onClick={onToggleLocale}
               aria-label={localeTooltip}
-              className="w-full min-h-[40px] px-[14px] rounded-[12px] border border-[#28B5C5]/45 bg-white text-[#142D4E] font-bold text-[0.86rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/60 inline-flex items-center justify-between cursor-pointer transition-colors"
+              className="w-full min-h-[40px] px-[14px] rounded-[12px] border border-[#28B5C5]/45 bg-white text-[#142D4E] font-bold text-[0.86rem] hover:border-[#176B87] hover:bg-[#DDF3F5]/60 dark:bg-[#1B3553] dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] inline-flex items-center justify-between cursor-pointer transition-colors"
             >
               <span className="inline-flex items-center gap-[8px]">
-                <Globe className="w-[17px] h-[17px] text-[#176B87]" aria-hidden="true" />
+                <Globe className="w-[17px] h-[17px] text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
                 <span>{locale === 'ar' ? 'اللغة' : 'Language'}</span>
               </span>
-              <span className="text-[0.8rem] font-extrabold text-[#176B87]">
+              <span className="text-[0.8rem] font-extrabold text-[#176B87] dark:text-[#28B5C5]">
                 {locale === 'ar' ? 'EN' : 'AR'}
               </span>
             </button>
@@ -539,10 +542,10 @@ export function FloatingGlassSidebar({
                 setDrawerOpen(false);
                 onOpenAuth('login');
               }}
-              className="w-full min-h-[42px] rounded-[13px] font-bold text-[0.92rem] border border-[#DCE7ED] text-[#142D4E] bg-white hover:border-[#176B87] hover:text-[#176B87] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
+              className="w-full min-h-[42px] rounded-[13px] font-bold text-[0.92rem] border border-[#DCE7ED] text-[#142D4E] bg-white hover:border-[#176B87] hover:text-[#176B87] dark:bg-[#142D4E] dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:text-[#28B5C5] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
             >
               <LogIn className="w-[18px] h-[18px]" aria-hidden="true" />
-              <span>{locale === 'ar' ? 'تسجيل الدخول' : 'Sign In'}</span>
+              <span>{locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}</span>
             </button>
 
             <button
@@ -551,10 +554,10 @@ export function FloatingGlassSidebar({
                 setDrawerOpen(false);
                 onOpenAuth('register');
               }}
-              className="w-full min-h-[44px] rounded-[13px] font-bold text-[0.92rem] bg-[#176B87] text-white shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
+              className="w-full min-h-[44px] rounded-[13px] font-bold text-[0.92rem] bg-[#176B87] text-white shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
             >
               <UserPlus className="w-[18px] h-[18px]" aria-hidden="true" />
-              <span>{locale === 'ar' ? 'سجّل الآن' : 'Register Now'}</span>
+              <span>{locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}</span>
             </button>
           </div>
         </aside>

@@ -21,6 +21,13 @@ import { PROGRAMS } from './data/programs';
 import type { Locale, Program, ProgramKind } from './types/program';
 import type { SearchServiceTarget } from './utils/headerSearch';
 import { filterPrograms, paginatePrograms, PROGRAMS_PER_PAGE } from './utils/programFilter';
+import {
+  applyThemeToDocument,
+  persistTheme,
+  readStoredTheme,
+  toggleThemeValue,
+  type Theme,
+} from './utils/theme';
 
 type PageRoute = 'home' | 'programs';
 
@@ -36,6 +43,7 @@ function getInitialRoute(): { page: PageRoute; kind: ProgramKind } {
 export default function App() {
   const initialRoute = useMemo(() => getInitialRoute(), []);
   const [locale, setLocale] = useState<Locale>('ar');
+  const [theme, setTheme] = useState<Theme>(() => readStoredTheme());
   const [activePage, setActivePage] = useState<PageRoute>(initialRoute.page);
   const [kind, setKind] = useState<ProgramKind>(initialRoute.kind);
   const [activeNav, setActiveNav] = useState<NavSection>(
@@ -50,6 +58,11 @@ export default function App() {
     document.documentElement.lang = locale;
     document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
   }, [locale]);
+
+  useEffect(() => {
+    applyThemeToDocument(theme);
+    persistTheme(theme);
+  }, [theme]);
 
   useEffect(() => {
     const onPopState = () => {
@@ -130,6 +143,10 @@ export default function App() {
     setLocale((prev) => (prev === 'ar' ? 'en' : 'ar'));
   };
 
+  const handleToggleTheme = () => {
+    setTheme((prev) => toggleThemeValue(prev));
+  };
+
   const handleSearchChange = (value: string) => {
     setSearch(value);
     setCurrentPage(1);
@@ -165,14 +182,19 @@ export default function App() {
   };
 
   return (
-    <div id="app" className="min-h-screen flex flex-col bg-white text-[#183247]">
+    <div
+      id="app"
+      className="min-h-screen flex flex-col bg-white text-[#183247] dark:bg-[#0B1726] dark:text-[#F1F5F9] transition-colors duration-200"
+    >
       <FloatingGlassHeader
         locale={locale}
+        theme={theme}
         programs={PROGRAMS}
         searchQuery={search}
         onSearchChange={handleSearchChange}
         onSubmitSearch={handleHeaderSearchSubmit}
         onToggleLocale={handleToggleLocale}
+        onToggleTheme={handleToggleTheme}
         onGoHome={navigateToHome}
         onSelectProgram={(program) => handleOpenProgram(program, 'details')}
         onSelectService={handleSelectSearchService}
@@ -180,6 +202,7 @@ export default function App() {
 
       <FloatingGlassSidebar
         locale={locale}
+        theme={theme}
         activeNav={activeNav}
         onSelectNav={handleSelectNav}
         onSelectKind={(nextKind) => {

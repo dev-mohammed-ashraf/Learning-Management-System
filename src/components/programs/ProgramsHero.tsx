@@ -11,22 +11,22 @@ export function ProgramsHero({ locale, kind, onGoHome }: ProgramsHeroProps) {
   const titleText =
     locale === 'ar'
       ? kind === 'diplomas'
-        ? 'برامج الدبلومات'
-        : 'برامج الزمالات'
+        ? 'الدبلومات والدورات المعتمدة'
+        : 'الزمالات التخصصية'
       : kind === 'diplomas'
-        ? 'Diploma Programs'
-        : 'Fellowship Programs';
+        ? 'Accredited Diplomas & Courses'
+        : 'Specialized Fellowships';
 
   const { lead, tail } = splitTwoToneTitle(titleText);
 
   const leadParagraph =
     locale === 'ar'
       ? kind === 'diplomas'
-        ? 'تصفّح جميع البرامج الأكاديمية المتاحة في معهد البحوث والاستشارات بجامعة تبوك.'
-        : 'برامج زمالة مهنية متخصصة يقدمها معهد البحوث والاستشارات بجامعة تبوك.'
+        ? 'تصفّح جميع الدورات وبرامج الدبلوم المشارك المهني المقدمة عن بُعد في جامعة تبوك، وقارن المحاور والساعات المعتمدة لاختيار مسارك الدراسي.'
+        : 'مسارات زمالة تخصصية قيد الإعداد الأكاديمي تمهيدًا لإطلاقها عبر منصة معهد البحوث والاستشارات بجامعة تبوك.'
       : kind === 'diplomas'
-        ? 'Browse all the academic programs available at the Research and Consulting Institute at the University of Tabuk.'
-        : 'Specialized professional fellowship programs offered by the Research and Consulting Institute at the University of Tabuk.';
+        ? 'Browse all online professional associate diploma courses offered at the University of Tabuk, and compare modules and credit hours to choose your study path.'
+        : 'Specialized professional fellowship tracks currently under academic preparation for release at the University of Tabuk.';
 
   return (
     <div className="ut-page-hero pt-[122px] pb-[44px] max-[1023px]:pt-[160px] max-[767px]:pt-[202px] max-[767px]:pb-[32px] relative overflow-hidden border-b border-white/10">

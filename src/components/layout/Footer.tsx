@@ -17,13 +17,13 @@ export function Footer({
   onOpenPolicy,
 }: FooterProps) {
   const quickLinks: { labelAr: string; labelEn: string; nav?: NavSection; action?: 'policy' }[] = [
-    { labelAr: 'البرامج', labelEn: 'Programs', nav: 'diplomas' },
-    { labelAr: 'عن المعهد', labelEn: 'About Institute', nav: 'about' },
+    { labelAr: 'الدورات والدبلومات', labelEn: 'Courses & Diplomas', nav: 'diplomas' },
+    { labelAr: 'عن المنصة', labelEn: 'About Platform', nav: 'about' },
     { labelAr: 'الأسئلة الشائعة', labelEn: 'FAQs', nav: 'about' },
-    { labelAr: 'برامج الزمالات', labelEn: 'Fellowships', nav: 'fellowships' },
+    { labelAr: 'مسارات الزمالة', labelEn: 'Fellowships', nav: 'fellowships' },
     { labelAr: 'السياسات والأحكام', labelEn: 'Policies & Terms', action: 'policy' },
-    { labelAr: 'إفادة جهة العمل', labelEn: 'Employer Letters', nav: 'letters' },
-    { labelAr: 'تواصل معنا', labelEn: 'Contact Us', nav: 'contact' },
+    { labelAr: 'إفادة الدراسة', labelEn: 'Study Verification', nav: 'letters' },
+    { labelAr: 'دعم الطلاب', labelEn: 'Student Support', nav: 'contact' },
   ];
 
   const featuredIds = ['5', '6', '7', '8', '10', '13', '14'];
@@ -54,7 +54,7 @@ export function Footer({
   };
 
   return (
-    <footer className="bg-[#142D4E] text-[#CBD8E6] text-[0.92rem] leading-[1.75]">
+    <footer className="bg-[#142D4E] dark:bg-[#08121E] dark:border-t dark:border-white/10 text-[#CBD8E6] text-[0.92rem] leading-[1.75]">
       <div className="wrap">
         <div className="grid grid-cols-[1.4fr_1fr_1fr_1.3fr] max-[920px]:grid-cols-2 max-[560px]:grid-cols-1 gap-[40px] max-[560px]:gap-[32px] pt-[64px] pb-[48px]">
           <div className="min-w-0">
@@ -71,8 +71,8 @@ export function Footer({
             />
             <p className="text-[0.9rem] max-w-[40ch]">
               {locale === 'ar'
-                ? 'نقدّم البرامج التعليمية والتدريبية منذ 2006م.'
-                : 'Delivering academic and training programs since 2006.'}
+                ? 'منصة التعلّم الرقمي التابعة لمعهد البحوث والاستشارات بجامعة تبوك — مسارات تعليمية وتدريبية منذ عام 2006م.'
+                : 'Digital learning platform of the Research & Consulting Institute, University of Tabuk — delivering academic programs since 2006.'}
             </p>
           </div>
 
@@ -104,7 +104,7 @@ export function Footer({
 
           <div className="min-w-0">
             <h4 className="text-white text-[0.95rem] font-bold mb-[16px]">
-              {locale === 'ar' ? 'أبرز البرامج' : 'Featured Programs'}
+              {locale === 'ar' ? 'الدورات المتاحة' : 'Available Courses'}
             </h4>
             <ul className="list-none m-0 p-0 flex flex-col gap-[10px] text-[0.9rem]">
               {featuredPrograms.map((program) => (

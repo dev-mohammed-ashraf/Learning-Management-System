@@ -17,39 +17,39 @@ export function FeaturedPrograms({
   const featured = PROGRAMS.slice(0, 3);
 
   return (
-    <section className="bg-white border-t border-[#DCE7ED] py-[72px] max-[720px]:py-[52px]">
+    <section className="bg-white dark:bg-[#102238] border-t border-[#DCE7ED] dark:border-white/12 py-[72px] max-[720px]:py-[52px]">
       <div className="wrap">
         <div className="flex items-end justify-between gap-[20px] flex-wrap mb-[34px]">
           <div>
-            <div className="ut-eyebrow inline-flex items-center gap-[9px] text-[0.84rem] font-bold text-[#176B87] mb-[8px]">
-              <span>{locale === 'ar' ? 'برامج الدبلومات المعتمدة' : 'Accredited Diplomas'}</span>
+            <div className="ut-eyebrow inline-flex items-center gap-[9px] text-[0.84rem] font-bold text-[#176B87] dark:text-[#28B5C5] mb-[8px]">
+              <span>{locale === 'ar' ? 'مسارات التعلم المتاحة' : 'Available Learning Tracks'}</span>
             </div>
 
-            <h2 className="text-[clamp(1.65rem,3vw,2.2rem)] font-extrabold text-[#142D4E] leading-[1.4] text-balance">
+            <h2 className="text-[clamp(1.65rem,3vw,2.2rem)] font-extrabold text-[#142D4E] dark:text-[#F1F5F9] leading-[1.4] text-balance">
               {locale === 'ar' ? (
                 <>
-                  اكتشف <span className="text-[#176B87]">برامجنا الأكاديمية</span>
+                  أبرز الدورات <span className="text-[#176B87] dark:text-[#28B5C5]">والدبلومات المعتمدة</span>
                 </>
               ) : (
                 <>
-                  Discover Our <span className="text-[#176B87]">Academic Programs</span>
+                  Featured Courses <span className="text-[#176B87] dark:text-[#28B5C5]">&amp; Accredited Diplomas</span>
                 </>
               )}
             </h2>
 
-            <p className="text-[#64748B] text-[1rem] leading-[1.85] mt-[8px] max-w-[44rem]">
+            <p className="text-[#64748B] dark:text-[#B8C7D9] text-[1rem] leading-[1.85] mt-[8px] max-w-[44rem]">
               {locale === 'ar'
-                ? 'اختر البرنامج الذي يناسب طموحاتك وابدأ رحلتك نحو مستقبل مهني أكثر تميزًا.'
-                : 'Choose the program that fits your ambitions and begin your journey toward a distinguished career.'}
+                ? 'اختر التخصص الذي يثير شغفك المعرفي، واطّلع على تفاصيل المحاور الدراسية والساعات المعتمدة لكل مسار.'
+                : 'Choose the field that matches your learning goals and review curriculum topics and credit hours for every track.'}
             </p>
           </div>
 
           <button
             type="button"
             onClick={onViewAllPrograms}
-            className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[22px] py-[10px] font-bold text-[0.92rem] border border-[#DCE7ED] bg-[#EAF3F6] text-[#142D4E] hover:border-[#28B5C5] hover:bg-[#DDF3F5] hover:text-[#176B87] transition-all duration-200 cursor-pointer whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[22px] py-[10px] font-bold text-[0.92rem] border border-[#DCE7ED] bg-[#EAF3F6] text-[#142D4E] hover:border-[#28B5C5] hover:bg-[#DDF3F5] hover:text-[#176B87] dark:border-white/15 dark:bg-[#142D4E] dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:bg-[#1B3553] dark:hover:text-[#28B5C5] transition-all duration-200 cursor-pointer whitespace-nowrap"
           >
-            <span>{locale === 'ar' ? 'عرض جميع البرامج' : 'View All Programs'}</span>
+            <span>{locale === 'ar' ? 'استعراض كل الدورات' : 'Browse All Courses'}</span>
             {locale === 'ar' ? (
               <ArrowLeft className="w-[16px] h-[16px] flex-none" aria-hidden="true" />
             ) : (

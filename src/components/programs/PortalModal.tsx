@@ -56,15 +56,15 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
       if (!email.trim() || !password.trim()) {
         setFormError(
           locale === 'ar'
-            ? 'يرجى إدخال البريد الإلكتروني وكلمة المرور.'
-            : 'Please enter your email and password.'
+            ? 'يرجى إدخال البريد الإلكتروني وكلمة المرور للدخول إلى حسابك.'
+            : 'Please enter your email and password to sign in.'
         );
         return;
       }
       setSubmittedMsg(
         locale === 'ar'
-          ? 'تم التحقق من بيانات الدخول. جارٍ تحويلك إلى بوابة المتدرب في معهد البحوث والاستشارات.'
-          : 'Credentials verified. Redirecting to the Research and Consulting Institute learner portal.'
+          ? 'تم التحقق من بيانات الطالب بنجاح. جارٍ توجيهك إلى بوابة التعلّم الرقمي بجامعة تبوك.'
+          : 'Student credentials verified. Redirecting to the University of Tabuk digital learning portal.'
       );
       return;
     }
@@ -73,15 +73,15 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
       if (!fullName.trim() || !phone.trim() || !email.trim()) {
         setFormError(
           locale === 'ar'
-            ? 'يرجى تعبئة الاسم ورقم الجوال والبريد الإلكتروني.'
-            : 'Please fill in your full name, phone number, and email.'
+            ? 'يرجى كتابة الاسم الكامل ورقم الجوال والبريد الإلكتروني لنتمكن من الرد عليك.'
+            : 'Please provide your full name, mobile number, and email so our team can reach you.'
         );
         return;
       }
       setSubmittedMsg(
         locale === 'ar'
-          ? 'تم استلام رسالتك بنجاح، وسيتواصل معك فريق القبول والاستفسارات خلال ساعات العمل الرسمية.'
-          : 'Your inquiry has been received. Our admissions team will contact you during official working hours.'
+          ? 'استلمنا استفسارك بنجاح، وسيتواصل معك فريق الإرشاد الطلابي خلال أوقات العمل الرسمية.'
+          : 'Your inquiry has been received. Our student guidance team will respond during working hours.'
       );
       return;
     }
@@ -89,7 +89,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     if (!fullName.trim() || !phone.trim() || !email.trim()) {
       setFormError(
         locale === 'ar'
-          ? 'يرجى استكمال جميع الحقول المطلوبة للتسجيل.'
+          ? 'يرجى تعبئة جميع الحقول المطلوبة لإتمام طلب التسجيل.'
           : 'Please complete all required registration fields.'
       );
       return;
@@ -97,7 +97,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     if (nationalId.trim().length < 8) {
       setFormError(
         locale === 'ar'
-          ? 'يرجى إدخال رقم الهوية الوطنية أو الإقامة بشكل صحيح.'
+          ? 'يرجى التحقق من إدخال رقم الهوية الوطنية أو الإقامة بشكل صحيح.'
           : 'Please enter a valid National ID or Iqama number.'
       );
       return;
@@ -107,51 +107,114 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     const chosenTitle = chosen ? (locale === 'ar' ? chosen.titleAr : chosen.titleEn) : '';
     setSubmittedMsg(
       locale === 'ar'
-        ? `تم تسجيل طلب الالتحاق المبدئي في "${chosenTitle}" بنجاح (${paymentPlan === 'full' ? 'سداد كامل' : 'نظام التقسيط'}). تم إرسال تفاصيل الفاتورة إلى بريدك الإلكتروني.`
-        : `Initial enrollment submitted for "${chosenTitle}" (${paymentPlan === 'full' ? 'Full Payment' : 'Installments'}). Payment details were sent to your email.`
+        ? `تم استلام طلب تسجيلك المبدئي في "${chosenTitle}" (${paymentPlan === 'full' ? 'سداد كامل' : 'نظام التقسيط'}). أرسلنا تفاصيل المتابعة والفاتورة إلى بريدك الإلكتروني.`
+        : `Your initial registration for "${chosenTitle}" (${paymentPlan === 'full' ? 'Full Payment' : 'Installments'}) has been recorded. Follow-up and billing details have been sent to your email.`
     );
   };
 
   const renderInfoBody = (section: Extract<ModalState, { type: 'info' }>['section']) => {
-    if (section === 'about' || section === 'entities') {
+    if (section === 'about') {
+      const faqs = [
+        {
+          qAr: 'كيف تُقدّم الدورات والدبلومات على المنصة؟',
+          qEn: 'How are classes delivered on the platform?',
+          aAr: 'تُقدّم جميع برامج الدبلوم المشارك المهني عن بُعد بنظام التعليم المتزامن المسائي لمدة عام دراسي (30 ساعة معتمدة).',
+          aEn: 'All professional associate diplomas are delivered online via live evening sessions over one academic year (30 credit hours).',
+        },
+        {
+          qAr: 'ما طبيعة الشهادة الممنوحة عند التخرج؟',
+          qEn: 'What certificate do students earn upon graduation?',
+          aAr: 'يحصل الطالب بعد استيفاء متطلبات التخرج على شهادة دبلوم مشارك مهني معتمدة من معهد البحوث والاستشارات بجامعة تبوك.',
+          aEn: 'Graduates receive an accredited professional associate diploma certificate from the Research and Consulting Institute at University of Tabuk.',
+        },
+        {
+          qAr: 'ما خيارات سداد الرسوم الدراسية؟',
+          qEn: 'What tuition payment options are available?',
+          aAr: 'تبلغ الرسوم 6,500 ر.س شاملة الضريبة، ويتاح السداد الكامل أو بالتقسيط الشهري عبر بوابة مدفوعات جامعة تبوك.',
+          aEn: 'Tuition is 6,500 SAR (VAT included), payable either in full or in monthly installments via the University of Tabuk payment gateway.',
+        },
+      ];
+
       return (
-        <div className="space-y-4">
-          <h3 className="text-[1.25rem] font-bold text-[#142D4E]">
-            {locale === 'ar'
-              ? section === 'entities'
-                ? 'خدمات الجهات والشراكات المؤسسية'
-                : 'عن معهد البحوث والاستشارات — جامعة تبوك'
-              : section === 'entities'
-                ? 'Corporate & Institutional Services'
-                : 'About the Research and Consulting Institute — University of Tabuk'}
-          </h3>
-          <p className="text-[#64748B] leading-[1.85] text-[0.95rem]">
-            {locale === 'ar'
-              ? 'يقدّم معهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م برامج الدبلومات المهنية المعتمدة والاستشارات الأكاديمية والتدريبية المصممة وفق احتياجات سوق العمل ورؤية السعودية 2030، بإشراف واعتماد المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
-              : 'Since 2006, the Research and Consulting Institute at the University of Tabuk has delivered accredited professional diplomas and specialized training aligned with Saudi Vision 2030 and supervised by NELC and the Ministry of Education.'}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-            <div className="bg-[#EAF3F6] border border-[#DCE7ED] rounded-[12px] p-4">
-              <div className="font-bold text-[#142D4E] text-[0.95rem]">
-                {locale === 'ar' ? 'برامج معتمدة عن بُعد' : 'Accredited Online Diplomas'}
+        <div className="space-y-5">
+          <div className="space-y-2.5">
+            <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+              {locale === 'ar'
+                ? 'عن منصة التعلّم — معهد البحوث والاستشارات بجامعة تبوك'
+                : 'About the Learning Platform — University of Tabuk'}
+            </h3>
+            <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
+              {locale === 'ar'
+                ? 'توفر المنصة تجربة دراسية إلكترونية منظمة تتيح للطلبة والراغبين في التطوير العلمي والعملي الالتحاق ببرامج الدبلوم المشارك المهني المقدمة من معهد البحوث والاستشارات بجامعة تبوك منذ عام 2006م، وفق بيئة تعليمية معتمدة من المركز الوطني للتعليم الإلكتروني ووزارة التعليم.'
+                : 'This platform delivers a structured online study experience enabling learners to enroll in accredited associate diplomas offered by the Research and Consulting Institute at the University of Tabuk since 2006, supervised by NELC and the Ministry of Education.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4">
+              <div className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem]">
+                {locale === 'ar' ? 'مسارات دراسية مسائية عن بُعد' : 'Evening Online Tracks'}
               </div>
-              <p className="text-[0.84rem] text-[#64748B] mt-1">
+              <p className="text-[0.84rem] text-[#64748B] dark:text-[#B8C7D9] mt-1">
                 {locale === 'ar'
-                  ? '30 ساعة معتمدة بدراسة مسائية مرنة تناسب الموظفين والخريجين.'
-                  : '30 credit hours with flexible evening schedules suited for working learners.'}
+                  ? '30 ساعة معتمدة في جداول مسائية تساعدك على التوفيق بين التعلم والتزاماتك.'
+                  : '30 credit hours arranged in evening schedules so learning fits around daily responsibilities.'}
               </p>
             </div>
-            <div className="bg-[#EAF3F6] border border-[#DCE7ED] rounded-[12px] p-4">
-              <div className="font-bold text-[#142D4E] text-[0.95rem]">
-                {locale === 'ar' ? 'سداد مرن وتقسيط' : 'Flexible Payment & Installments'}
+            <div className="bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4">
+              <div className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem]">
+                {locale === 'ar' ? 'خيارات سداد ميسّرة' : 'Flexible Payment Plans'}
               </div>
-              <p className="text-[0.84rem] text-[#64748B] mt-1">
+              <p className="text-[0.84rem] text-[#64748B] dark:text-[#B8C7D9] mt-1">
                 {locale === 'ar'
-                  ? 'سداد إلكتروني متكامل عبر بوابة مدفوعات جامعة تبوك.'
-                  : 'Seamless online full or installment billing via University of Tabuk payment portal.'}
+                  ? 'ادفع كاملًا أو بالتقسيط الإلكتروني مباشرة عبر بوابة مدفوعات جامعة تبوك.'
+                  : 'Pay tuition in full or via monthly installments through the University of Tabuk gateway.'}
               </p>
             </div>
           </div>
+
+          <div className="space-y-2.5 pt-1">
+            <h4 className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[1rem]">
+              {locale === 'ar' ? 'الأسئلة الشائعة للطلاب' : 'Student FAQs'}
+            </h4>
+            <div className="space-y-2.5">
+              {faqs.map((faq) => (
+                <div
+                  key={faq.qAr}
+                  className="bg-[#F8FBFD] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-3.5"
+                >
+                  <div className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.9rem]">
+                    {locale === 'ar' ? faq.qAr : faq.qEn}
+                  </div>
+                  <p className="text-[0.84rem] text-[#64748B] dark:text-[#B8C7D9] leading-[1.75] mt-1">
+                    {locale === 'ar' ? faq.aAr : faq.aEn}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    if (section === 'entities') {
+      return (
+        <div className="space-y-4">
+          <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+            {locale === 'ar' ? 'شراكات الجهات وبرامج التدريب المؤسسي' : 'Institutional Training Partnerships'}
+          </h3>
+          <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
+            {locale === 'ar'
+              ? 'يتعاون معهد البحوث والاستشارات بجامعة تبوك مع الجهات في القطاعين العام والخاص لتصميم وتنفيذ مسارات دبلوم وتدريب متخصصة لمنسوبيها بما يتوافق مع أهدافها التشغيلية.'
+              : 'The Research and Consulting Institute at University of Tabuk partners with public and private organizations to coordinate structured diploma and specialized training tracks for their teams.'}
+          </p>
+          <button
+            type="button"
+            onClick={() => onSwitchModal({ type: 'info', section: 'contact' })}
+            className="inline-flex items-center justify-center rounded-[10px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
+          >
+            {locale === 'ar' ? 'تواصل لتنسيق شراكة تدريبية' : 'Contact Us for Partnerships'}
+          </button>
         </div>
       );
     }
@@ -159,20 +222,20 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     if (section === 'letters') {
       return (
         <div className="space-y-4">
-          <h3 className="text-[1.25rem] font-bold text-[#142D4E]">
-            {locale === 'ar' ? 'خدمة إفادة جهة العمل' : 'Employer Verification Letters'}
+          <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+            {locale === 'ar' ? 'خطابات التعريف وإفادة الدراسة' : 'Enrollment & Study Verification Letters'}
           </h3>
-          <p className="text-[#64748B] leading-[1.85] text-[0.95rem]">
+          <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
             {locale === 'ar'
-              ? 'يمكن للمتدربين المسجلين في برامج الدبلومات استخراج خطاب تعريف وإفادة انتظام أو تخرج موثّقة لتقديمها لجهة العمل إلكترونيًا عبر بوابة المتدرب.'
-              : 'Enrolled learners can request official attendance and enrollment verification letters electronically for submission to employers.'}
+              ? 'تتيح المنصة للطلبة المسجلين إصدار خطاب تعريف وإفادة انتظام أو تخرج موثّقة إلكترونيًا لتقديمها إلى جهات العمل أو الجهات المعنية بكل يسر.'
+              : 'Enrolled students can electronically request official enrollment, attendance, or graduation verification letters via their student portal account.'}
           </p>
           <button
             type="button"
             onClick={() => onSwitchModal({ type: 'auth', mode: 'login' })}
-            className="inline-flex items-center justify-center rounded-[10px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] cursor-pointer"
+            className="inline-flex items-center justify-center rounded-[10px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
           >
-            {locale === 'ar' ? 'الدخول لطلب الإفادة' : 'Sign In to Request Letter'}
+            {locale === 'ar' ? 'دخول الطلاب لطلب الإفادة' : 'Student Sign In to Request'}
           </button>
         </div>
       );
@@ -181,24 +244,24 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     if (section === 'policy') {
       return (
         <div className="space-y-4">
-          <h3 className="text-[1.25rem] font-bold text-[#142D4E]">
-            {locale === 'ar' ? 'السياسات والأحكام والخصوصية' : 'Policies, Terms & Privacy'}
+          <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+            {locale === 'ar' ? 'السياسات الأكاديمية والخصوصية' : 'Academic Policies & Privacy'}
           </h3>
-          <ul className="space-y-2.5 text-[0.92rem] text-[#64748B] list-disc ps-5 leading-[1.8]">
+          <ul className="space-y-2.5 text-[0.92rem] text-[#64748B] dark:text-[#B8C7D9] list-disc ps-5 leading-[1.8]">
             <li>
               {locale === 'ar'
-                ? 'تُقدّم جميع برامج الدبلوم المشارك المهني عن بُعد بنظام التعليم المتزامن المسائي.'
-                : 'All professional associate diplomas are delivered online via evening synchronous learning.'}
+                ? 'تُقدّم جميع برامج الدبلوم المشارك المهني عن بُعد بنظام التعليم المتزامن المسائي وفق تقويم دراسي واضح.'
+                : 'All professional associate diplomas are delivered online via evening synchronous sessions on an organized academic calendar.'}
             </li>
             <li>
               {locale === 'ar'
-                ? 'تشمل الرسوم الدراسية المعلنة (6,500 ر.س) ضريبة القيمة المضافة وتخضع سياسة الاسترداد للوائح معهد البحوث والاستشارات.'
-                : 'Listed tuition fees (6,500 SAR) include VAT; refund rules follow Institute regulations.'}
+                ? 'تشمل الرسوم الدراسية المعلنة (6,500 ر.س) ضريبة القيمة المضافة، وتُطبّق اللوائح المعتمدة لدى معهد البحوث والاستشارات بجامعة تبوك.'
+                : 'Listed tuition fees (6,500 SAR) include VAT and are governed by Research and Consulting Institute regulations at University of Tabuk.'}
             </li>
             <li>
               {locale === 'ar'
-                ? 'تُستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح وحفظ تفضيلات اللغة فقط.'
-                : 'Cookies are used solely to improve navigation experience and preserve language preferences.'}
+                ? 'تُستخدم ملفات تعريف الارتباط لحفظ إعدادات اللغة وتيسير تجربة التصفح للطالب فقط.'
+                : 'Cookies are used solely to preserve language preferences and support smooth student navigation.'}
             </li>
           </ul>
         </div>
@@ -208,20 +271,20 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
     if (section === 'lms') {
       return (
         <div className="space-y-4">
-          <h3 className="text-[1.25rem] font-bold text-[#142D4E]">
-            {locale === 'ar' ? 'بوابة التعلم الإلكتروني' : 'Online Learning Portal'}
+          <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+            {locale === 'ar' ? 'بوابة التعلّم للطلاب (LMS)' : 'Student Learning Portal (LMS)'}
           </h3>
-          <p className="text-[#64748B] leading-[1.85] text-[0.95rem]">
+          <p className="text-[#64748B] dark:text-[#B8C7D9] leading-[1.85] text-[0.95rem]">
             {locale === 'ar'
-              ? 'سجّل الدخول بحسابك للوصول إلى القاعات الافتراضية، المحاضرات المسجلة، الواجبات، والاختبارات الفصلية.'
-              : 'Sign in with your learner account to access virtual classrooms, recorded lectures, assignments, and exams.'}
+              ? 'ادخل بحساب الطالب الخاص بك للوصول إلى القاعات الافتراضية، متابعة المحاضرات المسائية المسجلة، تسليم الأنشطة والواجبات، واستعراض جدول الاختبارات.'
+              : 'Sign in with your student account to join virtual classrooms, review recorded lectures, submit coursework assignments, and check assessment schedules.'}
           </p>
           <button
             type="button"
             onClick={() => onSwitchModal({ type: 'auth', mode: 'login' })}
-            className="inline-flex items-center justify-center rounded-[10px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] cursor-pointer"
+            className="inline-flex items-center justify-center rounded-[10px] px-[22px] py-[10px] font-bold text-[0.92rem] bg-[#176B87] text-white hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
           >
-            {locale === 'ar' ? 'الانتقال إلى تسجيل الدخول' : 'Proceed to Sign In'}
+            {locale === 'ar' ? 'الدخول إلى حساب الطالب' : 'Go to Student Sign In'}
           </button>
         </div>
       );
@@ -229,40 +292,40 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
 
     return (
       <div className="space-y-4">
-        <h3 className="text-[1.25rem] font-bold text-[#142D4E]">
-          {locale === 'ar' ? 'الدعم والاستفسارات — تواصل معنا' : 'Support & Inquiries — Contact Us'}
+        <h3 className="text-[1.25rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+          {locale === 'ar' ? 'الإرشاد والدعم الطلابي — تواصل معنا' : 'Student Support & Guidance — Contact Us'}
         </h3>
-        <div className="flex flex-wrap gap-4 text-[0.9rem] text-[#183247] bg-[#EAF3F6] border border-[#DCE7ED] rounded-[12px] p-4">
+        <div className="flex flex-wrap gap-4 text-[0.9rem] text-[#183247] dark:text-[#F1F5F9] bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4">
           <span className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-[#176B87]" aria-hidden="true" />
+            <Phone className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
             <span dir="ltr">+966 54 650 5679</span>
           </span>
           <span className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-[#176B87]" aria-hidden="true" />
+            <Phone className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
             <span dir="ltr">014 456 3710</span>
           </span>
           <span className="flex items-center gap-2">
-            <Mail className="w-4 h-4 text-[#176B87]" aria-hidden="true" />
+            <Mail className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5]" aria-hidden="true" />
             <span dir="ltr">irc-programs@ut.edu.sa</span>
           </span>
         </div>
 
         {submittedMsg ? (
-          <div className="bg-[#E7F5EE] border border-[#1F8A5B]/30 text-[#1F8A5B] rounded-[12px] p-4 flex items-start gap-3">
+          <div className="bg-[#E7F5EE] dark:bg-[#102E24] border border-[#1F8A5B]/30 dark:border-[#2ECC71]/35 text-[#1F8A5B] dark:text-[#6EE7B7] rounded-[12px] p-4 flex items-start gap-3">
             <CheckCircle2 className="w-5 h-5 flex-none mt-0.5" aria-hidden="true" />
             <p className="text-[0.92rem] font-semibold">{submittedMsg}</p>
           </div>
         ) : (
           <form onSubmit={(e) => handleSubmit(e, 'contact')} className="space-y-3">
             {formError && (
-              <p className="text-[#C0392B] text-[0.86rem] font-semibold">{formError}</p>
+              <p className="text-[#C0392B] dark:text-[#FCA5A5] text-[0.86rem] font-semibold">{formError}</p>
             )}
             <input
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder={locale === 'ar' ? 'الاسم الكامل' : 'Full Name'}
-              className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+              className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input
@@ -270,21 +333,21 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder={locale === 'ar' ? 'رقم الجوال (05XXXXXXXX)' : 'Mobile Number'}
-                className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
               />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={locale === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
-                className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
               />
             </div>
             <button
               type="submit"
-              className="w-full h-[46px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] cursor-pointer"
+              className="w-full h-[46px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
             >
-              {locale === 'ar' ? 'إرسال الاستفسار' : 'Submit Inquiry'}
+              {locale === 'ar' ? 'إرسال الاستفسار' : 'Send Inquiry'}
             </button>
           </form>
         )}
@@ -301,12 +364,12 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-white border border-[#DCE7ED] rounded-[18px] shadow-[0_22px_54px_rgba(20,45,78,0.25)] w-full max-w-[680px] max-h-[90vh] overflow-y-auto relative">
+      <div className="bg-white dark:bg-[#142D4E] border border-[#DCE7ED] dark:border-white/12 rounded-[18px] shadow-[0_22px_54px_rgba(20,45,78,0.25)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.55)] w-full max-w-[680px] max-h-[90vh] overflow-y-auto relative">
         <button
           type="button"
           onClick={onClose}
           aria-label={locale === 'ar' ? 'إغلاق' : 'Close'}
-          className="absolute top-4 end-4 z-10 w-9 h-9 rounded-[10px] bg-white/95 border border-[#DCE7ED] text-[#183247] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] cursor-pointer"
+          className="absolute top-4 end-4 z-10 w-9 h-9 rounded-[10px] bg-white/95 border border-[#DCE7ED] text-[#183247] dark:bg-[#102238]/90 dark:border-white/15 dark:text-[#F1F5F9] grid place-items-center hover:border-[#28B5C5] hover:text-[#176B87] dark:hover:text-[#28B5C5] cursor-pointer"
         >
           <X className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -337,7 +400,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
             </div>
 
             <div className="p-6 space-y-5">
-              <div className="flex gap-2 border-b border-[#DCE7ED] pb-3">
+              <div className="flex gap-2 border-b border-[#DCE7ED] dark:border-white/12 pb-3">
                 <button
                   type="button"
                   onClick={() =>
@@ -345,11 +408,11 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                   }
                   className={`px-4 py-2 rounded-[8px] text-[0.88rem] font-bold cursor-pointer transition-colors ${
                     modal.tab === 'details'
-                      ? 'bg-[#142D4E] text-white'
-                      : 'bg-[#EAF3F6] text-[#64748B] hover:text-[#142D4E]'
+                      ? 'bg-[#142D4E] text-white dark:bg-[#28B5C5] dark:text-[#0B1726]'
+                      : 'bg-[#EAF3F6] text-[#64748B] hover:text-[#142D4E] dark:bg-[#102238] dark:text-[#B8C7D9] dark:hover:text-[#F1F5F9]'
                   }`}
                 >
-                  {locale === 'ar' ? 'تفاصيل البرنامج' : 'Program Details'}
+                  {locale === 'ar' ? 'تفاصيل الدورة' : 'Course Details'}
                 </button>
                 <button
                   type="button"
@@ -358,31 +421,31 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                   }
                   className={`px-4 py-2 rounded-[8px] text-[0.88rem] font-bold cursor-pointer transition-colors ${
                     modal.tab === 'register'
-                      ? 'bg-[#176B87] text-white'
-                      : 'bg-[#EAF3F6] text-[#64748B] hover:text-[#142D4E]'
+                      ? 'bg-[#176B87] text-white dark:bg-[#28B5C5] dark:text-[#0B1726]'
+                      : 'bg-[#EAF3F6] text-[#64748B] hover:text-[#142D4E] dark:bg-[#102238] dark:text-[#B8C7D9] dark:hover:text-[#F1F5F9]'
                   }`}
                 >
-                  {locale === 'ar' ? 'التسجيل في البرنامج' : 'Enroll Now'}
+                  {locale === 'ar' ? 'التسجيل في الدورة' : 'Enroll in Course'}
                 </button>
               </div>
 
               {modal.tab === 'details' ? (
                 <div className="space-y-4">
-                  <p className="text-[#64748B] text-[0.95rem] leading-[1.9]">
+                  <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.95rem] leading-[1.9]">
                     {locale === 'ar' ? modal.program.descriptionAr : modal.program.descriptionEn}
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] border border-[#DCE7ED] rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247]">
-                      <Clock className="w-4 h-4 text-[#176B87] flex-none" aria-hidden="true" />
+                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                      <Clock className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
                       <span>{locale === 'ar' ? modal.program.durationAr : modal.program.durationEn}</span>
                     </div>
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] border border-[#DCE7ED] rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247]">
-                      <BookOpen className="w-4 h-4 text-[#176B87] flex-none" aria-hidden="true" />
+                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                      <BookOpen className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
                       <span>{locale === 'ar' ? modal.program.creditsAr : modal.program.creditsEn}</span>
                     </div>
-                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] border border-[#DCE7ED] rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247]">
-                      <GraduationCap className="w-4 h-4 text-[#176B87] flex-none" aria-hidden="true" />
+                    <div className="flex items-center gap-2.5 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] p-3 text-[0.82rem] font-bold text-[#183247] dark:text-[#F1F5F9]">
+                      <GraduationCap className="w-4 h-4 text-[#176B87] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
                       <span>
                         {locale === 'ar'
                           ? modal.program.accreditationAr
@@ -392,17 +455,17 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                   </div>
 
                   <div>
-                    <h4 className="font-bold text-[#142D4E] text-[0.95rem] mb-2">
-                      {locale === 'ar' ? 'أبرز المحاور التدريبية' : 'Core Curriculum Modules'}
+                    <h4 className="font-bold text-[#142D4E] dark:text-[#F1F5F9] text-[0.95rem] mb-2">
+                      {locale === 'ar' ? 'المحاور الدراسية للدورة' : 'Core Course Modules'}
                     </h4>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {(locale === 'ar' ? modal.program.modulesAr : modal.program.modulesEn).map(
                         (mod) => (
                           <li
                             key={mod}
-                            className="flex items-center gap-2 text-[0.86rem] text-[#183247] bg-[#EAF3F6] rounded-[8px] px-3 py-2"
+                            className="flex items-center gap-2 text-[0.86rem] text-[#183247] dark:text-[#F1F5F9] bg-[#EAF3F6] dark:bg-[#1B3553] rounded-[8px] px-3 py-2"
                           >
-                            <CheckCircle2 className="w-4 h-4 text-[#1F8A5B] flex-none" aria-hidden="true" />
+                            <CheckCircle2 className="w-4 h-4 text-[#1F8A5B] dark:text-[#28B5C5] flex-none" aria-hidden="true" />
                             <span>{mod}</span>
                           </li>
                         )
@@ -410,13 +473,22 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                     </ul>
                   </div>
 
-                  <div className="flex items-center justify-between gap-4 bg-[#EAF3F6] border border-[#DCE7ED] rounded-[12px] p-4 flex-wrap">
+                  <div className="bg-[#F8FBFD] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[10px] px-3.5 py-2.5 text-[0.85rem] text-[#4B6178] dark:text-[#B8C7D9]">
+                    <span className="font-bold text-[#142D4E] dark:text-[#F1F5F9]">
+                      {locale === 'ar' ? 'الفئة المستهدفة: ' : 'Who This Course Is For: '}
+                    </span>
+                    <span>
+                      {locale === 'ar' ? modal.program.targetAudienceAr : modal.program.targetAudienceEn}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-4 bg-[#EAF3F6] dark:bg-[#102238] border border-[#DCE7ED] dark:border-white/12 rounded-[12px] p-4 flex-wrap">
                     <div>
-                      <div className="num text-[1.4rem] font-bold text-[#142D4E]">
+                      <div className="num text-[1.4rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
                         {modal.program.price.toLocaleString('en-US')}{' '}
                         {locale === 'ar' ? modal.program.currencyAr : modal.program.currencyEn}
                       </div>
-                      <div className="text-[0.76rem] text-[#64748B] font-semibold">
+                      <div className="text-[0.76rem] text-[#64748B] dark:text-[#B8C7D9] font-semibold">
                         {locale === 'ar'
                           ? 'شامل الضريبة · متاح السداد الكامل أو بالتقسيط'
                           : 'VAT Included · Full payment or installments available'}
@@ -427,21 +499,21 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       onClick={() =>
                         onSwitchModal({ type: 'program', program: modal.program, tab: 'register' })
                       }
-                      className="rounded-[10px] px-6 py-2.5 bg-[#176B87] text-white font-bold text-[0.92rem] hover:bg-[#142D4E] cursor-pointer"
+                      className="rounded-[10px] px-6 py-2.5 bg-[#176B87] text-white font-bold text-[0.92rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
                     >
-                      {locale === 'ar' ? 'سجّل الآن' : 'Register Now'}
+                      {locale === 'ar' ? 'التسجيل في الدورة' : 'Enroll in Course'}
                     </button>
                   </div>
                 </div>
               ) : submittedMsg ? (
-                <div className="bg-[#E7F5EE] border border-[#1F8A5B]/30 text-[#1F8A5B] rounded-[12px] p-5 flex items-start gap-3">
+                <div className="bg-[#E7F5EE] dark:bg-[#102E24] border border-[#1F8A5B]/30 dark:border-[#2ECC71]/35 text-[#1F8A5B] dark:text-[#6EE7B7] rounded-[12px] p-5 flex items-start gap-3">
                   <CheckCircle2 className="w-6 h-6 flex-none mt-0.5" aria-hidden="true" />
                   <p className="text-[0.95rem] font-semibold leading-relaxed">{submittedMsg}</p>
                 </div>
               ) : (
                 <form onSubmit={(e) => handleSubmit(e, 'program-register')} className="space-y-3.5">
                   {formError && (
-                    <p className="text-[#C0392B] text-[0.86rem] font-semibold">{formError}</p>
+                    <p className="text-[#C0392B] dark:text-[#FCA5A5] text-[0.86rem] font-semibold">{formError}</p>
                   )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <input
@@ -449,14 +521,14 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder={locale === 'ar' ? 'الاسم الرباعي' : 'Full Name'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                     <input
                       type="text"
                       value={nationalId}
                       onChange={(e) => setNationalId(e.target.value)}
                       placeholder={locale === 'ar' ? 'رقم الهوية الوطنية / الإقامة' : 'National ID / Iqama'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -465,14 +537,14 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder={locale === 'ar' ? 'رقم الجوال' : 'Mobile Number'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={locale === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                   </div>
                   <div className="flex gap-3">
@@ -481,8 +553,8 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       onClick={() => setPaymentPlan('full')}
                       className={`flex-1 py-2.5 px-3 rounded-[10px] border text-[0.86rem] font-bold cursor-pointer ${
                         paymentPlan === 'full'
-                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E]'
-                          : 'border-[#DCE7ED] bg-white text-[#64748B]'
+                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E] dark:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]'
+                          : 'border-[#DCE7ED] bg-white text-[#64748B] dark:border-white/12 dark:bg-[#102238] dark:text-[#B8C7D9]'
                       }`}
                     >
                       {locale === 'ar' ? 'سداد كامل (6,500 ر.س)' : 'Full Payment (6,500 SAR)'}
@@ -492,8 +564,8 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       onClick={() => setPaymentPlan('installments')}
                       className={`flex-1 py-2.5 px-3 rounded-[10px] border text-[0.86rem] font-bold cursor-pointer ${
                         paymentPlan === 'installments'
-                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E]'
-                          : 'border-[#DCE7ED] bg-white text-[#64748B]'
+                          ? 'border-[#176B87] bg-[#DDF3F5] text-[#142D4E] dark:border-[#28B5C5] dark:bg-[#1B3553] dark:text-[#F1F5F9]'
+                          : 'border-[#DCE7ED] bg-white text-[#64748B] dark:border-white/12 dark:bg-[#102238] dark:text-[#B8C7D9]'
                       }`}
                     >
                       {locale === 'ar' ? 'نظام التقسيط الشهري' : 'Monthly Installments'}
@@ -501,9 +573,9 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                   </div>
                   <button
                     type="submit"
-                    className="w-full h-[48px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] cursor-pointer"
+                    className="w-full h-[48px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
                   >
-                    {locale === 'ar' ? 'إتمام التسجيل المبدئي' : 'Complete Initial Registration'}
+                    {locale === 'ar' ? 'تأكيد طلب التسجيل' : 'Confirm Enrollment Request'}
                   </button>
                 </form>
               )}
@@ -514,24 +586,24 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
         {modal.type === 'auth' && (
           <div className="p-6 space-y-5">
             <div>
-              <h3 className="text-[1.3rem] font-bold text-[#142D4E]">
+              <h3 className="text-[1.3rem] font-bold text-[#142D4E] dark:text-[#F1F5F9]">
                 {modal.mode === 'login'
                   ? locale === 'ar'
-                    ? 'تسجيل الدخول إلى المنصة'
-                    : 'Sign In to Portal'
+                    ? 'دخول الطلاب إلى المنصة'
+                    : 'Student Portal Sign In'
                   : locale === 'ar'
-                    ? 'إنشاء حساب متدرب جديد'
-                    : 'Create Learner Account'}
+                    ? 'إنشاء حساب طالب جديد'
+                    : 'Create Student Account'}
               </h3>
-              <p className="text-[#64748B] text-[0.9rem] mt-1">
+              <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.9rem] mt-1">
                 {locale === 'ar'
-                  ? 'بوابة معهد البحوث والاستشارات — جامعة تبوك'
-                  : 'Research and Consulting Institute — University of Tabuk'}
+                  ? 'منصة التعلّم الرقمي — معهد البحوث والاستشارات، جامعة تبوك'
+                  : 'Digital Learning Platform — Research & Consulting Institute, University of Tabuk'}
               </p>
             </div>
 
             {submittedMsg ? (
-              <div className="bg-[#E7F5EE] border border-[#1F8A5B]/30 text-[#1F8A5B] rounded-[12px] p-4 flex items-start gap-3">
+              <div className="bg-[#E7F5EE] dark:bg-[#102E24] border border-[#1F8A5B]/30 dark:border-[#2ECC71]/35 text-[#1F8A5B] dark:text-[#6EE7B7] rounded-[12px] p-4 flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 flex-none mt-0.5" aria-hidden="true" />
                 <p className="text-[0.92rem] font-semibold">{submittedMsg}</p>
               </div>
@@ -541,7 +613,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                 className="space-y-3.5"
               >
                 {formError && (
-                  <p className="text-[#C0392B] text-[0.86rem] font-semibold">{formError}</p>
+                  <p className="text-[#C0392B] dark:text-[#FCA5A5] text-[0.86rem] font-semibold">{formError}</p>
                 )}
 
                 {modal.mode === 'register' && (
@@ -549,8 +621,8 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                     <select
                       value={selectedProgramId}
                       onChange={(e) => setSelectedProgramId(e.target.value)}
-                      aria-label={locale === 'ar' ? 'البرنامج المطلوب' : 'Desired Program'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] font-bold text-[#183247]"
+                      aria-label={locale === 'ar' ? 'الدورة المطلوبة' : 'Desired Course'}
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] font-bold text-[#183247] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9]"
                     >
                       {PROGRAMS.map((p) => (
                         <option key={p.id} value={p.id}>
@@ -564,14 +636,14 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         placeholder={locale === 'ar' ? 'الاسم الكامل' : 'Full Name'}
-                        className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                        className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                       />
                       <input
                         type="text"
                         value={nationalId}
                         onChange={(e) => setNationalId(e.target.value)}
                         placeholder={locale === 'ar' ? 'رقم الهوية الوطنية / الإقامة' : 'National ID'}
-                        className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                        className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                       />
                     </div>
                     <input
@@ -579,7 +651,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder={locale === 'ar' ? 'رقم الجوال' : 'Mobile Number'}
-                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                      className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                     />
                   </>
                 )}
@@ -589,7 +661,7 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={locale === 'ar' ? 'البريد الإلكتروني' : 'Email Address'}
-                  className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                  className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                 />
 
                 {modal.mode === 'login' && (
@@ -598,41 +670,41 @@ export function PortalModal({ locale, modal, onClose, onSwitchModal }: PortalMod
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder={locale === 'ar' ? 'كلمة المرور' : 'Password'}
-                    className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87]"
+                    className="w-full h-[46px] px-4 rounded-[10px] border border-[#DCE7ED] bg-[#EAF3F6] focus:bg-white focus:outline-none focus:border-[#176B87] dark:border-white/12 dark:bg-[#1B3553] dark:text-[#F1F5F9] dark:placeholder:text-[#B8C7D9] dark:focus:bg-[#102238] dark:focus:border-[#28B5C5]"
                   />
                 )}
 
                 <button
                   type="submit"
-                  className="w-full h-[48px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] cursor-pointer"
+                  className="w-full h-[48px] rounded-[10px] bg-[#176B87] text-white font-bold text-[0.95rem] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] cursor-pointer"
                 >
                   {modal.mode === 'login'
                     ? locale === 'ar'
-                      ? 'تسجيل الدخول'
-                      : 'Sign In'
+                      ? 'دخول إلى المنصة'
+                      : 'Sign In to Platform'
                     : locale === 'ar'
-                      ? 'إنشاء الحساب والمتابعة'
-                      : 'Create Account & Continue'}
+                      ? 'إنشاء حساب الطالب'
+                      : 'Create Student Account'}
                 </button>
               </form>
             )}
 
-            <div className="pt-2 border-t border-[#DCE7ED] text-center text-[0.88rem] text-[#64748B]">
+            <div className="pt-2 border-t border-[#DCE7ED] dark:border-white/12 text-center text-[0.88rem] text-[#64748B] dark:text-[#B8C7D9]">
               {modal.mode === 'login' ? (
                 <button
                   type="button"
                   onClick={() => onSwitchModal({ type: 'auth', mode: 'register' })}
-                  className="text-[#176B87] font-bold hover:underline cursor-pointer"
+                  className="text-[#176B87] dark:text-[#28B5C5] font-bold hover:underline cursor-pointer"
                 >
-                  {locale === 'ar' ? 'ليس لديك حساب؟ سجّل الآن' : "Don't have an account? Register now"}
+                  {locale === 'ar' ? 'طالب جديد؟ أنشئ حسابك الآن' : 'New student? Create an account'}
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => onSwitchModal({ type: 'auth', mode: 'login' })}
-                  className="text-[#176B87] font-bold hover:underline cursor-pointer"
+                  className="text-[#176B87] dark:text-[#28B5C5] font-bold hover:underline cursor-pointer"
                 >
-                  {locale === 'ar' ? 'لديك حساب بالفعل؟ تسجيل الدخول' : 'Already have an account? Sign in'}
+                  {locale === 'ar' ? 'لديك حساب بالفعل؟ سجّل الدخول' : 'Already enrolled? Sign in'}
                 </button>
               )}
             </div>
