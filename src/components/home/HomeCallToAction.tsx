@@ -54,7 +54,7 @@ export function HomeCallToAction({
           <button
             type="button"
             onClick={onBrowsePrograms}
-            className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[26px] py-[12px] font-bold text-[0.96rem] bg-[#28B5C5] text-[#142D4E] hover:bg-[#DDF3F5] shadow-[0_8px_24px_rgba(40,181,197,0.28)] transition-all duration-200 cursor-pointer max-[520px]:flex-1 whitespace-nowrap"
+            className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[26px] py-[12px] font-bold text-[0.96rem] bg-[#28B5C5] text-[#142D4E] hover:bg-[#DDF3F5] transition-all duration-200 cursor-pointer max-[520px]:flex-1 whitespace-nowrap"
           >
             <span>{locale === 'ar' ? 'اكتشف الدورات' : 'Explore Courses'}</span>
             {locale === 'ar' ? (
