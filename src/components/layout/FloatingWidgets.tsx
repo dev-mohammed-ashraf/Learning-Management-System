@@ -38,8 +38,8 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
   };
 
   const bottomOffset = cookieVisible
-    ? 'bottom-[104px] max-[600px]:bottom-[calc(168px_+_env(safe-area-inset-bottom))]'
-    : 'bottom-[20px] max-[600px]:bottom-[calc(16px_+_env(safe-area-inset-bottom))]';
+    ? 'bottom-[104px] max-[600px]:bottom-[calc(168px_+_env(safe-area-inset-bottom,0px))]'
+    : 'bottom-[16px] max-[600px]:bottom-[calc(12px_+_env(safe-area-inset-bottom,0px))]';
 
   return (
     <>

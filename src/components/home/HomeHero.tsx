@@ -112,7 +112,7 @@ export function HomeHero({
       <div className="wrap relative">
         <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,5.2fr)_minmax(0,6.8fr)] items-center gap-y-8 lg:gap-x-6 lg:min-h-[540px]">
           {/* Editorial Typography Column */}
-          <div className="relative z-20 flex flex-col items-start madar-hero-enter">
+          <div className="relative z-20 flex flex-col items-center text-center lg:items-start lg:text-start madar-hero-enter">
             <div className="ut-eyebrow inline-flex items-center gap-[10px] text-[0.84rem] sm:text-[0.86rem] font-bold text-[#DDF3F5] mb-[14px]">
               <span>
                 {isRtl
@@ -142,18 +142,18 @@ export function HomeHero({
               aria-hidden="true"
             />
 
-            <p className="text-[#DDF3F5]/88 text-[1.02rem] max-[720px]:text-[0.94rem] leading-[1.8] max-w-[31rem]">
+            <p className="text-[#DDF3F5]/88 text-[1.02rem] max-[720px]:text-[0.94rem] leading-[1.8] max-w-[31rem] mx-auto lg:mx-0">
               {isRtl
                 ? 'بيئة تعلّم إلكترونية متكاملة تتيح لك دراسة برامج الدبلوم المهني المعتمدة عن بُعد، وفق جدول مسائي مرن يربط التأصيل العلمي بالتطبيق العملي.'
                 : 'A structured online learning environment offering accredited professional associate diplomas with flexible evening instruction uniting foundational clarity and applied practice.'}
             </p>
 
             {/* Primary & Secondary CTA Buttons (Flat primary button, zero glow shadow) */}
-            <div className="flex flex-wrap items-center gap-[12px] mt-[22px] sm:mt-[26px] max-[520px]:w-full">
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-[12px] mt-[22px] sm:mt-[26px] w-full max-[520px]:flex-col max-[520px]:items-stretch">
               <button
                 type="button"
                 onClick={onExplorePrograms}
-                className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[26px] py-[13px] font-bold text-[0.96rem] bg-[#28B5C5] text-[#142D4E] hover:bg-[#DDF3F5] transition-colors duration-200 cursor-pointer max-[520px]:flex-1 whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[26px] py-[13px] font-bold text-[0.96rem] bg-[#28B5C5] text-[#142D4E] hover:bg-[#DDF3F5] transition-colors duration-200 cursor-pointer max-[520px]:w-full whitespace-nowrap"
               >
                 <span>{isRtl ? 'اكتشف الدورات' : 'Explore Courses'}</span>
                 {isRtl ? (
@@ -166,7 +166,7 @@ export function HomeHero({
               <button
                 type="button"
                 onClick={onLearnAbout}
-                className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[24px] py-[13px] font-bold text-[0.96rem] border border-[#DDF3F5]/30 bg-white/[0.06] text-white hover:border-[#28B5C5] hover:text-[#28B5C5] hover:bg-white/[0.1] transition-colors duration-200 cursor-pointer max-[520px]:flex-1 whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-[8px] rounded-[12px] px-[24px] py-[13px] font-bold text-[0.96rem] border border-[#DDF3F5]/30 bg-white/[0.06] text-white hover:border-[#28B5C5] hover:text-[#28B5C5] hover:bg-white/[0.1] transition-colors duration-200 cursor-pointer max-[520px]:w-full whitespace-nowrap"
               >
                 <Compass className="w-[17px] h-[17px] flex-none" aria-hidden="true" />
                 <span>{isRtl ? 'تعرّف على المنصة' : 'About the Platform'}</span>
@@ -174,7 +174,7 @@ export function HomeHero({
             </div>
 
             {/* Clean Unboxed Structural Metadata Strip (zero pill capsules) */}
-            <div className="mt-[22px] sm:mt-[26px] pt-[16px] border-t border-white/12 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] font-medium text-[#DDF3F5]/80">
+            <div className="mt-[22px] sm:mt-[26px] pt-[16px] border-t border-white/12 flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-1 text-[0.82rem] font-medium text-[#DDF3F5]/80">
               <span className="num font-bold text-white">
                 {isRtl ? `${totalDiplomas} دبلومات معتمدة` : `${totalDiplomas} Accredited Diplomas`}
               </span>

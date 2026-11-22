@@ -11,7 +11,6 @@ import {
   LogIn,
   LogOut,
   Map,
-  Menu,
   Target,
   UserPlus,
   UserRound,
@@ -90,6 +89,8 @@ interface FloatingGlassSidebarProps {
   onSelectKind: (kind: ProgramKind) => void;
   onOpenAuth: (mode: 'login' | 'register') => void;
   onSignOut?: () => void;
+  mobileMenuOpen?: boolean;
+  onMobileMenuOpenChange?: (open: boolean) => void;
 }
 
 export function FloatingGlassSidebar({
@@ -101,9 +102,18 @@ export function FloatingGlassSidebar({
   onSelectKind,
   onOpenAuth,
   onSignOut,
+  mobileMenuOpen,
+  onMobileMenuOpenChange,
 }: FloatingGlassSidebarProps) {
   const [expanded, setExpanded] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [internalDrawerOpen, setInternalDrawerOpen] = useState(false);
+  const drawerOpen = mobileMenuOpen ?? internalDrawerOpen;
+  const setDrawerOpen = (open: boolean) => {
+    if (mobileMenuOpen === undefined) {
+      setInternalDrawerOpen(open);
+    }
+    onMobileMenuOpenChange?.(open);
+  };
 
   useEffect(() => {
     if (!drawerOpen) return;
@@ -146,7 +156,7 @@ export function FloatingGlassSidebar({
       <aside
         aria-label={locale === 'ar' ? 'القائمة الرئيسية الجانبية' : 'Primary Floating Sidebar'}
         data-expanded={expanded ? 'true' : 'false'}
-        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 z-[60] h-fit max-h-[88vh] rounded-[24px] p-[12px] ut-glass-sidebar ${
+        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 z-[60] h-fit max-h-[var(--gf-max-h,88vh)] overflow-hidden rounded-[24px] p-[12px] ut-glass-sidebar ${
           expanded ? 'w-[264px]' : 'w-[86px]'
         }`}
       >
@@ -402,21 +412,6 @@ export function FloatingGlassSidebar({
         </div>
       </aside>
 
-      {/* Mobile & Tablet Floating Glass Menu Trigger */}
-      <button
-        type="button"
-        onClick={() => setDrawerOpen(true)}
-        aria-expanded={drawerOpen}
-        aria-controls="mobileGlassDrawer"
-        aria-label={locale === 'ar' ? 'فتح القائمة الرئيسية' : 'Open main navigation menu'}
-        className="min-[1024px]:hidden fixed min-[768px]:top-[106px] max-[767px]:top-[150px] right-[40px] max-[767px]:right-[12px] z-[60] h-[40px] px-[14px] rounded-[13px] ut-glass-sidebar text-[#142D4E] dark:text-[#F1F5F9] inline-flex items-center gap-[8px] hover:border-[#28B5C5] hover:text-[#176B87] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer"
-      >
-        <Menu className="w-[18px] h-[18px] flex-none" aria-hidden="true" />
-        <span className="font-bold text-[0.84rem]">
-          {locale === 'ar' ? 'القائمة' : 'Menu'}
-        </span>
-      </button>
-
       {/* Mobile & Tablet Glass Backdrop + Right-Side Drawer */}
       <div
         className={`min-[1024px]:hidden fixed inset-0 z-[95] transition-opacity duration-250 ${
@@ -436,7 +431,7 @@ export function FloatingGlassSidebar({
           role="dialog"
           aria-modal="true"
           aria-label={locale === 'ar' ? 'القائمة الجانبية' : 'Mobile Navigation'}
-          className={`fixed top-[12px] bottom-[12px] right-[12px] w-[min(310px,calc(100vw-24px))] rounded-[24px] p-[16px] ut-glass-sidebar-drawer flex flex-col transition-transform duration-300 ease-out ${
+          className={`fixed top-[calc(12px+env(safe-area-inset-top,0px))] bottom-[calc(12px+env(safe-area-inset-bottom,0px))] right-[12px] w-[min(310px,calc(100vw-24px))] rounded-[24px] p-[16px] ut-glass-sidebar-drawer flex flex-col transition-transform duration-300 ease-out ${
             drawerOpen ? 'translate-x-0' : 'translate-x-[calc(100%+28px)]'
           }`}
         >

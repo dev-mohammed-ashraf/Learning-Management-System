@@ -126,6 +126,7 @@ export default function App() {
   const [selectedSort, setSelectedSort] = useState<CourseSortOption>('default');
   const [currentPage, setCurrentPage] = useState(1);
   const [modal, setModal] = useState<ModalState>({ type: 'closed' });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [studentState, setStudentState] = useState<StudentPlatformState>(() =>
     loadStudentPlatformState()
   );
@@ -397,6 +398,8 @@ export default function App() {
         onGoHome={navigateToHome}
         onSelectProgram={(program) => handleOpenProgram(program, 'details')}
         onSelectService={handleSelectSearchService}
+        mobileMenuOpen={mobileMenuOpen}
+        onOpenMobileMenu={() => setMobileMenuOpen(true)}
       />
 
       <FloatingGlassSidebar
@@ -411,6 +414,8 @@ export default function App() {
         }}
         onOpenAuth={(mode) => setModal({ type: 'auth', mode })}
         onSignOut={handleStudentSignOut}
+        mobileMenuOpen={mobileMenuOpen}
+        onMobileMenuOpenChange={setMobileMenuOpen}
       />
 
       <main className="flex-1">

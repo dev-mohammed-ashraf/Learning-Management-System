@@ -1,27 +1,24 @@
 /**
- * Glass Fusion controller.
+ * Glass sidebar layout controller.
  *
- * Detects when the Floating Glass Sidebar approaches or touches the Floating
- * Glass Header (both are viewport-anchored, so proximity only changes on
- * viewport resizes, sidebar width transitions, or content reflows) and drives
- * a single `glass-fused` class on <html> plus a few CSS custom properties.
+ * Keeps the floating desktop sidebar clear of the floating header at all times.
+ * It measures the real header bounds and writes CSS custom properties that:
+ * - cap the sidebar height to the available viewport space below the header
+ * - preserve a consistent gap between header and sidebar
+ * - vertically center the sidebar within that available space
  *
- * - Zero React re-renders: measurement happens in a ResizeObserver + rAF and
- *   is written straight to CSS custom properties.
- * - The fused geometry assumes a butt joint (sidebar top edge == header bottom
- *   edge); the sidebar glides into that position via a `translate` offset
- *   (`--gf-dock`) so no layout property of the page ever changes.
- * - `--gf-seam-end` / `--gf-left-fade` position the header's masked border
- *   lines; `--gf-fa-r` / `--gf-fb-r` size the two concave fillets.
+ * Measurements run in ResizeObserver + rAF and write directly to CSS vars, so
+ * no React re-renders are involved and layout stays responsive to header size,
+ * viewport changes, and sidebar content/width transitions.
  */
 const DESKTOP_MQ = '(min-width: 1024px)';
 
-/** Gap (px) between the sidebar top and the header bottom that starts the fusion. */
-const ENGAGE_GAP_PX = 28;
-/** Gap (px) that must be exceeded before the fusion releases (hysteresis). */
-const RELEASE_GAP_PX = 36;
-/** Radius of the concave fillet where the sidebar's right edge meets the header. */
-const FILLET_B_RADIUS = 16;
+/** Minimum vertical gap between the header bottom and the sidebar top. */
+const GAP_PX = 20;
+/** Bottom viewport margin, kept in balance with the sidebar's left offset. */
+const BOTTOM_MARGIN_PX = 20;
+/** Minimum sidebar height before internal scrolling takes over. */
+const MIN_SIDEBAR_HEIGHT_PX = 240;
 
 export function initGlassFusion(): () => void {
   if (typeof window === 'undefined') return () => undefined;
@@ -32,7 +29,6 @@ export function initGlassFusion(): () => void {
   if (!header || !sidebar) return () => undefined;
 
   const media = window.matchMedia(DESKTOP_MQ);
-  let fused = false;
   let frame = 0;
   const applied = new Map<string, string>();
 
@@ -42,67 +38,45 @@ export function initGlassFusion(): () => void {
     root.style.setProperty(name, value);
   };
 
-  const setFused = (next: boolean) => {
-    if (next === fused) return;
-    fused = next;
-    root.classList.toggle('glass-fused', fused);
+  const clearLayoutVars = () => {
+    setVar('--gf-dock', '0px');
+    setVar('--gf-max-h', '88vh');
+    setVar('--gf-top-bound', '0px');
   };
 
   const recalc = () => {
     frame = 0;
 
     if (!media.matches) {
-      // Fusion is a laptop/desktop effect only; the mobile layouts differ.
-      setFused(false);
-      setVar('--gf-dock', '0px');
-      setVar('--gf-seam-end', '0px');
-      setVar('--gf-left-fade', '0px');
+      root.classList.remove('glass-fused');
+      clearLayoutVars();
       return;
     }
 
     const viewportH = window.innerHeight;
     const headerRect = header.getBoundingClientRect();
-    const sidebarRect = sidebar.getBoundingClientRect();
-    const joinBottom = headerRect.bottom;
 
-    // Height the sidebar would have in the separate, vertically centered
-    // state (scrollHeight reports the full content height even while the
-    // fused max-height cap shrinks the rendered box -> no feedback loop).
-    const separateHeight = Math.min(sidebar.scrollHeight, viewportH * 0.88);
-    const gap = (viewportH - separateHeight) / 2 - joinBottom;
+    // Keep a visible gap below the real header bounds. The header is sticky, so
+    // its bottom edge is the authoritative collision boundary.
+    const topBound = Math.max(0, headerRect.bottom + GAP_PX);
+    const availableH = Math.max(
+      MIN_SIDEBAR_HEIGHT_PX,
+      viewportH - topBound - BOTTOM_MARGIN_PX,
+    );
 
-    const overlapLeft = headerRect.left - sidebarRect.left; // normally 20px
-    const seamWidth = sidebarRect.right - headerRect.left; // 66px collapsed / 244px expanded
-    const geometryOk = overlapLeft >= 0 && overlapLeft <= 26 && seamWidth >= 40;
+    // Center the sidebar inside the available region below the header.
+    // Sidebar base CSS uses top:50% + translateY(-50%), so dock is the delta
+    // between that viewport center and the available-region center.
+    const availableCenter = topBound + availableH / 2;
+    const dock = availableCenter - viewportH / 2;
 
-    const threshold = fused ? RELEASE_GAP_PX : ENGAGE_GAP_PX;
-    setFused(geometryOk && gap <= threshold);
-
-    // Fillet radii adapt to the measured contact geometry.
-    setVar('--gf-fa-r', `${Math.min(20, Math.max(8, overlapLeft))}px`);
-    setVar('--gf-fb-r', `${FILLET_B_RADIUS}px`);
-
-    if (!fused) {
-      setVar('--gf-dock', '0px');
-      setVar('--gf-seam-end', '0px');
-      setVar('--gf-left-fade', '0px');
-      return;
-    }
-
-    // Dock: shift the sidebar's translate so its top edge lands exactly on the
-    // header's bottom edge (top:50% + translate -50% + dock == joinBottom).
-    const dock = joinBottom - viewportH / 2 + sidebarRect.height / 2;
+    setVar('--gf-top-bound', `${topBound.toFixed(2)}px`);
+    setVar('--gf-max-h', `${availableH.toFixed(2)}px`);
     setVar('--gf-dock', `${dock.toFixed(2)}px`);
-    // Header bottom border fades from its left edge to the right fillet tangent.
-    setVar(
-      '--gf-seam-end',
-      `${(sidebarRect.right + FILLET_B_RADIUS - headerRect.left).toFixed(2)}px`,
-    );
-    // Header left border fades below the left fillet tangent.
-    setVar(
-      '--gf-left-fade',
-      `${(joinBottom - Math.min(20, Math.max(8, overlapLeft)) - headerRect.top).toFixed(2)}px`,
-    );
+
+    // The new layout keeps a deliberate gap, so the old flush glass-fusion
+    // visual should not activate.
+    root.classList.remove('glass-fused');
   };
 
   const schedule = () => {
@@ -114,6 +88,7 @@ export function initGlassFusion(): () => void {
   observer.observe(header);
   observer.observe(sidebar);
   window.addEventListener('resize', schedule);
+  window.addEventListener('scroll', schedule, { passive: true });
   media.addEventListener('change', schedule);
   recalc();
 
@@ -121,6 +96,7 @@ export function initGlassFusion(): () => void {
     if (frame) window.cancelAnimationFrame(frame);
     observer.disconnect();
     window.removeEventListener('resize', schedule);
+    window.removeEventListener('scroll', schedule);
     media.removeEventListener('change', schedule);
     root.classList.remove('glass-fused');
     for (const name of applied.keys()) root.style.removeProperty(name);

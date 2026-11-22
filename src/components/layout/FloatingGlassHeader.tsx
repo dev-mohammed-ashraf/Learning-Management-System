@@ -4,6 +4,7 @@ import {
   ArrowUpRight,
   BookOpen,
   GraduationCap,
+  Menu,
   Moon,
   Search,
   Sun,
@@ -29,6 +30,8 @@ interface FloatingGlassHeaderProps {
   onGoHome: () => void;
   onSelectProgram: (program: Program) => void;
   onSelectService: (target: SearchServiceTarget) => void;
+  onOpenMobileMenu?: () => void;
+  mobileMenuOpen?: boolean;
 }
 
 export function FloatingGlassHeader({
@@ -43,6 +46,8 @@ export function FloatingGlassHeader({
   onGoHome,
   onSelectProgram,
   onSelectService,
+  onOpenMobileMenu,
+  mobileMenuOpen = false,
 }: FloatingGlassHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
@@ -276,6 +281,22 @@ export function FloatingGlassHeader({
         dir="ltr"
         className="order-3 max-[767px]:order-2 flex-none flex items-center gap-[10px]"
       >
+        {onOpenMobileMenu && (
+          <button
+            type="button"
+            onClick={onOpenMobileMenu}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobileGlassDrawer"
+            aria-label={locale === 'ar' ? 'فتح القائمة الرئيسية' : 'Open main navigation menu'}
+            className="min-[1024px]:hidden h-[42px] px-[14px] max-[767px]:px-[12px] rounded-[13px] ut-glass-sidebar text-[#142D4E] dark:text-[#F1F5F9] inline-flex items-center gap-[8px] hover:border-[#28B5C5] hover:text-[#176B87] dark:hover:text-[#28B5C5] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer flex-none"
+          >
+            <Menu className="w-[18px] h-[18px] flex-none" aria-hidden="true" />
+            <span className="font-bold text-[0.84rem] max-[420px]:hidden">
+              {locale === 'ar' ? 'القائمة' : 'Menu'}
+            </span>
+          </button>
+        )}
+
         <div className="relative group/theme">
           <button
             type="button"

@@ -49,6 +49,11 @@
   --r-sm: 10px;
   --r: 14px;
   --r-lg: 18px;
+  --scrollbar-track: rgba(20, 45, 78, 0.05);
+  --scrollbar-thumb: rgba(23, 107, 135, 0.38);
+  --scrollbar-thumb-hover: rgba(23, 107, 135, 0.58);
+  --selection-bg: rgba(40, 181, 197, 0.88);
+  --selection-fg: #ffffff;
   color-scheme: light;
 }
 
@@ -60,7 +65,60 @@
   --ink: #F1F5F9;
   --muted: #B8C7D9;
   --line: rgba(255, 255, 255, 0.12);
+  --scrollbar-track: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb: rgba(40, 181, 197, 0.42);
+  --scrollbar-thumb-hover: rgba(40, 181, 197, 0.62);
+  --selection-bg: rgba(40, 181, 197, 0.9);
+  --selection-fg: #0b1726;
   color-scheme: dark;
+}
+
+/* Global text selection — brand teal with high-contrast foreground */
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+::-moz-selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+/* Global scrollbar — subtle, brand-aligned, theme-aware */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 180ms ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 @layer base {
@@ -348,7 +406,7 @@ aside.ut-glass-sidebar {
 
 html.glass-fused aside.ut-glass-sidebar {
   /* Stay inside the viewport while docked under the header. */
-  max-height: calc(100vh - 122px);
+  max-height: var(--gf-max-h, calc(100vh - 122px));
   /* The top edge becomes the fused interior: no border, no corner curves —
      the fillets take over the silhouette. */
   border-top-color: transparent;
