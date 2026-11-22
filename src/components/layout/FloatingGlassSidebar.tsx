@@ -8,7 +8,6 @@ import {
   Folder,
   GraduationCap,
   Home,
-  LogIn,
   LogOut,
   Map,
   Target,
@@ -156,7 +155,7 @@ export function FloatingGlassSidebar({
       <aside
         aria-label={locale === 'ar' ? 'القائمة الرئيسية الجانبية' : 'Primary Floating Sidebar'}
         data-expanded={expanded ? 'true' : 'false'}
-        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 z-[60] h-fit max-h-[var(--gf-max-h,88vh)] overflow-hidden rounded-[24px] p-[12px] ut-glass-sidebar ${
+        className={`hidden min-[1024px]:flex flex-col fixed left-[20px] top-1/2 z-[60] h-fit max-h-[var(--gf-max-h,88vh)] rounded-[24px] p-[12px] ut-glass-sidebar ${
           expanded ? 'w-[264px]' : 'w-[86px]'
         }`}
       >
@@ -195,8 +194,9 @@ export function FloatingGlassSidebar({
           )}
         </button>
 
+        <div className="flex flex-col flex-1 min-h-0 overflow-hidden rounded-[inherit]">
         {/* A. Brand Area */}
-        <div className="flex-none pb-[8px] mb-[6px] border-b border-[#DCE7ED]/80 dark:border-white/12 flex items-center justify-center">
+        <div className="flex-none pb-[6px] mb-[4px] border-b border-[#DCE7ED]/80 dark:border-white/12 flex items-center justify-center">
           <button
             type="button"
             onClick={() => handleNavClick('home')}
@@ -230,25 +230,24 @@ export function FloatingGlassSidebar({
         {/* B. 4 Grouped Student Navigation Sections (10 items) */}
         <nav
           aria-label={locale === 'ar' ? 'التنقل الرئيسي' : 'Main Navigation'}
-          className="flex-1 min-h-0 flex flex-col gap-[2px] py-[2px] overflow-y-auto [&::-webkit-scrollbar]:hidden"
+          className="ut-sidebar-nav-scroll flex-1 min-h-0 flex flex-col gap-[2px] py-[2px] overflow-y-auto"
         >
           {SIDEBAR_GROUPS.map((group, groupIndex) => (
             <div key={group.id} className="flex flex-col gap-[2px]">
               {groupIndex > 0 && (
                 <div
-                  className="my-[4px] border-t border-[#DCE7ED]/80 dark:border-white/12"
+                  className="my-[2px] border-t border-[#DCE7ED]/80 dark:border-white/12"
                   aria-hidden="true"
                 />
               )}
 
-              <div
-                aria-hidden={!expanded}
-                className={`px-[10px] pt-[2px] pb-[2px] text-[0.68rem] font-bold tracking-wide whitespace-nowrap overflow-hidden text-[#64748B] dark:text-[#94A3B8] transition-opacity duration-300 ease-out ${
-                  expanded ? 'opacity-100' : 'pointer-events-none opacity-0'
-                }`}
-              >
-                {locale === 'ar' ? group.groupLabelAr : group.groupLabelEn}
-              </div>
+              {expanded && (
+                <div
+                  className="px-[10px] pt-[2px] pb-[1px] text-[0.68rem] font-bold tracking-wide whitespace-nowrap overflow-hidden text-[#64748B] dark:text-[#94A3B8]"
+                >
+                  {locale === 'ar' ? group.groupLabelAr : group.groupLabelEn}
+                </div>
+              )}
 
               {group.items.map((item) => {
                 const Icon = item.icon;
@@ -303,7 +302,7 @@ export function FloatingGlassSidebar({
         </nav>
 
         {/* C. Bottom Actions: Login + Register (or Signed-In Profile/Sign Out) */}
-        <div className="flex-none pt-[10px] mt-[6px] border-t border-[#DCE7ED]/80 dark:border-white/12 flex flex-col gap-[6px]">
+        <div className="flex-none pt-[8px] mt-[4px] border-t border-[#DCE7ED]/80 dark:border-white/12 flex flex-col gap-[6px]">
           {account?.signedIn ? (
             <>
               <div className="relative group/account">
@@ -352,34 +351,6 @@ export function FloatingGlassSidebar({
             </>
           ) : (
             <>
-              <div className="relative group/login">
-                <button
-                  type="button"
-                  onClick={() => onOpenAuth('login')}
-                  aria-label={locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
-                  title={!expanded ? (locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In') : undefined}
-                  className={`w-full h-[36px] flex items-center rounded-[12px] border border-[#DCE7ED] bg-white/75 text-[#142D4E] font-bold text-[0.84rem] hover:border-[#176B87] hover:text-[#176B87] hover:bg-white dark:bg-[#142D4E]/80 dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:text-[#28B5C5] dark:hover:bg-[#1B3553] focus-visible:outline-2 focus-visible:outline-[#176B87] transition-all duration-200 cursor-pointer ${
-                    expanded ? 'px-[12px] gap-[9px] justify-center' : 'justify-center px-0'
-                  }`}
-                >
-                  <LogIn className="w-[16px] h-[16px] flex-none" aria-hidden="true" />
-                  {expanded && (
-                    <span className="whitespace-nowrap">
-                      {locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
-                    </span>
-                  )}
-                </button>
-
-                {!expanded && (
-                  <span
-                    role="tooltip"
-                    className="pointer-events-none opacity-0 -translate-x-[6px] group-hover/login:opacity-100 group-hover/login:translate-x-0 group-focus-within/login:opacity-100 group-focus-within/login:translate-x-0 transition-all duration-150 absolute left-[calc(100%+12px)] top-1/2 -translate-y-1/2 ut-glass-tooltip text-[0.8rem] font-bold px-[12px] py-[6px] rounded-[10px] whitespace-nowrap z-[70]"
-                  >
-                    {locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}
-                  </span>
-                )}
-              </div>
-
               <div className="relative group/reg">
                 <button
                   type="button"
@@ -409,6 +380,8 @@ export function FloatingGlassSidebar({
               </div>
             </>
           )}
+
+        </div>
         </div>
       </aside>
 
@@ -539,31 +512,17 @@ export function FloatingGlassSidebar({
                 )}
               </>
             ) : (
-              <>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDrawerOpen(false);
-                    onOpenAuth('login');
-                  }}
-                  className="w-full min-h-[42px] rounded-[13px] font-bold text-[0.92rem] border border-[#DCE7ED] text-[#142D4E] bg-white hover:border-[#176B87] hover:text-[#176B87] dark:bg-[#142D4E] dark:border-white/15 dark:text-[#F1F5F9] dark:hover:border-[#28B5C5] dark:hover:text-[#28B5C5] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
-                >
-                  <LogIn className="w-[18px] h-[18px]" aria-hidden="true" />
-                  <span>{locale === 'ar' ? 'دخول الطلاب' : 'Student Sign In'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setDrawerOpen(false);
-                    onOpenAuth('register');
-                  }}
-                  className="w-full min-h-[44px] rounded-[13px] font-bold text-[0.92rem] bg-[#176B87] text-white shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
-                >
-                  <UserPlus className="w-[18px] h-[18px]" aria-hidden="true" />
-                  <span>{locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}</span>
-                </button>
-              </>
+              <button
+                type="button"
+                onClick={() => {
+                  setDrawerOpen(false);
+                  onOpenAuth('register');
+                }}
+                className="w-full min-h-[44px] rounded-[13px] font-bold text-[0.92rem] bg-[#176B87] text-white shadow-[0_6px_18px_rgba(23,107,135,0.28)] hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] inline-flex items-center justify-center gap-[8px] cursor-pointer transition-colors"
+              >
+                <UserPlus className="w-[18px] h-[18px]" aria-hidden="true" />
+                <span>{locale === 'ar' ? 'ابدأ التعلم' : 'Enroll Now'}</span>
+              </button>
             )}
           </div>
         </aside>

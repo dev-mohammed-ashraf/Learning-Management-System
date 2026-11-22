@@ -26,7 +26,12 @@ export type PageRoute =
   | 'groups'
   | 'ai-tools'
   | 'dashboard'
-  | 'profile';
+  | 'dashboard-login'
+  | 'profile'
+  | 'learn'
+  | 'admin'
+  | 'company'
+  | 'exam';
 
 export type CourseProgressStatus = 'in_progress' | 'completed';
 

@@ -4,23 +4,10 @@ import type { Locale } from '../../types/program';
 
 interface FloatingWidgetsProps {
   locale: Locale;
-  onOpenPrivacy: () => void;
 }
 
-export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps) {
+export function FloatingWidgets({ locale }: FloatingWidgetsProps) {
   const [showTop, setShowTop] = useState(false);
-  const [cookieVisible, setCookieVisible] = useState(false);
-
-  useEffect(() => {
-    try {
-      const accepted = window.localStorage.getItem('madar_cookies_ok');
-      if (!accepted) {
-        setCookieVisible(true);
-      }
-    } catch {
-      setCookieVisible(true);
-    }
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 500);
@@ -28,18 +15,7 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const acceptCookies = () => {
-    try {
-      window.localStorage.setItem('madar_cookies_ok', '1');
-    } catch {
-      // ignore storage failure
-    }
-    setCookieVisible(false);
-  };
-
-  const bottomOffset = cookieVisible
-    ? 'bottom-[104px] max-[600px]:bottom-[calc(168px_+_env(safe-area-inset-bottom,0px))]'
-    : 'bottom-[16px] max-[600px]:bottom-[calc(12px_+_env(safe-area-inset-bottom,0px))]';
+  const bottomOffset = 'bottom-[16px] max-[600px]:bottom-[calc(12px+env(safe-area-inset-bottom,0px))]';
 
   return (
     <>
@@ -68,38 +44,6 @@ export function FloatingWidgets({ locale, onOpenPrivacy }: FloatingWidgetsProps)
       >
         <ChevronUp className="w-[20px] h-[20px]" aria-hidden="true" />
       </button>
-
-      {cookieVisible && (
-        <div
-          id="cookieBar"
-          role="dialog"
-          aria-live="polite"
-          aria-label={locale === 'ar' ? 'إشعار ملفات الارتباط' : 'Cookie Consent Notice'}
-          className="fixed bottom-0 inset-x-0 z-[90] bg-white border-t border-[#DCE7ED] dark:bg-[#102238] dark:border-white/12 shadow-[0_-8px_24px_rgba(20,45,78,0.08)] dark:shadow-[0_-8px_28px_rgba(0,0,0,0.45)] py-[16px] px-[24px]"
-        >
-          <div className="max-w-[1320px] mx-auto flex items-center gap-[20px] flex-wrap justify-center">
-            <p className="text-[#64748B] dark:text-[#B8C7D9] text-[0.86rem] leading-[1.9] flex-1 min-w-[260px] m-0">
-              {locale === 'ar'
-                ? 'نستخدم ملفات تعريف الارتباط لحفظ تفضيلات اللغة وتحسين تجربتك الدراسية عبر المنصة. بمواصلتك التصفح فإنك توافق على استخدامها. '
-                : 'We use cookies to preserve language settings and enhance your learning experience on the platform. By continuing to browse, you consent to their use. '}
-              <button
-                type="button"
-                onClick={onOpenPrivacy}
-                className="text-[#176B87] dark:text-[#28B5C5] font-bold underline underline-offset-[3px] hover:text-[#142D4E] dark:hover:text-[#F1F5F9] cursor-pointer"
-              >
-                {locale === 'ar' ? 'اطّلع على السياسات' : 'Learn more'}
-              </button>
-            </p>
-            <button
-              type="button"
-              onClick={acceptCookies}
-              className="flex-none inline-flex items-center justify-center rounded-[10px] px-[18px] py-[8px] font-bold text-[0.84rem] bg-[#176B87] text-white hover:bg-[#142D4E] dark:bg-[#28B5C5] dark:text-[#0B1726] dark:hover:bg-[#DDF3F5] transition-colors cursor-pointer"
-            >
-              {locale === 'ar' ? 'موافق' : 'Accept'}
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 }

@@ -1,11 +1,19 @@
 import { useState } from 'react';
 import { Bookmark, BookOpen, CheckCircle2, Clock } from 'lucide-react';
+import type { DemoCourse, DemoLearningState } from '../../types/coursePlayer';
 import type { Locale, Program } from '../../types/program';
 import type { LibraryFilterTab, StudentPlatformState } from '../../types/student';
 import {
   computeCourseProgressPct,
   filterLibraryCourses,
 } from '../../utils/studentPlatform';
+import {
+  computeDemoCourseProgressPct,
+  getDemoCourseProgress,
+  isDemoCourseEnrolled,
+} from '../../utils/demoLearning';
+import { DemoCourseDetailsModal } from './DemoCourseDetailsModal';
+import { DemoCoursesSection } from './DemoCoursesSection';
 import { PageHeroBanner } from '../common/PageHeroBanner';
 import { ProgressBar } from '../common/ProgressBar';
 
@@ -18,6 +26,11 @@ interface LibraryPageProps {
   onOpenProgram: (program: Program, tab?: 'details' | 'register') => void;
   onToggleSave: (program: Program) => void;
   onToggleModule: (program: Program, moduleIndex: number) => void;
+  /** Demo course learning experience (mock data — optional to stay backward compatible). */
+  demoCourses?: DemoCourse[];
+  demoLearning?: DemoLearningState;
+  onEnrollDemoCourse?: (courseId: string) => void;
+  onStartDemoLearning?: (courseId: string) => void;
 }
 
 export function LibraryPage({
@@ -28,8 +41,15 @@ export function LibraryPage({
   onOpenProgram,
   onToggleSave,
   onToggleModule,
+  demoCourses = [],
+  demoLearning,
+  onEnrollDemoCourse,
+  onStartDemoLearning,
 }: LibraryPageProps) {
   const [activeTab, setActiveTab] = useState<LibraryFilterTab>('all');
+  const [demoDetailsCourse, setDemoDetailsCourse] = useState<DemoCourse | null>(null);
+  const demoFeatureReady =
+    demoCourses.length > 0 && demoLearning && onEnrollDemoCourse && onStartDemoLearning;
 
   const tabs: { id: LibraryFilterTab; labelAr: string; labelEn: string }[] = [
     { id: 'all', labelAr: 'الكل', labelEn: 'All' },
@@ -54,6 +74,18 @@ export function LibraryPage({
 
       <section className="py-[32px] pb-[72px]">
         <div className="wrap space-y-6">
+          {/* Demo interactive courses (mock data, free preview enrollment) */}
+          {demoFeatureReady && (
+            <DemoCoursesSection
+              locale={locale}
+              courses={demoCourses}
+              learning={demoLearning}
+              onOpenCourse={setDemoDetailsCourse}
+              onStartLearning={onStartDemoLearning}
+              onEnrollCourse={onEnrollDemoCourse}
+            />
+          )}
+
           {/* Filter Tabs */}
           <div
             role="tablist"
@@ -266,6 +298,23 @@ export function LibraryPage({
                 );
               })}
             </div>
+          )}
+          {demoFeatureReady && demoDetailsCourse && (
+            <DemoCourseDetailsModal
+              locale={locale}
+              course={demoDetailsCourse}
+              isEnrolled={isDemoCourseEnrolled(demoLearning, demoDetailsCourse.id)}
+              progressPct={computeDemoCourseProgressPct(
+                demoDetailsCourse,
+                getDemoCourseProgress(demoLearning, demoDetailsCourse.id)
+              )}
+              onClose={() => setDemoDetailsCourse(null)}
+              onEnroll={onEnrollDemoCourse}
+              onStartLearning={(courseId) => {
+                setDemoDetailsCourse(null);
+                onStartDemoLearning(courseId);
+              }}
+            />
           )}
         </div>
       </section>
